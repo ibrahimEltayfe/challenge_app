@@ -1,0 +1,8 @@
+class AppStrings{
+ AppStrings._();
+
+ static const String bergenFont = 'bergen';
+ static const String junegullFont = 'junegull';
+ static const String senFont = 'sen';
+
+}

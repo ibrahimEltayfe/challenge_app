@@ -1,0 +1,37 @@
+{
+  "email":"Email",
+  "password":"Password",
+  "forgotPassword":"Forgot Password",
+  "enterYourEmail": "Enter you email",
+  "login":"Login",
+  "register":"Register",
+  "doNotHaveAnAccount": "Do not have an account? ",
+  "alreadyHaveAnAccount": "Do you have an account? ",
+  "or":"OR",
+  "resetPassword":"Reset Your Password",
+  "verifyEmailMessage":"Please click on the link sent to your email to verify.",
+  "done":"Done",
+  "setupProfile": "Setup Profile",
+
+  "welcome":"Welcome",
+  "search": "Search",
+  "trending":"Trending",
+  "points":"points",
+  "news":"New",
+  "submits":"Shares",
+  "shareYourCreativity":"share your creativity",
+
+  "name":"Name",
+  "title":"Title",
+  "changePassword":"Change Password",
+  "add":"Add",
+  "editProfile":"Edit Profile",
+  "likes":"Likes",
+  "myChallenges":"My Challenges",
+  "appSetting":"App Setting",
+  "about":"About",
+  "logout":"Logout",
+  "socialLinks":"Social links",
+
+  "exploreCode":"Explore Code"
+}

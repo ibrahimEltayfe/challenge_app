@@ -1,0 +1,83 @@
+name: challenge_app
+description: A new Flutter project.
+
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.5 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+
+  cupertino_icons: ^1.0.5
+
+  firebase_auth: ^4.2.1
+  firebase_core: ^2.4.0
+  cloud_firestore: ^4.2.0
+  firebase_storage: ^11.0.8
+  google_sign_in: ^5.4.2
+  cached_network_image: ^3.2.3
+
+  internet_connection_checker: ^1.0.0+1
+  connectivity_plus: ^3.0.2
+
+  flutter_riverpod: ^2.1.1
+  equatable: ^2.0.5
+
+  shared_preferences: ^2.0.15
+  image_picker: ^0.8.6
+  lottie: ^2.1.0
+  font_awesome_flutter: ^10.3.0
+  dartz: ^0.10.1
+  email_validator: ^2.1.17
+  device_preview: ^1.1.0
+  ntp: ^2.0.0
+  responsive_framework: ^0.2.0
+  flutter_screenutil: ^5.6.0
+  flutter_svg: ^1.1.6
+  fluttertoast: ^8.1.2
+  flutter_feather_icons: ^2.0.0+1
+  http: ^0.13.5
+  archive: ^3.3.5
+  dio: ^4.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.3.3
+  flutter_lints: ^2.0.1
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
+    - assets/lottie/
+
+  fonts:
+    - family: sen
+      fonts:
+        - asset: assets/fonts/sen/Sen-Regular.ttf
+        - asset: assets/fonts/sen/Sen-Bold.ttf
+          weight: 700
+    - family: bergen
+      fonts:
+        - asset: assets/fonts/bergen/BergenSans-Regular.otf
+        - asset: assets/fonts/bergen/BergenSans-SemiBold.otf
+          weight: 700
+    - family: junegull
+      fonts:
+        - asset: assets/fonts/junegull/junegull.ttf
+
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
