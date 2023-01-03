@@ -16,7 +16,7 @@ import 'app_localizations_en.dart';
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'gen_l10n/app_localizations.dart';
+/// import 'l10n/app_localizations.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -132,13 +132,13 @@ abstract class AppLocalizations {
   /// No description provided for @doNotHaveAnAccount.
   ///
   /// In en, this message translates to:
-  /// **'Do not have an account?'**
+  /// **'Do not have an account? '**
   String get doNotHaveAnAccount;
 
   /// No description provided for @alreadyHaveAnAccount.
   ///
   /// In en, this message translates to:
-  /// **'Do you have an account?'**
+  /// **'Do you have an account? '**
   String get alreadyHaveAnAccount;
 
   /// No description provided for @or.
@@ -150,7 +150,7 @@ abstract class AppLocalizations {
   /// No description provided for @resetPassword.
   ///
   /// In en, this message translates to:
-  /// **'Reset Password'**
+  /// **'Reset Your Password'**
   String get resetPassword;
 
   /// No description provided for @verifyEmailMessage.
@@ -164,6 +164,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get done;
+
+  /// No description provided for @setupProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup Profile'**
+  String get setupProfile;
 
   /// No description provided for @welcome.
   ///
@@ -207,6 +213,12 @@ abstract class AppLocalizations {
   /// **'share your creativity'**
   String get shareYourCreativity;
 
+  /// No description provided for @applyFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Filter'**
+  String get applyFilter;
+
   /// No description provided for @name.
   ///
   /// In en, this message translates to:
@@ -246,7 +258,7 @@ abstract class AppLocalizations {
   /// No description provided for @myChallenges.
   ///
   /// In en, this message translates to:
-  /// **'My Challenges'**
+  /// **'My Challenges Shares'**
   String get myChallenges;
 
   /// No description provided for @appSetting.
@@ -272,6 +284,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Social links'**
   String get socialLinks;
+
+  /// No description provided for @exploreCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Code'**
+  String get exploreCode;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

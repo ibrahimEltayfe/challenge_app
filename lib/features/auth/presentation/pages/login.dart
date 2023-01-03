@@ -6,9 +6,9 @@ import 'package:challenge_app/features/auth/presentation/widgets/social_buttons.
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../reusable_components/action_button.dart';
-import '../../../../reusable_components/double_back_to_exit.dart';
-import '../../../../reusable_components/input_text_field.dart';
+import '../../../reusable_components/action_button.dart';
+import '../../../reusable_components/double_back_to_exit.dart';
+import '../../../reusable_components/input_text_field.dart';
 import '../widgets/or_divider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {

@@ -3,8 +3,6 @@ import 'package:challenge_app/features/challenge_details/presentation/widgets/us
 import 'package:flutter/material.dart';
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../core/constants/app_icons.dart';
 
 class ChallengeResponsesGridView extends StatelessWidget {
   const ChallengeResponsesGridView({super.key});
@@ -71,7 +69,7 @@ class _BuildResponseCard extends StatelessWidget {
             bottom: 0,
             child: Container(
               width: 189,
-              height: 26,
+              height: 29,
               padding: const EdgeInsets.all(4),
               color: Color(0x7ff2f2f2),
               child: Row(
@@ -110,8 +108,9 @@ class _BuildCardCategoryName extends StatelessWidget {
         child: Text(
           "Flutter",
           style: context.textTheme.titleSmall!.copyWith(
-              color: context.theme.greyColor
+              color: context.theme.greyColor,
           ),
+
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           softWrap: false,

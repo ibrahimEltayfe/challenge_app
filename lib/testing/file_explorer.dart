@@ -4,7 +4,7 @@ import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/testing/file_manager.dart';
 import 'package:flutter/material.dart';
 
-import 'github_helper.dart';
+import 'github_helper_test.dart';
 
 class FileExplorer extends StatefulWidget {
   const FileExplorer({Key? key}) : super(key: key);

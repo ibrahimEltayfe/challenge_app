@@ -41,6 +41,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get done => 'تم';
 
   @override
+  String get setupProfile => 'تعديل الملف الشخصى';
+
+  @override
   String get welcome => 'مرحبا';
 
   @override
@@ -50,7 +53,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get trending => 'الشائع';
 
   @override
-  String get points => 'النقاط';
+  String get points => 'نقاط';
 
   @override
   String get news => 'الجديد';
@@ -60,6 +63,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shareYourCreativity => 'شارك إبداعك';
+
+  @override
+  String get applyFilter => 'تطبيق الفلتر';
 
   @override
   String get name => 'الاسم';
@@ -80,7 +86,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get likes => 'الاعجابات';
 
   @override
-  String get myChallenges => 'تحدياتى';
+  String get myChallenges => 'مشاركاتى فى التحديات';
 
   @override
   String get appSetting => 'إعدادات التطبيق';
@@ -93,4 +99,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get socialLinks => 'روابط التواصل';
+
+  @override
+  String get exploreCode => 'تصفح الكود';
 }

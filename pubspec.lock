@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.0"
+  animated_checkmark:
+    dependency: transitive
+    description:
+      name: animated_checkmark
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   archive:
     dependency: "direct main"
     description:
@@ -141,6 +148,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  chips_choice:
+    dependency: "direct main"
+    description:
+      name: chips_choice
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   clock:
     dependency: transitive
     description:
@@ -372,6 +386,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  flexi_chip:
+    dependency: transitive
+    description:
+      name: flexi_chip
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.8"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -659,7 +680,7 @@ packages:
     source: hosted
     version: "1.8.0"
   mime:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: mime
       url: "https://pub.dartlang.org"
@@ -722,7 +743,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -1062,6 +1083,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  widget_event:
+    dependency: transitive
+    description:
+      name: widget_event
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.5"
   win32:
     dependency: transitive
     description:

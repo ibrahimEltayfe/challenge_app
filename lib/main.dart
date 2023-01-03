@@ -1,12 +1,17 @@
+import 'dart:developer';
+import 'dart:ui';
+
 import 'package:challenge_app/core/constants/app_themes.dart';
 import 'package:challenge_app/testing/file_explorer.dart';
+import 'package:challenge_app/testing/github_repo_downloader.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
-import 'app_routers.dart';
+import 'config/app_routers.dart';
 import 'core/constants/app_routes.dart';
-import 'core/utils/initialize_app_services.dart';
+import 'config/initialize_app_services.dart';
 import 'l10n/app_localizations.dart';
 
 void main() async {
@@ -32,7 +37,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           useInheritedMediaQuery: true,
           locale: DevicePreview.locale(context),
-          theme: AppThemes.lightTheme,
+          theme: AppThemes.lightTheme(context),
 
           builder: (context, child) {
              return ResponsiveWrapper.builder(
@@ -60,7 +65,7 @@ class MyApp extends StatelessWidget {
           },
 
          onGenerateRoute: RoutesManager.routes,
-         initialRoute: AppRoutes.loginRoute,
+         initialRoute: AppRoutes.homeRoute,
 
          localizationsDelegates: AppLocalizations.localizationsDelegates,
          supportedLocales: AppLocalizations.supportedLocales,

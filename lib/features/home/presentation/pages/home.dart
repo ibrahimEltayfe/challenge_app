@@ -1,14 +1,13 @@
-import 'package:challenge_app/core/constants/app_images.dart';
+import 'dart:ui';
 import 'package:challenge_app/core/constants/app_lottie.dart';
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
-import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../reusable_components/coins.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/horizontal_list.dart';
 
@@ -25,15 +24,26 @@ class Home extends ConsumerWidget {
           children: [
             /* - top bar - */
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: SizedBox(
-                height: 75,
+                height: 85,
                 child: Stack(
-                  children: const[
-                    _BuildFireBall(),
-                    _BuildWelcomeText(),
+                  children:[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _BuildWelcomeText(),
+                        _BuildFireBall(),
+                      ],
+                    ),
                     _BuildUserName(name:'Ibrahim'),
-                    _BuildCoins(numOfCoins: 10)
+                    PositionedDirectional(
+                      end: 0,
+                      top: 13,
+                      child: Coins(numOfCoins: 10),
+                    )
+
                   ],
                 ),
               ),
@@ -96,9 +106,8 @@ class _BuildFireBallState extends State<_BuildFireBall> with SingleTickerProvide
 
   @override
   Widget build(BuildContext context) {
-    return PositionedDirectional(
-      start: 125,
-      top: -10,
+    return Transform.translate(
+      offset: Offset(0,-8),
       child: Lottie.asset(
         AppLottie.fireBall,
         width: 50,
@@ -114,15 +123,9 @@ class _BuildWelcomeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-        top: 0,
-        height: 40,
-        child: FittedBox(
-          child: Text(
-            context.localization.welcome,
-            style: context.textTheme.displayMedium,
-          ),
-        )
+    return Text(
+      context.localization.welcome,
+      style: context.textTheme.displayMedium,
     );
   }
 }
@@ -135,32 +138,9 @@ class _BuildUserName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
         bottom: 0,
-        height: 35,
-        child: FittedBox(
-          child: Text(name,style: context.textTheme.displayMedium!.copyWith(
-              color: context.theme.primaryColor
-          ),),
-        )
-    );
-  }
-}
-
-class _BuildCoins extends StatelessWidget {
-  final int numOfCoins;
-  const _BuildCoins({Key? key, required this.numOfCoins}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return PositionedDirectional(
-        end: 0,
-        top: 13,
-        child: Row(
-          children: [
-            Text('$numOfCoins',style: context.textTheme.titleSmall,),
-            const SizedBox(width: 4,),
-            SvgPicture.asset(AppImages.coins,width: 22,height: 25,),
-          ],
-        )
+        child: Text(name,style: context.textTheme.titleLarge!.copyWith(
+          fontWeight: window.locale.languageCode == 'ar' ? FontWeight.w500 : FontWeight.w700,
+        ),)
     );
   }
 }

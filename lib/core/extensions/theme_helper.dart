@@ -26,6 +26,10 @@ extension CustomThemeColors on ThemeData{
     return AppColors.mediumOrange;
   }
 
+  Color get lightRed{
+    return AppColors.lightRed;
+  }
+
   Color get redColor{
     return AppColors.red;
   }

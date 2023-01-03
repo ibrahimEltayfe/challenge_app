@@ -1,12 +1,11 @@
 import 'package:challenge_app/core/constants/app_icons.dart';
-import 'package:challenge_app/core/extensions/localization_helper.dart';
+import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/challenge_details/presentation/widgets/like_container.dart';
-import 'package:challenge_app/reusable_components/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../../../reusable_components/back_button_shadow_box.dart';
+import '../../../reusable_components/action_button.dart';
+import '../../../reusable_components/back_button_shadow_box.dart';
 import '../widgets/user_details_card.dart';
 
 class ChallengeResponseCardDetails extends StatelessWidget {
@@ -141,7 +140,7 @@ class _BuildCodeSection extends StatelessWidget {
                 height: 47,
                 title: 'Explore Code',
                 onTap: (){
-
+                  Navigator.pushNamed(context, AppRoutes.repositoryFileExplorerRoute);
                 }
             )
           ],

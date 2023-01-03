@@ -49,16 +49,13 @@ class GithubHelper{
     var file = File('$dir/$fileName');
     log("file.path ${file.path}");
     return file;
-
-   // return await file.writeAsBytes(req.data);
-
   }
 
-  Stream<FileSystemEntity> readZip() async*{
+  Future<void> unZipFile(String zipFilePath) async{
     final dir = await getApplicationDocumentsDirectory();
 
     // Use an InputFileStream to access the zip file without storing it in memory.
-    final inputStream = InputFileStream(path.join(dir.path,'weather-app.zip'));
+    final inputStream = InputFileStream(zipFilePath);
     // Decode the zip from the InputFileStream. The archive will have the contents of the
     // zip, without having stored the data in memory.
     final archive = ZipDecoder().decodeBuffer(inputStream);

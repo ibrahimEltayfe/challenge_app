@@ -1,20 +1,16 @@
-import 'dart:developer';
-import 'dart:io';
 import 'dart:ui';
-
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:challenge_app/reusable_components/action_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../reusable_components/double_back_to_exit.dart';
-import '../../../../reusable_components/input_text_field.dart';
+import '../../../reusable_components/double_back_to_exit.dart';
 import '../widgets/or_divider.dart';
 import '../widgets/social_buttons.dart';
+import '../../../reusable_components/action_button.dart';
+import '../../../reusable_components/input_text_field.dart';
 
 class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({Key? key,}) : super(key: key);

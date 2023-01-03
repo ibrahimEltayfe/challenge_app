@@ -7,17 +7,17 @@ class AppRoutes {
   static const String registerRoute = '/register';
   static const String forgotPasswordRoute = '/forgotPassword';
   static const String searchRoute = '/search';
-  static const String setupProfileRoute = '/setupProfile';
 
   static const String challengeDetailsRoute = '/challengeDetails';
   static const String challengeRespondCardDetailsRoute = '/challengeRespondCardDetails';
+  static const String repositoryFileExplorerRoute = '/repositoryFileExplorer';
 
   static const String addChallengeResponseRoute = '/userChallengeResponse';
-
   static const String profileRoute = '/profile';
   static const String editProfileRoute = '/editProfile';
-  static const String favouritesRoute = '/favourites';
-
+  static const String userLikesRoute = '/userLikes';
+  static const String userSharedChallengesRoute = '/userSharedChallenges';
+  static const String appSettingsRoute = '/appSettings';
   static const String aboutRoute = '/about';
 
   static const String emailVerificationCheckRoute = '/emailVerificationCheck';

@@ -16,7 +16,7 @@ class BackArrow extends StatelessWidget {
         child: Padding(
           padding: EdgeInsetsDirectional.only(start: 15,top: 16),
           child: Icon(
-            AppIcons.backArrowFa,
+            AppIcons.leftBackArrowFa,
             size: 27,
           ),
         ),

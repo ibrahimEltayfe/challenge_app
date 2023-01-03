@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:challenge_app/core/constants/app_icons.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,7 @@ class BackButtonShadowBox extends StatelessWidget {
           color: context.theme.whiteColor,
         ),
         child: FittedBox(
-          child: FaIcon(AppIcons.backArrowFa),
+          child: FaIcon(AppIcons.leftBackArrowFa),
         ),
       ),
     );

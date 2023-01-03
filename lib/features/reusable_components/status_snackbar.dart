@@ -1,7 +1,6 @@
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:flutter/material.dart';
-import '../core/constants/app_colors.dart';
-import '../core/constants/app_styles.dart';
+import '../../core/constants/app_colors.dart';
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> statusSnackBar({
   required BuildContext context,

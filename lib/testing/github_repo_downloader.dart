@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:challenge_app/testing/github_helper.dart';
+import 'package:challenge_app/testing/github_helper_test.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,20 +35,7 @@ class _TestGithubState extends State<TestGithub> {
             if(snapshot.connectionState == ConnectionState.waiting){
               return CircularProgressIndicator();
             }
-            return StreamBuilder<FileSystemEntity>(
-              stream: githubHelper.readZip(),
-              builder: (context, snapshot) {
-                return ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, i) {
-                    return ListTile(
-                      title: Text(snapshot.data?.path??'...'),
-                      subtitle: Text(snapshot.data?.statSync().type.toString()??'..'),
-                    );
-                  },
-                );
-              },
-            );
+            return Center(child: Text("Done"),);
           }
         )
 

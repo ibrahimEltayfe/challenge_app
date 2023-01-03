@@ -46,8 +46,11 @@ dependencies:
   fluttertoast: ^8.1.2
   flutter_feather_icons: ^2.0.0+1
   http: ^0.13.5
-  archive: ^3.3.5
   dio: ^4.0.6
+  chips_choice: ^3.0.0
+  path_provider: ^2.0.11
+  archive: ^3.3.5
+  mime: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -79,5 +82,10 @@ flutter:
       fonts:
         - asset: assets/fonts/junegull/junegull.ttf
 
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+    - family: dubai
+      fonts:
+        - asset: assets/fonts/dubai/Dubai-Regular.ttf
+        - asset: assets/fonts/dubai/Dubai-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/dubai/Dubai-Bold.ttf
+          weight: 700

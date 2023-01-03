@@ -5,4 +5,7 @@ class AppStrings{
  static const String junegullFont = 'junegull';
  static const String senFont = 'sen';
 
+ static const String dubaiFont = 'dubai';
+
+
 }

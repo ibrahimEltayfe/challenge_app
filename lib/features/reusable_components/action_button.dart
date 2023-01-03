@@ -7,7 +7,9 @@ class ActionButton extends StatelessWidget {
   final VoidCallback onTap;
   final double? width;
   final double? height;
+  final double cornerRadius;
   const ActionButton({
+    this.cornerRadius = 8,
     this.width,
     this.height,
     required this.title,
@@ -34,7 +36,7 @@ class ActionButton extends StatelessWidget {
           backgroundColor: MaterialStatePropertyAll<Color>(context.theme.primaryColor),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(cornerRadius),
               )
           ),
         ),

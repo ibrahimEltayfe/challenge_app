@@ -2,20 +2,19 @@ import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/auth/data/models/socail_link_model.dart';
-import 'package:challenge_app/reusable_components/action_button.dart';
-import 'package:challenge_app/reusable_components/input_text_field.dart';
 import 'package:flutter/material.dart';
-
+import '../../../reusable_components/action_button.dart';
+import '../../../reusable_components/input_text_field.dart';
 import '../widgets/social_input_field.dart';
 
-class SetupProfile extends StatefulWidget {
-  const SetupProfile({Key? key}) : super(key: key);
+class SetupProfilePage extends StatefulWidget {
+  const SetupProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<SetupProfile> createState() => _SetupProfileState();
+  State<SetupProfilePage> createState() => _SetupProfilePageState();
 }
 
-class _SetupProfileState extends State<SetupProfile> {
+class _SetupProfilePageState extends State<SetupProfilePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TextEditingController nameController = TextEditingController();
   late final TextEditingController titleController = TextEditingController();

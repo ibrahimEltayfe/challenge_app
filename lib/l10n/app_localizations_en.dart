@@ -23,22 +23,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get register => 'Register';
 
   @override
-  String get doNotHaveAnAccount => 'Do not have an account?';
+  String get doNotHaveAnAccount => 'Do not have an account? ';
 
   @override
-  String get alreadyHaveAnAccount => 'Do you have an account?';
+  String get alreadyHaveAnAccount => 'Do you have an account? ';
 
   @override
   String get or => 'OR';
 
   @override
-  String get resetPassword => 'Reset Password';
+  String get resetPassword => 'Reset Your Password';
 
   @override
   String get verifyEmailMessage => 'Please click on the link sent to your email to verify.';
 
   @override
   String get done => 'Done';
+
+  @override
+  String get setupProfile => 'Setup Profile';
 
   @override
   String get welcome => 'Welcome';
@@ -62,6 +65,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareYourCreativity => 'share your creativity';
 
   @override
+  String get applyFilter => 'Apply Filter';
+
+  @override
   String get name => 'Name';
 
   @override
@@ -80,7 +86,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get likes => 'Likes';
 
   @override
-  String get myChallenges => 'My Challenges';
+  String get myChallenges => 'My Challenges Shares';
 
   @override
   String get appSetting => 'App Setting';
@@ -93,4 +99,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get socialLinks => 'Social links';
+
+  @override
+  String get exploreCode => 'Explore Code';
 }

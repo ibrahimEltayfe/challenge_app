@@ -20,6 +20,7 @@
   "news":"New",
   "submits":"Shares",
   "shareYourCreativity":"share your creativity",
+  "applyFilter": "Apply Filter",
 
   "name":"Name",
   "title":"Title",
@@ -27,7 +28,7 @@
   "add":"Add",
   "editProfile":"Edit Profile",
   "likes":"Likes",
-  "myChallenges":"My Challenges",
+  "myChallenges":"My Challenges Shares",
   "appSetting":"App Setting",
   "about":"About",
   "logout":"Logout",

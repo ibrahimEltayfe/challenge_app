@@ -3,10 +3,9 @@ import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:challenge_app/reusable_components/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import '../../../reusable_components/action_button.dart';
 import '../widgets/back_arrow.dart';
 
 class EmailVerificationCheckPage extends StatelessWidget {
@@ -45,7 +44,7 @@ class EmailVerificationCheckPage extends StatelessWidget {
                     //todo:check email verification
 
                     //if verified
-                    Navigator.pushNamed(context,AppRoutes.setupProfileRoute);
+                    Navigator.pushNamed(context,AppRoutes.editProfileRoute);
                   }
 
               )
