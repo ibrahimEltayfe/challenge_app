@@ -1,7 +1,7 @@
 # challenge_app
 
 # Highlighted Feature: InApp Github Repository File Explorer
-<img src="https://user-images.githubusercontent.com/40795940/210559097-19889c18-4dc8-46ae-98e6-f086e63959d0.gif" width="300">
+<img src="https://user-images.githubusercontent.com/40795940/210563537-ee0e98e2-d131-494c-b25c-abf1269fcf47.gif" width="300">
 
 # Images
 
