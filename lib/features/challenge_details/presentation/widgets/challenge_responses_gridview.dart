@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:challenge_app/features/challenge_details/presentation/widgets/like_container.dart';
 import 'package:challenge_app/features/challenge_details/presentation/widgets/user_details_card.dart';
 import 'package:flutter/material.dart';
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChallengeResponsesGridView extends StatelessWidget {
   const ChallengeResponsesGridView({super.key});
@@ -32,19 +35,19 @@ class ChallengeRespondCard extends StatelessWidget {
     return ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         child: Column(
-          children: const[
-            _BuildResponseCard(),
+              children: const[
+                _BuildResponseCard(),
 
-            SizedBox(height: 10,),
+                SizedBox(height: 10,),
 
-            UserDetailsCard(
-              height: 40,
-              imageUrl: '',
-              name: "Ibrahim eltayfe",
-              title: 'Flutter Developer',
+                UserDetailsCard(
+                  height: 40,
+                  imageUrl: '',
+                  name: "Ibrahim eltayfe",
+                  title: 'Flutter Developer',
+                )
+              ],
             )
-          ],
-        )
     );
   }
 }
@@ -56,41 +59,47 @@ class _BuildResponseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 5,
-      child: Stack(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: (){
-              Navigator.pushNamed(context, AppRoutes.challengeRespondCardDetailsRoute);
-            },
-            child: Placeholder()
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              width: 189,
-              height: 29,
-              padding: const EdgeInsets.all(4),
-              color: Color(0x7ff2f2f2),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                textDirection: TextDirection.ltr,
-                children: const [
-                  SizedBox(width: 6,),
-                  LikeContainer(
-                    numOfLikes:40,
-                    isActive:false
-                  ),
-
-                  SizedBox(width: 8,),
-                  _BuildCardCategoryName(),
-
-                  SizedBox(width: 12,)
-                ],
+      child: LayoutBuilder(
+        builder: (context,size) {
+          return Stack(
+            children: [
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: (){
+                  Navigator.pushNamed(context, AppRoutes.challengeRespondCardDetailsRoute);
+                },
+                child: Placeholder()
               ),
-            ),
-          ),
-        ],
+
+              Positioned(
+                bottom: 0,
+
+                child: Container(
+                  width: size.maxWidth,
+                  height: 29,
+                  padding: const EdgeInsets.all(4),
+                  color: Color(0x7ff2f2f2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    textDirection: TextDirection.ltr,
+                    children: const [
+                      SizedBox(width: 6,),
+                      LikeContainer(
+                        numOfLikes:40,
+                        isActive:false
+                      ),
+
+                      SizedBox(width: 8,),
+                      _BuildCardCategoryName(),
+
+                      SizedBox(width: 10,)
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
       ),
     );
   }

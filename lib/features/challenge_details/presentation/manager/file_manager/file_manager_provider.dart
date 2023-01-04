@@ -14,27 +14,39 @@ part 'file_manager_state.dart';
 
 final fileManagerProvider = StateNotifierProvider.autoDispose<FileManagerProvider,FileManagerState>(
   //todo:pass github repo
-  (ref) => FileManagerProvider()..getLocalRepoFiles(
-      GithubRepository(
-          repositoryName: 'weather-app',
-          branchName: 'main',
-          userName: 'ibrahimEltayfe'
-      )
-  )
+  (ref) => FileManagerProvider()..init()..getLocalRepoFiles()
 );
 
 class FileManagerProvider extends StateNotifier<FileManagerState> {
   FileManagerProvider() : super(FileManagerInitial());
 
-  Future getLocalRepoFiles(GithubRepository githubRepository) async {
+  GithubRepository githubRepository = GithubRepository(
+      repositoryName: 'weather-app',
+      branchName: 'main',
+      userName: 'ibrahimEltayfe'
+  );
+
+  String mainRepoDirName = '';
+  Directory? appDir;
+  late List<String> repoFiles = [];
+
+  void init(){
+    mainRepoDirName = '${githubRepository.repositoryName}-${githubRepository.branchName}';
+    repoFiles.add(mainRepoDirName);
+  }
+
+  Future getLocalRepoFiles() async {
     state = FileManagerLoading();
     try{
-      final repoLocalDirectory = await _getLocalRepositoryDirectory(githubRepository);
+      appDir ??= await getApplicationDocumentsDirectory();
+
+      final repoLocalDirectory = await getLocalRepositoryDirectory(githubRepository);
       final List<FileSystemEntity> files = repoLocalDirectory.listSync();
       List<FileModel> fileModels = [];
 
+      //re arrange files to put directories at top
       for(int dummy = 0,i = 0;files.length > i; i++){
-        //re arrange files to put directories at top
+
         if(files[i].statSync().type == FileSystemEntityType.directory){
           final removedFile = files.removeAt(i);
           files.insert(dummy, removedFile);
@@ -42,6 +54,7 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
         }
        }
 
+      //fill file model
       for(FileSystemEntity file in files){
         final fileModel = FileModel();
         fileModel.fileType = _getFileType(file);
@@ -54,20 +67,30 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
 
       state = FileManagerDataFetched(fileModels);
     }catch(e){
+      log(e.toString());
       state = FileManagerError(ExceptionHandler.handle(e).failure.message) ;
     }
   }
 
-  Future<Directory> _getLocalRepositoryDirectory(GithubRepository githubRepository) async{
-    final dir = await getApplicationDocumentsDirectory();
+  Future<Directory> getLocalRepositoryDirectory(GithubRepository githubRepository) async{
     Directory repoLocalDirectory = Directory(
-        path.join(
-            dir.path,
-            'out/${githubRepository.repositoryName}-${githubRepository.branchName}'
-        )
+      path.join(
+        appDir!.path,
+        'out/${formatSubFilesAsString()}'
+      )
     );
 
     return repoLocalDirectory;
+  }
+
+  String formatSubFilesAsString(){
+    String dirSubFiles = '';
+
+    for(String subFileName in repoFiles){
+      dirSubFiles += '$subFileName/';
+    }
+
+    return dirSubFiles;
   }
 
   FileType _getFileType(FileSystemEntity file){

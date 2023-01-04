@@ -76,7 +76,7 @@ class RoutesManager{
 
       case AppRoutes.repositoryFileExplorerRoute:
         return MaterialPageRoute(
-            builder: (_)=> RepositoryFileExplorer(),
+            builder: (_)=> RepositoryFileExplorerPage(),
             settings: settings
         );
 

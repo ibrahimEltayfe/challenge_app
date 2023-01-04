@@ -10,7 +10,7 @@ class ProfileButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: SizedBox(
-        width: 370,
+        width: 350,
         child: ListView.separated(
           itemCount: 6,
           separatorBuilder: (context, index) => SizedBox(height: index==4?32:11,),

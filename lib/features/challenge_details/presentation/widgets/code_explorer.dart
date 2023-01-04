@@ -1,12 +1,15 @@
 import 'dart:developer';
-import 'dart:io';
+
+import 'package:challenge_app/core/constants/app_strings.dart';
+import 'package:challenge_app/core/constants/app_themes.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/challenge_details/data/models/file_model.dart';
 import 'package:challenge_app/features/challenge_details/presentation/manager/file_manager/file_manager_provider.dart';
+import 'package:challenge_app/testing/file_manager.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lottie/lottie.dart';
 import '../../../../core/constants/app_icons.dart';
 import 'lottie_widget.dart';
 
@@ -16,21 +19,30 @@ class CodeExplorer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Directionality(
         textDirection: TextDirection.ltr,
-        children: [
-          Text("Code",style: context.textTheme.titleLarge,),
+        child: Theme(
+          data: AppThemes.lightTheme(context).copyWith(
+            textTheme: AppThemes.lightTheme(context).textTheme.apply(
+                fontFamily: AppStrings.senFont,
+            )
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Code",style: context.textTheme.titleLarge,),
 
-          const SizedBox(height: 8,),
-          _BuildCurrentFilePath(),
+              const SizedBox(height: 8,),
+              const _BuildCurrentFilePath(),
 
-          SizedBox(height: 15,),
-          _PinnedFiles(),
+              const SizedBox(height: 15,),
+              const _BuildPinnedFiles(),
 
-          SizedBox(height: 15,),
-          _BuildFiles()
-        ],
+              const SizedBox(height: 15,),
+              const _BuildFiles()
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -44,35 +56,35 @@ class _BuildCurrentFilePath extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final fileManagerRef = ref.watch(fileManagerProvider.notifier);
+
+    if(ref.watch(fileManagerProvider) is! FileManagerDataFetched){
+      return SizedBox.shrink();
+    }
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: RichText(
         text: TextSpan(
           children: separatePathToTextSpans(
               context,
-              'weather-app-main/'
-          ),
+              fileManagerRef
+            ),
+
         ),
       ),
-    );
+     );
+
   }
 
-  List<TextSpan> separatePathToTextSpans(BuildContext context,String path){
-    final List<String> separatedText = path.split('/')..remove('');
+  List<TextSpan> separatePathToTextSpans(
+      BuildContext context,
+      FileManagerProvider fileManagerRef
+   ){
     final List<TextSpan> textSpans = [];
+    final files = fileManagerRef.repoFiles;
 
-    for(int i=0; i<separatedText.length; i++){
-      final bool isLastItem = i==separatedText.length-1;
-
-      textSpans.add(
-          TextSpan(
-              text: separatedText[i],
-              style: context.textTheme.titleMedium!.copyWith(
-                  color: isLastItem
-                      ? context.theme.primaryColor
-                      : context.theme.darkBlueColor
-              )
-          ));
+    for(int i=0; i<files.length; i++){
+      final bool isLastItem = i==files.length-1;
 
       textSpans.add(
           TextSpan(
@@ -81,6 +93,23 @@ class _BuildCurrentFilePath extends ConsumerWidget {
                   color: context.theme.greyColor
               )
           ));
+
+      textSpans.add(
+          TextSpan(
+            text: files[i],
+            style: context.textTheme.titleMedium!.copyWith(
+                color: isLastItem
+                    ? context.theme.primaryColor
+                    : context.theme.darkBlueColor
+            ),
+            recognizer: TapGestureRecognizer()..onTap = (){
+              if(i == files.length-1){
+                return;
+              }
+              fileManagerRef.repoFiles.replaceRange(i+1, files.length, []);
+              fileManagerRef.getLocalRepoFiles();
+            }
+      ));
     }
 
     return textSpans;
@@ -88,8 +117,8 @@ class _BuildCurrentFilePath extends ConsumerWidget {
 
 }
 
-class _PinnedFiles extends ConsumerWidget {
-  const _PinnedFiles({
+class _BuildPinnedFiles extends ConsumerWidget {
+  const _BuildPinnedFiles({
     Key? key,
   }) : super(key: key);
 
@@ -150,18 +179,17 @@ class _BuildPinnedItem extends StatelessWidget {
               ),
             ),
 
-            SizedBox(width: 5,),
+            const SizedBox(width: 5,),
 
-            FittedBox(
-              child: Text(
-                fileName,
-                style: context.textTheme.titleMedium!.copyWith(
-                    color: isOpened ? context.theme.primaryColor: context.theme.greyColor
-                ),
+             Text(
+              fileName,
+              style: context.textTheme.titleSmall!.copyWith(
+                  color: isOpened ? context.theme.primaryColor: context.theme.greyColor,
               ),
+              maxLines: 1,
             ),
 
-            SizedBox(width:4,),
+            const SizedBox(width:4,),
 
           ],
         ),
@@ -202,71 +230,78 @@ class _BuildFiles extends ConsumerWidget {
             );
           },
         ),
-      );;
+      );
     }
 
     return const SizedBox.shrink();
   }
 }
 
-class _BuildFileContainer extends StatelessWidget {
+class _BuildFileContainer extends ConsumerWidget {
   final FileModel file;
   const _BuildFileContainer({Key? key, required this.file}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: Container(
-        width: 397,
-        height: 54,
-        padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(9),
-          border: Border.all(color: Colors.black, width: 1,),
-          color: context.theme.backgroundColor,
-        ),
+  Widget build(BuildContext context,WidgetRef ref) {
+    return InkWell(
+      onTap: (){
+        final fileManagerRef = ref.read(fileManagerProvider.notifier);
+        fileManagerRef.repoFiles.add(file.fileName!);
+        ref.read(fileManagerProvider.notifier).getLocalRepoFiles();
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+        child: Container(
+          width: 397,
+          height: 54,
+          padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(9),
+            border: Border.all(color: Colors.black, width: 1,),
+            color: context.theme.backgroundColor,
+          ),
 
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          textDirection: TextDirection.ltr,
-          children: [
-            const SizedBox(width: 5,),
-            Flexible(
-              flex: 0,
-              child: FittedBox(
-                child: Icon(file.fileIcon),
-              ),
-            ),
-
-            const SizedBox(width: 10,),
-
-            Expanded(
-              flex: 11,
-              child: Text(
-                file.fileName!,
-                style: context.textTheme.titleMedium,
-              ),
-            ),
-
-            Spacer(),
-
-            if(file.canPin!)
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            textDirection: TextDirection.ltr,
+            children: [
+              const SizedBox(width: 5,),
               Flexible(
                 flex: 0,
-                child: InkWell(
-                  onTap: (){
-                    //todo:add to pin list
-                  },
-                  child: FittedBox(
-                    child: Icon(AppIcons.pinFa,size: 18,),
-                  ),
+                child: FittedBox(
+                  child: Icon(file.fileIcon),
                 ),
               ),
 
-            const SizedBox(width: 2,),
+              const SizedBox(width: 10,),
 
-          ],
+              Expanded(
+                flex: 11,
+                child: Text(
+                  file.fileName!,
+                  style: context.textTheme.titleMedium,
+                ),
+              ),
+
+              Spacer(),
+
+              if(file.canPin!)
+                Flexible(
+                  flex: 0,
+                  child: InkWell(
+                    onTap: (){
+                      //todo:add to pin list
+                    },
+                    child: FittedBox(
+                      child: Icon(AppIcons.pinFa,size: 18,),
+                    ),
+                  ),
+                ),
+
+              const SizedBox(width: 2,),
+
+            ],
+          ),
         ),
       ),
     );

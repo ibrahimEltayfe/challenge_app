@@ -1,20 +1,12 @@
-import 'dart:developer';
-
-import 'package:challenge_app/core/constants/app_icons.dart';
-import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:challenge_app/core/utils/github_helper.dart';
 import 'package:challenge_app/features/challenge_details/presentation/manager/github_provider/github_provider.dart';
 import 'package:challenge_app/features/reusable_components/back_button_shadow_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:lottie/lottie.dart';
-
 import '../widgets/code_explorer.dart';
 import '../widgets/lottie_widget.dart';
 
-class RepositoryFileExplorer extends ConsumerWidget {
-  const RepositoryFileExplorer({
+class RepositoryFileExplorerPage extends ConsumerWidget {
+  const RepositoryFileExplorerPage({
     Key? key,
   }) : super(key: key);
 

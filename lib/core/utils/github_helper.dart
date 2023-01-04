@@ -101,6 +101,7 @@ class GithubRepository{
   GithubRepository({
     required this.repositoryName,
     required this.branchName,
-    required this.userName
+    required this.userName,
   });
+
 }
