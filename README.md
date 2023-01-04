@@ -15,4 +15,3 @@
 
 <img src="https://user-images.githubusercontent.com/40795940/210558900-9042216d-e299-4dde-ac17-5551c9421c18.png" width="300"> <img src="https://user-images.githubusercontent.com/40795940/210558952-278b633a-e5a6-4add-955b-34b11852d1c3.png" width="300">
 
-<img src="https://user-images.githubusercontent.com/40795940/210558952-278b633a-e5a6-4add-955b-34b11852d1c3.png" width="300">
