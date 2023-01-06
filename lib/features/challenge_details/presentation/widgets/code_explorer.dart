@@ -1,11 +1,11 @@
-import 'dart:developer';
 
+import 'package:challenge_app/config/language_provider.dart';
 import 'package:challenge_app/core/constants/app_strings.dart';
 import 'package:challenge_app/core/constants/app_themes.dart';
+import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/challenge_details/data/models/file_model.dart';
 import 'package:challenge_app/features/challenge_details/presentation/manager/file_manager/file_manager_provider.dart';
-import 'package:challenge_app/testing/file_manager.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,17 +13,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/constants/app_icons.dart';
 import 'lottie_widget.dart';
 
-class CodeExplorer extends StatelessWidget {
+class CodeExplorer extends ConsumerWidget {
   const CodeExplorer({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    final languageRef = ref.watch(languageProvider);
+    final fileManagerRef = ref.watch(fileManagerProvider);
+
     return Expanded(
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Theme(
-          data: AppThemes.lightTheme(context).copyWith(
-            textTheme: AppThemes.lightTheme(context).textTheme.apply(
+          data: AppThemes.lightTheme(context,languageRef).copyWith(
+            textTheme: AppThemes.lightTheme(context,languageRef).textTheme.apply(
                 fontFamily: AppStrings.senFont,
             )
           ),
@@ -39,7 +42,14 @@ class CodeExplorer extends StatelessWidget {
               const _BuildPinnedFiles(),
 
               const SizedBox(height: 15,),
-              const _BuildFiles()
+              
+              if(fileManagerRef is FileManagerFilesFetched)
+                const _BuildFiles()
+              
+              else if(fileManagerRef is FileManagerTextFileFetched)
+                _BuildTextFile(text:fileManagerRef.textFileContent)
+                
+              
             ],
           ),
         ),
@@ -48,7 +58,6 @@ class CodeExplorer extends StatelessWidget {
   }
 }
 
-
 class _BuildCurrentFilePath extends ConsumerWidget {
   const _BuildCurrentFilePath({
     Key? key,
@@ -56,24 +65,19 @@ class _BuildCurrentFilePath extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fileManagerRef = ref.watch(fileManagerProvider.notifier);
+    ref.watch(fileManagerProvider);
 
-    if(ref.watch(fileManagerProvider) is! FileManagerDataFetched){
-      return SizedBox.shrink();
-    }
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: RichText(
         text: TextSpan(
           children: separatePathToTextSpans(
               context,
-              fileManagerRef
+              ref.watch(fileManagerProvider.notifier)
             ),
-
         ),
       ),
      );
-
   }
 
   List<TextSpan> separatePathToTextSpans(
@@ -107,7 +111,7 @@ class _BuildCurrentFilePath extends ConsumerWidget {
                 return;
               }
               fileManagerRef.repoFiles.replaceRange(i+1, files.length, []);
-              fileManagerRef.getLocalRepoFiles();
+              fileManagerRef.fetchLocalDirectoryFiles();
             }
       ));
     }
@@ -128,11 +132,11 @@ class _BuildPinnedFiles extends ConsumerWidget {
       height: 32,
       child: Row(
         children: [
-          FittedBox(
+          const FittedBox(
             child: FaIcon(AppIcons.pinFa,size: 19,),
           ),
 
-          SizedBox(width: 10,),
+         const SizedBox(width: 10,),
 
           Expanded(
             child: ListView.builder(
@@ -218,7 +222,7 @@ class _BuildFiles extends ConsumerWidget {
         message: 'Loading Files..',
         lottiePath: 'assets/lottie/file_loading.json',
       );
-    }else if(fileManagerRef is FileManagerDataFetched){
+    }else if(fileManagerRef is FileManagerFilesFetched){
       final List<FileModel> repoFileModels = fileManagerRef.fileModels;
 
       return Expanded(
@@ -246,8 +250,8 @@ class _BuildFileContainer extends ConsumerWidget {
     return InkWell(
       onTap: (){
         final fileManagerRef = ref.read(fileManagerProvider.notifier);
-        fileManagerRef.repoFiles.add(file.fileName!);
-        ref.read(fileManagerProvider.notifier).getLocalRepoFiles();
+        fileManagerRef.repoFiles.add(file.name!);
+        ref.read(fileManagerProvider.notifier).fetchLocalDirectoryFiles();
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
@@ -269,7 +273,7 @@ class _BuildFileContainer extends ConsumerWidget {
               Flexible(
                 flex: 0,
                 child: FittedBox(
-                  child: Icon(file.fileIcon),
+                  child: Icon(file.icon),
                 ),
               ),
 
@@ -278,7 +282,7 @@ class _BuildFileContainer extends ConsumerWidget {
               Expanded(
                 flex: 11,
                 child: Text(
-                  file.fileName!,
+                  file.name!,
                   style: context.textTheme.titleMedium,
                 ),
               ),
@@ -302,6 +306,28 @@ class _BuildFileContainer extends ConsumerWidget {
 
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _BuildTextFile extends StatelessWidget {
+  final String text;
+  const _BuildTextFile({Key? key, required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 1, ),
+            color: const Color(0xfffbfbfb),
+          ),
+          child: Text(text,style: context.textTheme.titleSmall,),
+
         ),
       ),
     );

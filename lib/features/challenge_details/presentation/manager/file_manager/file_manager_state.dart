@@ -11,12 +11,20 @@ class FileManagerInitial extends FileManagerState {}
 
 class FileManagerLoading extends FileManagerState {}
 
-class FileManagerDataFetched extends FileManagerState {
+class FileManagerFilesFetched extends FileManagerState {
   final List<FileModel> fileModels;
-  const FileManagerDataFetched(this.fileModels);
+  const FileManagerFilesFetched(this.fileModels);
 
   @override
   List<Object> get props => [fileModels];
+}
+
+class FileManagerTextFileFetched extends FileManagerState {
+  final String textFileContent;
+  const FileManagerTextFileFetched(this.textFileContent);
+
+  @override
+  List<Object> get props => [textFileContent];
 }
 
 class FileManagerError extends FileManagerState {

@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:riverpod/riverpod.dart';
 import '../../../../../core/utils/github_helper.dart';
 import 'package:path/path.dart' as path;
 part 'github_state.dart';
@@ -35,6 +35,7 @@ class GithubProvider extends StateNotifier<GithubState> {
             state = GithubError(failure.message);
           },
           (_){
+
             state = GithubDataFetched();
           }
       );

@@ -6,6 +6,7 @@ enum FileType{
   video,
   pdf,
   text,
+  json,
   directory,
   notSupported
 }
@@ -25,6 +26,8 @@ extension IconsForFileType on FileType{
         return AppIcons.directoryFa;
       case FileType.notSupported:
         return AppIcons.notSupportedFa;
+      case FileType.json:
+        return AppIcons.jsonFa;
     }
   }
 

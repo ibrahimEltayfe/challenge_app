@@ -2,15 +2,15 @@ import 'package:challenge_app/features/challenge_details/data/models/file_type.d
 import 'package:flutter/material.dart';
 
 class FileModel{
-  String? fileName;
-  FileType? fileType;
-  IconData? fileIcon;
+  String? name;
+  FileType? type;
+  IconData? icon;
   bool? canPin;
 
   FileModel({
-    this.fileName,
-    this.fileType,
-    this.fileIcon,
+    this.name,
+    this.type,
+    this.icon,
     this.canPin,
   });
 }
