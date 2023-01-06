@@ -1,7 +1,7 @@
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../core/enums/socials_enum.dart';
+import '../../../profile/data/models/socials_enum.dart';
 
 
 class SocialInputField extends StatelessWidget {

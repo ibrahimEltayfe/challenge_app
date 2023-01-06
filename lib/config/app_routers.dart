@@ -3,17 +3,17 @@ import 'package:challenge_app/features/auth/presentation/pages/forgot_password.d
 import 'package:challenge_app/features/auth/presentation/pages/register.dart';
 import 'package:challenge_app/features/auth/presentation/pages/setup_profile.dart';
 import 'package:challenge_app/features/challenge_details/presentation/pages/challenge_details_page.dart';
-import 'package:challenge_app/features/challenge_details/presentation/pages/repository_file_explorer.dart';
+import 'package:challenge_app/features/challenge_details/presentation/pages/repository_file_explorer_page.dart';
 import 'package:challenge_app/features/home/presentation/pages/search_Page.dart';
 import 'package:challenge_app/features/profile/presentation/pages/about.dart';
-import 'package:challenge_app/features/profile/presentation/pages/app_settings.dart';
+import 'package:challenge_app/features/app_settings/presentation/pages/app_settings.dart';
 import 'package:challenge_app/features/profile/presentation/pages/user_likes_page.dart';
 import 'package:challenge_app/features/profile/presentation/pages/user_shared_challenges.dart';
 import 'package:flutter/material.dart';
 import '../core/constants/app_routes.dart';
 import '../features/auth/presentation/pages/decide_page.dart';
 import '../features/auth/presentation/pages/login.dart';
-import '../features/challenge_details/presentation/pages/challenge_response_details.dart';
+import '../features/challenge_details/presentation/pages/challenge_response_details_page.dart';
 import '../features/home/presentation/pages/home_base.dart';
 
 class RoutesManager{

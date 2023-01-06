@@ -31,6 +31,7 @@ class AppIcons{
   static const IconData imageFa = FontAwesomeIcons.image;
   static const IconData videoFa = FontAwesomeIcons.fileVideo;
   static const IconData pdfFa = FontAwesomeIcons.filePdf;
+  static const IconData jsonFa = FontAwesomeIcons.j;
   static const IconData notSupportedFa = FontAwesomeIcons.fileCircleQuestion;
 
   static const IconData search = Icons.search_outlined;
