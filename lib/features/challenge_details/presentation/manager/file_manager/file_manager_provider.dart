@@ -8,16 +8,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import '../../../../../core/utils/file_helper.dart';
 import '../../../../../core/utils/github_helper.dart';
 part 'file_manager_state.dart';
 
 final fileManagerProvider = StateNotifierProvider.autoDispose<FileManagerProvider,FileManagerState>(
   //todo:pass github repo
-  (ref) => FileManagerProvider()..init()
+  (ref){
+    final FileHelper localFileHelper = LocalFileHelper();
+    return FileManagerProvider(localFileHelper)..init();
+  }
 );
 
 class FileManagerProvider extends StateNotifier<FileManagerState> {
-  FileManagerProvider() : super(FileManagerInitial());
+  final FileHelper _fileHelper;
+  FileManagerProvider(this._fileHelper) : super(FileManagerInitial());
 
   String mainRepoDirName = '';
   Directory? appDir;
@@ -46,24 +51,33 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
 
   Future fetchLocalDirectoryFiles() async {
     state = FileManagerLoading();
-    try{
-      final currentPath = path.join(appDir!.path, 'out${_formatFilesListToPath()}');
 
+    try{
+      final currentPath = path.join(appDir!.path, 'out${convertListToPath(repoFiles)}');
+      final FileType fileType = _getFileType(File(currentPath));
       //if the current path is not directory
-      if(!_isDirectory(currentPath)){
+      if(fileType != FileType.directory){
         //todo:check for other types like: image,..
-        final text = await openTextFile();
-        state = FileManagerTextFileFetched(text);
+
+        if(fileType == FileType.image){
+          state = FileManagerImageFileFetched(File(currentPath));
+        } else if(fileType == FileType.svgImage){
+          state = FileManagerImageFileFetched(File(currentPath),isSvg: true);
+        } else{
+          final text = await _fileHelper.openTextFile(currentPath);
+          state = FileManagerTextFileFetched(text);
+        }
+
         return;
       }
 
-      final localDirectory = Directory(currentPath);
-      final List<FileSystemEntity> files = localDirectory.listSync();
+      final List<FileSystemEntity> files = _fileHelper.fetchDirectoryFilesFromPath(currentPath);
       List<FileModel> fileModels = [];
 
       //re arrange files to put directories at top
       for(int dummy = 0,i = 0;files.length > i; i++){
-        if(files[i].statSync().type == FileSystemEntityType.directory){
+        final fileType = _fileHelper.getFileSystemType(files[i]);
+        if(fileType == FileSystemEntityType.directory){
           final removedFile = files.removeAt(i);
           files.insert(dummy, removedFile);
           dummy++;
@@ -88,39 +102,27 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
     }
   }
 
-  bool _isDirectory(String path){
-    final File file = File(path);
-    
-    return file.statSync().type == FileSystemEntityType.directory;
-  }
-
-  Future<String> openTextFile() async{
-    String text;
-
-    final File file = File(path.join(appDir!.path, 'out${_formatFilesListToPath()}'));
-
-    text = await file.readAsString();
-
-    return text;
-  }
-
   FileType _getFileType(FileSystemEntity file){
-    final mime = lookupMimeType(path.extension(file.path));
-
-    if(file.statSync().type == FileSystemEntityType.directory){
+    if(_fileHelper.getFileSystemType(file) == FileSystemEntityType.directory){
       return FileType.directory;
     }else{
+      final mime = _fileHelper.getFileMimeType(file.path);
+
       if(mime != null){
         final mimeType = mime.split('/')[0];
         final mimeExtension = mime.split('/')[1];
 
         if(mimeType == 'image'){
-          return FileType.image;
-        }else if(mimeType == 'video'){
+          if(mimeExtension == 'svg' || mimeExtension == 'svg+xml'){
+            return FileType.svgImage;
+          }else{
+            return FileType.image;
+          }
+        } else if(mimeType == 'video'){
           return FileType.video;
         }else if(mimeExtension == 'pdf'){
           return FileType.pdf;
-        }else if(mimeType == 'text'){
+        }else if(mimeType == 'text' || mimeExtension=='xml'){
           return FileType.text;
         }else if(mimeExtension == 'json'){
           return FileType.json;
@@ -134,15 +136,22 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
 
   }
 
-  String _formatFilesListToPath(){
+  String convertListToPath(List<String> files){
     //convert subFiles list to path
     String localFilePath = '';
 
-    for(String subFileName in repoFiles){
+    for(String subFileName in files){
       localFilePath += '/$subFileName';
     }
 
     return localFilePath;
   }
+
+  List<String> convertPathToList(String path){
+    //convert path to list
+    final files = path.split('/')..remove('');
+    return files;
+  }
+
 
 }

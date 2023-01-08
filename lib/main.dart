@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
               },
 
               onGenerateRoute: RoutesManager.routes,
-              initialRoute: AppRoutes.loginRoute,
+              initialRoute: AppRoutes.homeRoute,
 
               locale: Locale(languageRef.name,''),
               localizationsDelegates: AppLocalizations.localizationsDelegates,

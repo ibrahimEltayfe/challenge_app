@@ -1,16 +1,20 @@
 
+import 'dart:developer';
+import 'dart:io';
 import 'package:challenge_app/config/language_provider.dart';
 import 'package:challenge_app/core/constants/app_strings.dart';
 import 'package:challenge_app/core/constants/app_themes.dart';
-import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/challenge_details/data/models/file_model.dart';
 import 'package:challenge_app/features/challenge_details/presentation/manager/file_manager/file_manager_provider.dart';
+import 'package:challenge_app/features/challenge_details/presentation/manager/pinned_items_provider/pinned_files_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/constants/app_icons.dart';
+import '../../data/models/pinned_file_model.dart';
 import 'lottie_widget.dart';
 
 class CodeExplorer extends ConsumerWidget {
@@ -19,7 +23,6 @@ class CodeExplorer extends ConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     final languageRef = ref.watch(languageProvider);
-    final fileManagerRef = ref.watch(fileManagerProvider);
 
     return Expanded(
       child: Directionality(
@@ -42,13 +45,8 @@ class CodeExplorer extends ConsumerWidget {
               const _BuildPinnedFiles(),
 
               const SizedBox(height: 15,),
-              
-              if(fileManagerRef is FileManagerFilesFetched)
-                const _BuildFiles()
-              
-              else if(fileManagerRef is FileManagerTextFileFetched)
-                _BuildTextFile(text:fileManagerRef.textFileContent)
-                
+
+              _BuildFilesBasedOnType()
               
             ],
           ),
@@ -57,6 +55,29 @@ class CodeExplorer extends ConsumerWidget {
     );
   }
 }
+
+class _BuildFilesBasedOnType extends ConsumerWidget {
+  const _BuildFilesBasedOnType({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context,WidgetRef ref) {
+    final fileManagerRef = ref.watch(fileManagerProvider);
+
+    if(fileManagerRef is  FileManagerImageFileFetched){
+      return _BuildImageFile(
+        imageFile:fileManagerRef.imageFile,
+        isSvg: fileManagerRef.isSvg,
+      );
+    }else if(fileManagerRef is FileManagerFilesFetched) {
+      return const _BuildFiles();
+    } if(fileManagerRef is FileManagerTextFileFetched){
+      return _BuildTextFile(text:fileManagerRef.textFileContent);
+    }
+
+    return const SizedBox.shrink();
+  }
+}
+
 
 class _BuildCurrentFilePath extends ConsumerWidget {
   const _BuildCurrentFilePath({
@@ -128,77 +149,107 @@ class _BuildPinnedFiles extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-      height: 32,
-      child: Row(
-        children: [
-          const FittedBox(
-            child: FaIcon(AppIcons.pinFa,size: 19,),
+    final pinnedFilesRef = ref.watch(pinnedFilesProvider.notifier);
+    final pinnedFileState = ref.watch(pinnedFilesProvider);
+
+    ref.listen(fileManagerProvider, (previous, next) {
+      if(next is! FileManagerLoading && pinnedFilesRef.pinnedFiles.isNotEmpty){
+        //change open pinned files color
+        final fileManagerRef = ref.read(fileManagerProvider.notifier);
+
+        final currentPath = fileManagerRef.convertListToPath(fileManagerRef.repoFiles);
+        pinnedFilesRef.changeFileOpenState(currentPath);
+      }
+    });
+
+    if(pinnedFileState is PinnedFilesDataModified){
+        if(pinnedFilesRef.pinnedFiles.isEmpty){
+          return const SizedBox.shrink();
+        }
+
+        return SizedBox(
+          height: 32,
+          child: Row(
+            children: [
+              const FittedBox(
+                child: FaIcon(AppIcons.pinFa,size: 19,),
+              ),
+
+              const SizedBox(width: 10,),
+
+              Expanded(
+                 child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: pinnedFilesRef.pinnedFiles.length,
+                        itemBuilder: (context, i) {
+                          return _BuildPinnedItem(
+                            pinnedFile:pinnedFilesRef.pinnedFiles[i],
+                            index: i,
+                          );
+                        },
+                      )
+              )
+            ],
           ),
+        );
+      }
 
-         const SizedBox(width: 10,),
+    return const SizedBox.shrink();
 
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return const _BuildPinnedItem(
-                  fileName: 'home.dart',
-                  isOpened: false,
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
   }
 }
 
-class _BuildPinnedItem extends StatelessWidget {
-  final String fileName;
-  final bool isOpened;
-  const _BuildPinnedItem({Key? key, required this.fileName, required this.isOpened}) : super(key: key);
+class _BuildPinnedItem extends ConsumerWidget {
+  final PinnedFileModel pinnedFile;
+  final int index;
+  const _BuildPinnedItem({Key? key,required this.pinnedFile, required this.index}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pinnedFileRef = ref.read(pinnedFilesProvider.notifier);
+
     return Padding(
-      padding: const EdgeInsetsDirectional.only(end: 10),
-      child: Container(
-        padding: const EdgeInsets.all(7),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          color: context.theme.lightGreyColor,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            FittedBox(
-              child: InkWell(
-                  onTap: (){
-                    //todo: remove item from pin
-                  },
-                  child: Icon(Icons.close,size: 16,)
+      padding: const EdgeInsets.only(right: 10),
+      child: InkWell(
+        onTap: (){
+          pinnedFileRef.goToPinnedFilePath(pinnedFile.filePath);
+        },
+        child: Container(
+          padding: const EdgeInsets.all(7),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: context.theme.lightGreyColor,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+             FittedBox(
+               child: InkWell(
+                onTap: (){
+                 pinnedFileRef.removeFileFromPin(index);
+               },
+               child: const Icon(Icons.close,size: 16,)
+              )
+             ),
+
+              const SizedBox(width: 5,),
+
+              Text(
+                pinnedFile.fileName,
+                style: context.textTheme.titleSmall!.copyWith(
+                  color: pinnedFile.isOpened ? context.theme.primaryColor: context.theme.greyColor,
+                ),
+                maxLines: 1,
               ),
-            ),
 
-            const SizedBox(width: 5,),
+              const SizedBox(width:4,),
 
-             Text(
-              fileName,
-              style: context.textTheme.titleSmall!.copyWith(
-                  color: isOpened ? context.theme.primaryColor: context.theme.greyColor,
-              ),
-              maxLines: 1,
-            ),
-
-            const SizedBox(width:4,),
-
-          ],
+            ],
+          ),
         ),
       ),
     );
+
   }
 }
 
@@ -247,11 +298,12 @@ class _BuildFileContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    final fileManagerRef = ref.read(fileManagerProvider.notifier);
+
     return InkWell(
       onTap: (){
-        final fileManagerRef = ref.read(fileManagerProvider.notifier);
         fileManagerRef.repoFiles.add(file.name!);
-        ref.read(fileManagerProvider.notifier).fetchLocalDirectoryFiles();
+        fileManagerRef.fetchLocalDirectoryFiles();
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
@@ -287,16 +339,25 @@ class _BuildFileContainer extends ConsumerWidget {
                 ),
               ),
 
-              Spacer(),
+              const Spacer(),
 
               if(file.canPin!)
                 Flexible(
                   flex: 0,
                   child: InkWell(
                     onTap: (){
-                      //todo:add to pin list
+                      final filePath = fileManagerRef.convertListToPath(fileManagerRef.repoFiles);
+
+                      final pinnedFile = PinnedFileModel(
+                          isOpened: false,
+                          fileName: file.name!,
+                          filePath: '$filePath/${file.name!}'
+                      );
+
+                      ref.read(pinnedFilesProvider.notifier).addFileToPin(pinnedFile);
+
                     },
-                    child: FittedBox(
+                    child: const FittedBox(
                       child: Icon(AppIcons.pinFa,size: 18,),
                     ),
                   ),
@@ -319,17 +380,32 @@ class _BuildTextFile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black, width: 1, ),
-            color: const Color(0xfffbfbfb),
-          ),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black, width: 1, ),
+          color: const Color(0xfffbfbfb),
+        ),
+        child: SingleChildScrollView(
           child: Text(text,style: context.textTheme.titleSmall,),
-
         ),
       ),
+    );
+  }
+}
+
+class _BuildImageFile extends StatelessWidget {
+  final File imageFile;
+  final bool isSvg;
+  const _BuildImageFile ({Key? key, required this.imageFile, required this.isSvg}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: isSvg
+        ? SvgPicture.file(imageFile)
+        : Image.file(imageFile),
     );
   }
 }

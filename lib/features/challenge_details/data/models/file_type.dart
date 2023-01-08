@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 enum FileType{
   image,
+  svgImage,
   video,
   pdf,
   text,
@@ -15,6 +16,8 @@ extension IconsForFileType on FileType{
   IconData get getIcon{
     switch(this) {
       case FileType.image:
+        return AppIcons.imageFa;
+      case FileType.svgImage:
         return AppIcons.imageFa;
       case FileType.video:
         return AppIcons.videoFa;

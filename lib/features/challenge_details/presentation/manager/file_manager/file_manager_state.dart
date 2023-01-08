@@ -27,6 +27,15 @@ class FileManagerTextFileFetched extends FileManagerState {
   List<Object> get props => [textFileContent];
 }
 
+class FileManagerImageFileFetched extends FileManagerState {
+  final File imageFile;
+  final bool isSvg;
+  const FileManagerImageFileFetched(this.imageFile,{this.isSvg = false});
+
+  @override
+  List<Object> get props => [imageFile];
+}
+
 class FileManagerError extends FileManagerState {
   final String message;
   const FileManagerError(this.message);
