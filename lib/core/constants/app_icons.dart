@@ -34,6 +34,8 @@ class AppIcons{
   static const IconData jsonFa = FontAwesomeIcons.j;
   static const IconData notSupportedFa = FontAwesomeIcons.fileCircleQuestion;
 
+  static const IconData importFileFa = FontAwesomeIcons.fileImport;
+
   static const IconData search = Icons.search_outlined;
   static const IconData home = FeatherIcons.home;
 

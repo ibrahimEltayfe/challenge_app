@@ -3,7 +3,7 @@ enum AppLanguages{
   en,
 }
 
-extension languageHandler on AppLanguages{
+extension LanguageHandler on AppLanguages{
   String get getLangName{
     switch(this){
       case AppLanguages.ar:

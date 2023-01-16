@@ -11,8 +11,9 @@ class AppRoutes {
   static const String challengeDetailsRoute = '/challengeDetails';
   static const String challengeRespondCardDetailsRoute = '/challengeRespondCardDetails';
   static const String repositoryFileExplorerRoute = '/repositoryFileExplorer';
+  static const String addChallengeResponseRoute = '/addChallengeResponse';
 
-  static const String addChallengeResponseRoute = '/userChallengeResponse';
+
   static const String profileRoute = '/profile';
   static const String editProfileRoute = '/editProfile';
   static const String userLikesRoute = '/userLikes';

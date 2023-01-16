@@ -2,10 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:challenge_app/core/error_handling/exceptions.dart';
 import 'package:challenge_app/features/challenge_details/data/models/file_model.dart';
-import 'package:challenge_app/features/challenge_details/data/models/file_type.dart';
+import 'package:challenge_app/core/common/enums/file_identifier.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import '../../../../../core/utils/file_helper.dart';
@@ -54,16 +53,17 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
 
     try{
       final currentPath = path.join(appDir!.path, 'out${convertListToPath(repoFiles)}');
-      final FileType fileType = _getFileType(File(currentPath));
+      final FileIdentifier fileType = _fileHelper.getFileType(File(currentPath));
       //if the current path is not directory
-      if(fileType != FileType.directory){
+      if(fileType != FileIdentifier.directory){
         //todo:check for other types like: image,..
 
-        if(fileType == FileType.image){
+        if(fileType == FileIdentifier.image){
           state = FileManagerImageFileFetched(File(currentPath));
-        } else if(fileType == FileType.svgImage){
+        } else if(fileType == FileIdentifier.svgImage){
           state = FileManagerImageFileFetched(File(currentPath),isSvg: true);
         } else{
+          //todo: it opens the file as text even if there is no text mime type for it
           final text = await _fileHelper.openTextFile(currentPath);
           state = FileManagerTextFileFetched(text);
         }
@@ -76,8 +76,8 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
 
       //re arrange files to put directories at top
       for(int dummy = 0,i = 0;files.length > i; i++){
-        final fileType = _fileHelper.getFileSystemType(files[i]);
-        if(fileType == FileSystemEntityType.directory){
+        final FileIdentifier fileType = _fileHelper.getFileType(files[i]);
+        if(fileType == FileIdentifier.directory){
           final removedFile = files.removeAt(i);
           files.insert(dummy, removedFile);
           dummy++;
@@ -87,7 +87,7 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
       //fill file model
       for(FileSystemEntity file in files){
         final fileModel = FileModel();
-        fileModel.type = _getFileType(file);
+        fileModel.type = _fileHelper.getFileType(file);
         fileModel.name = path.basename(file.path);
         fileModel.icon = fileModel.type!.getIcon;
         fileModel.canPin = fileModel.type!.canPin;
@@ -100,40 +100,6 @@ class FileManagerProvider extends StateNotifier<FileManagerState> {
       log(e.toString());
       state = FileManagerError(ExceptionHandler.handle(e).failure.message) ;
     }
-  }
-
-  FileType _getFileType(FileSystemEntity file){
-    if(_fileHelper.getFileSystemType(file) == FileSystemEntityType.directory){
-      return FileType.directory;
-    }else{
-      final mime = _fileHelper.getFileMimeType(file.path);
-
-      if(mime != null){
-        final mimeType = mime.split('/')[0];
-        final mimeExtension = mime.split('/')[1];
-
-        if(mimeType == 'image'){
-          if(mimeExtension == 'svg' || mimeExtension == 'svg+xml'){
-            return FileType.svgImage;
-          }else{
-            return FileType.image;
-          }
-        } else if(mimeType == 'video'){
-          return FileType.video;
-        }else if(mimeExtension == 'pdf'){
-          return FileType.pdf;
-        }else if(mimeType == 'text' || mimeExtension=='xml'){
-          return FileType.text;
-        }else if(mimeExtension == 'json'){
-          return FileType.json;
-        }else{
-          return FileType.notSupported;
-        }
-      }else{
-        return FileType.text;
-      }
-    }
-
   }
 
   String convertListToPath(List<String> files){

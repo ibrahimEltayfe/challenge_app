@@ -1,7 +1,7 @@
 import 'package:challenge_app/core/constants/app_icons.dart';
 import 'package:flutter/material.dart';
 
-enum FileType{
+enum FileIdentifier{
   image,
   svgImage,
   video,
@@ -9,33 +9,33 @@ enum FileType{
   text,
   json,
   directory,
-  notSupported
+  notSupported,
 }
 
-extension IconsForFileType on FileType{
+extension IconsForFileType on FileIdentifier{
   IconData get getIcon{
     switch(this) {
-      case FileType.image:
+      case FileIdentifier.image:
         return AppIcons.imageFa;
-      case FileType.svgImage:
+      case FileIdentifier.svgImage:
         return AppIcons.imageFa;
-      case FileType.video:
+      case FileIdentifier.video:
         return AppIcons.videoFa;
-      case FileType.pdf:
+      case FileIdentifier.pdf:
         return AppIcons.pdfFa;
-      case FileType.text:
+      case FileIdentifier.text:
         return AppIcons.textFileFa;
-      case FileType.directory:
+      case FileIdentifier.directory:
         return AppIcons.directoryFa;
-      case FileType.notSupported:
+      case FileIdentifier.notSupported:
         return AppIcons.notSupportedFa;
-      case FileType.json:
+      case FileIdentifier.json:
         return AppIcons.jsonFa;
     }
   }
 
   bool get canPin{
-    if(this == FileType.directory || this == FileType.notSupported){
+    if(this == FileIdentifier.directory || this == FileIdentifier.notSupported){
       return false;
     }
 

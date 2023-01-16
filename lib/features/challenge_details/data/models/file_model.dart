@@ -1,9 +1,9 @@
-import 'package:challenge_app/features/challenge_details/data/models/file_type.dart';
+import 'package:challenge_app/core/common/enums/file_identifier.dart';
 import 'package:flutter/material.dart';
 
 class FileModel{
   String? name;
-  FileType? type;
+  FileIdentifier? type;
   IconData? icon;
   bool? canPin;
 

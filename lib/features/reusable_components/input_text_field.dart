@@ -6,6 +6,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 class InputTextField extends StatelessWidget {
   final double width;
+  final double height;
   final String hint;
   final String? Function(String?)? validator;
   final TextEditingController controller;
@@ -15,6 +16,7 @@ class InputTextField extends StatelessWidget {
   const InputTextField({
     Key? key,
     this.width = 338,
+    this.height = 60,
     this.isObscure = false,
     required this.hint,
     this.validator,
@@ -27,7 +29,7 @@ class InputTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width:width,
-      height: 60,
+      height: height,
       child: TextFormField(
         validator: validator,
         controller: controller,
@@ -40,6 +42,7 @@ class InputTextField extends StatelessWidget {
         keyboardType: keyboardType,
         obscureText: isObscure,
         decoration: InputDecoration(
+          isDense: true,
           hintText: hint,
           hintStyle: context.textTheme.labelMedium,
           alignLabelWithHint: true,

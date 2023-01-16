@@ -1,4 +1,5 @@
 import 'package:challenge_app/core/constants/app_icons.dart';
+import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
@@ -74,7 +75,7 @@ class _ChallengeDetailsPageState extends ConsumerState<ChallengeDetailsPage>
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
           child: Stack(
             children:[
               CustomScrollView(
@@ -102,6 +103,7 @@ class _ChallengeDetailsPageState extends ConsumerState<ChallengeDetailsPage>
                   child: ActionButton(
                     onTap: (){
                       //todo:navigate to share work page
+                      Navigator.pushNamed(context, AppRoutes.addChallengeResponseRoute);
                     },
                     title: context.localization.shareYourCreativity,
                     height: 54,

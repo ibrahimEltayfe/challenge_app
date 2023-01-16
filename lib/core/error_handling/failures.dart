@@ -33,3 +33,7 @@ class UnExpectedFailure extends Failure{
 class NoUIDFailure extends Failure{
   const NoUIDFailure(super.message);
 }
+
+class PickFileFailure extends Failure{
+  const PickFileFailure(super.message);
+}
