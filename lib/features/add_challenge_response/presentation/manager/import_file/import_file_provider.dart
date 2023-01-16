@@ -25,6 +25,7 @@ class ImportFileProvider extends StateNotifier<ImportFileState> {
     pickedFiles.fold(
       (failure) => state = ImportFileError(failure.message),
       (files){
+
         files.removeWhere((element) => element.path == null || element.path!.isEmpty);
         state = ImportFileDataFetched(files);
       }

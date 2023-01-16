@@ -1,11 +1,10 @@
+import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:challenge_app/core/constants/app_icons.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:challenge_app/features/add_challenge_response/presentation/manager/video_controllers/video_provider.dart';
+import 'package:challenge_app/features/add_challenge_response/presentation/manager/media_list_item/media_list_item_provider.dart';
 import 'package:challenge_app/features/add_challenge_response/presentation/widgets/image_display.dart';
-import 'package:challenge_app/features/add_challenge_response/presentation/widgets/video_controls.dart';
-import 'package:challenge_app/features/add_challenge_response/presentation/widgets/video_display.dart';
 import 'package:challenge_app/features/reusable_components/action_button.dart';
 import 'package:challenge_app/features/reusable_components/back_button_shadow_box.dart';
 import 'package:challenge_app/features/reusable_components/input_text_field.dart';
@@ -46,46 +45,17 @@ class _AddChallengeResponsePageState extends State<AddChallengeResponsePage> {
               children: [
                 SizedBox(width: 10,),
 
-                SizedBox(
-                  height: 410,
-                  width: 350,
-                  child: Stack(
-                    children:[
-                     Positioned(
-                         right: 0,
-                         top: 0,
-                         width: 300,
-                         height: 400,
-                         child: Column(
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: const[
-                              Expanded(
-                                child: _MediaImporterContainer()
-                              ),
-                              SizedBox(height: 5,),
-                             _BuildChallengeTitle("Snowing Background"),
-                           ],
-                         ),
-                       ),
-
-                      const Positioned(
-                        left: 35,
-                        bottom: 37,
-                        child: VideoControls(),
-                      )
-                    ],
-                  ),
-                ),
+                _BuildMediaContainer(),
 
                 const SizedBox(height: 28,),
                 _BuildGithubTitleBar(),
 
                 const SizedBox(height: 15,),
-                _BuildFormFields(scrollController: scrollController)
+                _BuildInputForm(scrollController: scrollController)
               ],
             ),
 
-            Positioned(
+            const Positioned(
                 left: 5,
                 top: 4,
                 child: BackButtonShadowBox()
@@ -98,15 +68,184 @@ class _AddChallengeResponsePageState extends State<AddChallengeResponsePage> {
   }
 }
 
-class _BuildFormFields extends StatefulWidget {
-  final ScrollController scrollController;
-  const _BuildFormFields({Key? key, required this.scrollController}) : super(key: key);
+class _BuildMediaContainer extends StatelessWidget {
+  const _BuildMediaContainer({Key? key}) : super(key: key);
 
   @override
-  State<_BuildFormFields> createState() => _BuildFormFieldsState();
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: SizedBox(
+        height: 400,
+        width: 300,
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const[
+            Expanded(
+                child: _MediaContainer()
+            ),
+
+            SizedBox(height: 5,),
+            _BuildChallengeTitle("Snowing Background"),
+          ],
+        )
+      ),
+    );
+  }
 }
 
-class _BuildFormFieldsState extends State<_BuildFormFields> {
+class _BuildChallengeTitle extends StatelessWidget {
+  final String title;
+  const _BuildChallengeTitle(this.title,{Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Text(
+        title,
+        style: context.textTheme.titleMedium!.copyWith(fontSize: 19),
+      ),
+    );
+  }
+}
+
+class _MediaContainer extends StatelessWidget {
+  const _MediaContainer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      alignment: Alignment.center,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: context.theme.primaryColor, width: 1),
+        color: const Color(0xfffbfbfb),
+      ),
+      child: Column(
+        children: [
+          const _TopColoredBars(),
+
+          Expanded(
+            child: Consumer(
+              builder: (context, ref, child) {
+                final importFileState = ref.watch(importFileProvider);
+
+                ref.listen(importFileProvider,(previous, current) {
+                 if(current is ImportFileError){
+                   Fluttertoast.showToast(msg: current.message);
+                 }
+                },);
+
+                if(importFileState is ImportFileLoading){
+                 return const _BuildLoadingWidget();
+
+                } else if(importFileState is ImportFileDataFetched){
+                  final List<PlatformFile> files = importFileState.files;
+
+                  return _BuildMediaFiles(files);
+
+                }
+
+                return const MediaImporterWidget();
+              },
+            ),
+          ),
+        ],
+      )
+     );
+  }
+}
+
+class _TopColoredBars extends StatelessWidget {
+  const _TopColoredBars({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(
+        builder: (context, ref, child) {
+          ref.watch(currentMediaItemProvider);
+          final currentMediaItemRef = ref.watch(currentMediaItemProvider.notifier);
+
+          final int itemCounts = currentMediaItemRef.filesCount;
+
+          if(itemCounts != 0){
+            return Row(
+              children: List.generate(itemCounts, (i){
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(end: 5),
+                    child: ColoredBox(
+                      color: currentMediaItemRef.currentIndex == i
+                          ? context.theme.primaryColor
+                          : context.theme.greyColor,
+                      child: const SizedBox(height: 4,),
+                    ),
+                  ),
+                );
+              }),
+            );
+          }else{
+            return const SizedBox.shrink();
+          }
+        }
+    );
+  }
+}
+
+class _BuildMediaFiles extends ConsumerWidget {
+  final List<PlatformFile> files;
+  const _BuildMediaFiles(this.files, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context,WidgetRef ref) {
+    final mediaListItemRef = ref.watch(currentMediaItemProvider.notifier);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      mediaListItemRef.setFilesCount(files.length);
+    });
+
+    return LayoutBuilder(
+      builder: (context,size) {
+        return CarouselSlider.builder(
+            itemCount: files.length,
+            options: CarouselOptions(
+                autoPlay: false,
+                enlargeCenterPage: true,
+                height: double.infinity,
+                viewportFraction: 1,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                scrollDirection: Axis.horizontal,
+                onPageChanged: (index, reason) {
+                  mediaListItemRef.changeIndex(index);
+                },
+            ),
+
+            itemBuilder: (_,i,pageIndex){
+                return SizedBox(
+                    height: size.maxHeight,
+                    width: size.maxWidth,
+                    child: ImageDisplay(path: files[i].path!,)
+                );
+            }
+        );
+      }
+    );
+  }
+}
+
+class _BuildInputForm extends StatefulWidget {
+  final ScrollController scrollController;
+  const _BuildInputForm({Key? key, required this.scrollController}) : super(key: key);
+
+  @override
+  State<_BuildInputForm> createState() => _BuildInputFormState();
+}
+
+class _BuildInputFormState extends State<_BuildInputForm> {
   final usernameController = TextEditingController();
   final repositoryNameController = TextEditingController();
   final branchNameController = TextEditingController();
@@ -154,10 +293,10 @@ class _BuildFormFieldsState extends State<_BuildFormFields> {
 
 
             ActionButton(
-              title: context.localization.shareYourCreativity,
-              onTap: (){
+                title: context.localization.shareYourCreativity,
+                onTap: (){
 
-             }
+                }
             )
 
           ],
@@ -184,122 +323,6 @@ class _BuildGithubTitleBar extends StatelessWidget {
     );
   }
 }
-
-
-class _BuildChallengeTitle extends StatelessWidget {
-  final String title;
-  const _BuildChallengeTitle(this.title,{Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Text(
-        title,
-        style: context.textTheme.titleMedium!.copyWith(fontSize: 19),
-      ),
-    );
-  }
-}
-
-class _MediaImporterContainer extends StatelessWidget {
-  const _MediaImporterContainer({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      alignment: Alignment.center,
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: context.theme.primaryColor, width: 1),
-        color: const Color(0xfffbfbfb),
-      ),
-      child: _MediaImporterHandler()
-     );
-  }
-}
-
-class _MediaImporterHandler extends ConsumerWidget {
-
-  @override
-  Widget build(BuildContext context,WidgetRef ref) {
-
-    final importFileState = ref.watch(importFileProvider);
-
-    ref.listen(importFileProvider,(previous, current) {
-      if(current is ImportFileError){
-        Fluttertoast.showToast(msg: current.message);
-      }
-    },);
-
-    if(importFileState is ImportFileLoading){
-      //Loading..
-      return const _BuildLoadingWidget();
-
-    } else if(importFileState is ImportFileDataFetched){
-      //build files container based on file type..
-      final List<PlatformFile> files = importFileState.files;
-
-      return _MediaDisplayer(files);
-
-    }
-
-    return const MediaImporterWidget();
-  }
-}
-
-class _MediaDisplayer extends ConsumerWidget {
-  final List<PlatformFile> files;
-  const _MediaDisplayer(this.files, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context,WidgetRef ref) {
-    return  LayoutBuilder(
-      builder: (context,size) {
-        return CarouselSlider.builder(
-            itemCount: files.length,
-            options: CarouselOptions(
-                autoPlay: false,
-                enlargeCenterPage: true,
-                height: double.infinity,
-                viewportFraction: 1,
-                initialPage: 0,
-                enableInfiniteScroll: false,
-                scrollDirection: Axis.horizontal
-            ),
-
-            itemBuilder: (_,i,pageIndex){
-              final fileType = ref.read(importFileProvider.notifier).getFileType(files[i].path ?? '');
-
-              if(fileType == FileIdentifier.image){
-
-                return SizedBox(
-                    height: size.maxHeight,
-                    width: size.maxWidth,
-                    child: ImageDisplay(path: files[i].path!,)
-                );
-
-              }else if(fileType == FileIdentifier.video){
-
-                return VideoDisplay(
-                  width: size.maxWidth,
-                  height: size.maxHeight,
-                  isNetworkVideo: false,
-                  path: files[i].path!,
-                );
-
-              }
-
-              return const SizedBox.shrink();
-            }
-        );
-      }
-    );
-  }
-}
-
 
 class _BuildLoadingWidget extends StatelessWidget {
   const _BuildLoadingWidget({Key? key}) : super(key: key);

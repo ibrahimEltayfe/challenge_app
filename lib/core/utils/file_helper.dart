@@ -40,6 +40,7 @@ class LocalFileHelper implements FileHelper{
     try{
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
+        type: FileType.image,
       );
 
       if (result != null) {
