@@ -12,8 +12,7 @@
 
 <img src="https://user-images.githubusercontent.com/40795940/210558900-9042216d-e299-4dde-ac17-5551c9421c18.png" width="300"> <img src="https://user-images.githubusercontent.com/40795940/210558952-278b633a-e5a6-4add-955b-34b11852d1c3.png" width="300">
 
-<img src="https://user-images.githubusercontent.com/40795940/211043094-68526c07-bb2a-4033-8a0f-4c034a70207a.png" width="300">
+<img src="https://user-images.githubusercontent.com/40795940/214129333-f4d419a1-906e-49fd-a321-ea7396608006.png" width="300"> <img src="https://user-images.githubusercontent.com/40795940/214129337-2eb60ad2-7d76-4462-bb60-de9eea4c68e9.png" width="300">
 
-# InApp Github Repository File Explorer
+# InApp Github Repository File Explorer GIF
 <img src="https://user-images.githubusercontent.com/40795940/214128599-5d3a8642-a87c-4b2d-9ba0-06b678bb0407.gif" width="300">
-
