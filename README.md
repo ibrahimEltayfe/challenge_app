@@ -1,8 +1,5 @@
 # challenge_app
 
-# Highlighted Feature: InApp Github Repository File Explorer
-<img src="https://user-images.githubusercontent.com/40795940/210563537-ee0e98e2-d131-494c-b25c-abf1269fcf47.gif" width="300">
-
 # Images
 
 <img src= "https://user-images.githubusercontent.com/40795940/210561159-f853a379-ee93-4547-adfd-cc164f9a1996.png" width="300"> <img src= "https://user-images.githubusercontent.com/40795940/210561846-ea6967c3-57fc-4049-ae4f-5ce12613d965.png" width="300">
@@ -16,4 +13,7 @@
 <img src="https://user-images.githubusercontent.com/40795940/210558900-9042216d-e299-4dde-ac17-5551c9421c18.png" width="300"> <img src="https://user-images.githubusercontent.com/40795940/210558952-278b633a-e5a6-4add-955b-34b11852d1c3.png" width="300">
 
 <img src="https://user-images.githubusercontent.com/40795940/211043094-68526c07-bb2a-4033-8a0f-4c034a70207a.png" width="300">
+
+# InApp Github Repository File Explorer
+<img src="https://user-images.githubusercontent.com/40795940/214128599-5d3a8642-a87c-4b2d-9ba0-06b678bb0407.gif" width="300">
 
