@@ -34,5 +34,47 @@
   "logout": "تسجيل الخروج",
   "socialLinks": "روابط التواصل",
 
-  "exploreCode": "تصفح الكود"
+  "exploreCode": "تصفح الكود",
+
+  "unExpectedError" : "حدث خطأ, برجاء المحاولة مرة اخرى.",
+  "noInternetError":"لا يوجد انترنت",
+  "noUIDError":"انتهت صلاحية الجلسة, برجاء تسجيل الدخول",
+  "pickFileError": "حدث خطأ, لم نتمكن من جلب الملف",
+
+  "dioBadRequest": "حدث خطأ عند إرسال الطلب",
+  "dioUnAuthorized":"طلب غير مصرح به",
+  "dioForbidden": "السيرفر رفض الطلب, برجاء المحاولة مرة اخرى",
+  "dioRequestTimeout": "الطلب اخذ وقتا كثيرا, برجاء المحاولة مرة اخرى",
+  "dioInternalServerError": "هناك خطأ بالسيرفر, برجاء المحاولة مرة اخرى",
+  "dioNotFound": "الصفحة غير موجودة, برجاء المحاولة مرة اخرى",
+
+  "userDisabled": "هذا الحساب متوقف, برجاء مراسلتنا لمعرفة السبب.",
+  "userNotFound": "البريد الالكترونى غير موجود.",
+  "wrongPassword": "كلمة مرور غير صحيحة",
+  "invalidEmail": "البريد الالكترونى غير صالح",
+  "loginDefaultError":"حدث خطأ عند تسجيل الدخول, برجاء المحاولة مرة اخرى",
+
+  "errorOperationNotAllowed": "الحسابات المجهولة غير مفعلة",
+  "errorWeakPassword": "كلمة السر ليست قوية",
+  "errorInvalidEmail": "عنوان البريد الإلكتروني غير صحيح",
+  "errorEmailAlreadyInUse": "البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب مختلف",
+  "errorInvalidCredential": "عنوان البريد الإلكتروني غير صحيح",
+  "registerDefaultError":"حدث خطأ عند التسجيل, برجاء المحاولة مرة اخرى",
+
+  "accountExistsWithDifferentCredential": "الحساب موجود ببيانات مختلفة",
+  "invalidCredential": "البيانات المتلقاة غير صحيحة أو منتهية الصلاحية",
+  "operationNotAllowed": "العملية غير مسموح بها",
+  "invalidVerificationCode": "رمز التحقق غير صالح.",
+  "invalidVerificationId": "رمز التحقق من البيانات غير صالح",
+  "credentialDefaultError": "حدث خطأ, برجاء المحاولة مرة اخرى",
+
+  "expiredActionCode": "انتهت صلاحية رمز إعادة تعيين كلمة المرور",
+  "invalidActionCode": "رمز إعادة تعيين كلمة المرور غير صالح.",
+  "userDisabledResetPassword": "البريد الالكترونى التابع لهذا الرمز متوقف.",
+  "userNotFoundResetPassword": "لا يوجد مستخدم مطابق لرمز إعادة تعيين كلمة المرور.",
+  "weakPassword": "كلمة المرور الجديدة ليست قوية بما يكفي.",
+  "resetPasswordDefaultError":"خطأ عند إعادة تعيين كلمة المرور الخاصة بك .. يرجى المحاولة مرة أخرى",
+
+  "errorUserNotFound": "لا يوجد مستخدم مطابق لعنوان البريد الإلكتروني المحدد.",
+  "resetPasswordEmailDefaultError": "خطأ عند إرسال رمز إعادة التعيين الخاص بك, يرجى المحاولة مرة أخرى."
 }

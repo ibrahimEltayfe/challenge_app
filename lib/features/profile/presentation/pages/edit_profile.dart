@@ -5,16 +5,16 @@ import 'package:challenge_app/features/auth/data/models/socail_link_model.dart';
 import 'package:flutter/material.dart';
 import '../../../reusable_components/action_button.dart';
 import '../../../reusable_components/input_text_field.dart';
-import '../widgets/social_input_field.dart';
+import '../../../auth/presentation/widgets/social_input_field.dart';
 
-class SetupProfilePage extends StatefulWidget {
-  const SetupProfilePage({Key? key}) : super(key: key);
+class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<SetupProfilePage> createState() => _SetupProfilePageState();
+  State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _SetupProfilePageState extends State<SetupProfilePage> {
+class _EditProfilePageState extends State<EditProfilePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TextEditingController nameController = TextEditingController();
   late final TextEditingController titleController = TextEditingController();

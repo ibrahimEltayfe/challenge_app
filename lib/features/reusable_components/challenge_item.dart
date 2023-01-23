@@ -21,29 +21,34 @@ class ChallengeItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Stack(
-        children: [
-          GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: (){
-                Navigator.pushNamed(context, AppRoutes.challengeDetailsRoute);
-              },
-              child: Placeholder()
-          ),
+      child: LayoutBuilder(
+        builder: (_, size) {
+          return Stack(
+            children: [
+              GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: (){
+                    Navigator.pushNamed(context, AppRoutes.challengeDetailsRoute);
+                  },
+                  child: const Placeholder()
+              ),
 
-          _BuildPoints(points: challengePoints),
+              _BuildPoints(points: challengePoints),
 
-          PositionedDirectional(
-              top: 5,
-              end: 5,
-              child: BookmarkButton(isActive: isBookmarkActive,)
-          ),
+              PositionedDirectional(
+                  top: 5,
+                  end: 5,
+                  child: BookmarkButton(isActive: isBookmarkActive,)
+              ),
 
-          _BuildChallengeName(
-              name:'Snowing Background'
-          )
+              _BuildChallengeName(
+                  name:'Snowing Background'
+              )
 
-        ],
+            ],
+          );
+        },
+
       ),
     );
   }

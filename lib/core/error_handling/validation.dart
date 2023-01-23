@@ -1,6 +1,7 @@
 import 'dart:developer';
-
 import 'package:email_validator/email_validator.dart';
+
+//todo: add localization
 
 class Validation {
   Validation._internal();

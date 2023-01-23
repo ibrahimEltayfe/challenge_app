@@ -1,10 +1,8 @@
-
-import 'dart:developer';
 import 'dart:io';
-import 'package:challenge_app/config/language_provider.dart';
 import 'package:challenge_app/core/constants/app_strings.dart';
 import 'package:challenge_app/core/constants/app_themes.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:challenge_app/features/app_settings/data/models/app_languages.dart';
 import 'package:challenge_app/features/challenge_details/data/models/file_model.dart';
 import 'package:challenge_app/features/challenge_details/presentation/manager/file_manager/file_manager_provider.dart';
 import 'package:challenge_app/features/challenge_details/presentation/manager/pinned_items_provider/pinned_files_provider.dart';
@@ -13,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../../core/common/language_provider/language_provider.dart';
 import '../../../../core/constants/app_icons.dart';
 import '../../data/models/pinned_file_model.dart';
 import 'lottie_widget.dart';
@@ -22,14 +21,22 @@ class CodeExplorer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-    final languageRef = ref.watch(languageProvider);
+    final languageRef = ref.watch(languageProvider.notifier);
+    AppLanguages? currentLangCode = languageRef.appLanguage;
+    Locale? locale;
+
+    if(currentLangCode == null){
+      locale = null;
+    }else{
+      locale = Locale(currentLangCode.name);
+    }
 
     return Expanded(
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Theme(
-          data: AppThemes.lightTheme(context,languageRef).copyWith(
-            textTheme: AppThemes.lightTheme(context,languageRef).textTheme.apply(
+          data: AppThemes.lightTheme(context,locale??Localizations.localeOf(context)).copyWith(
+            textTheme: AppThemes.lightTheme(context,locale??Localizations.localeOf(context)).textTheme.apply(
                 fontFamily: AppStrings.senFont,
             )
           ),

@@ -102,4 +102,109 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exploreCode => 'Explore Code';
+
+  @override
+  String get unExpectedError => 'something went wrong, please try again later.';
+
+  @override
+  String get noInternetError => 'no internet';
+
+  @override
+  String get noUIDError => 'session ended, please login.';
+
+  @override
+  String get pickFileError => 'failed picking a file.';
+
+  @override
+  String get dioBadRequest => 'bad request, Try again later';
+
+  @override
+  String get dioUnAuthorized => 'user is un authorized';
+
+  @override
+  String get dioForbidden => 'server rejected the request, Try again later';
+
+  @override
+  String get dioRequestTimeout => 'time out, please try again later';
+
+  @override
+  String get dioInternalServerError => 'server error, please try again later';
+
+  @override
+  String get dioNotFound => 'page not found, please try again later';
+
+  @override
+  String get userDisabled => 'This user has been disabled. contact support for help.';
+
+  @override
+  String get userNotFound => 'Email is not found.';
+
+  @override
+  String get wrongPassword => 'Incorrect password, please try again.';
+
+  @override
+  String get invalidEmail => 'Email is not valid.';
+
+  @override
+  String get loginDefaultError => 'Login Error.. please try again';
+
+  @override
+  String get errorOperationNotAllowed => 'Anonymous accounts are not enabled.';
+
+  @override
+  String get errorWeakPassword => 'the password is not strong enough.';
+
+  @override
+  String get errorInvalidEmail => 'the email address is malformed.';
+
+  @override
+  String get errorEmailAlreadyInUse => 'the email is already in use by a different account.';
+
+  @override
+  String get errorInvalidCredential => 'the email address is malformed';
+
+  @override
+  String get registerDefaultError => 'Register Error.. please try again';
+
+  @override
+  String get accountExistsWithDifferentCredential => 'Account exists with different credentials.';
+
+  @override
+  String get invalidCredential => 'The credential received is malformed or has expired.';
+
+  @override
+  String get operationNotAllowed => 'Operation is not allowed.  Please contact support.';
+
+  @override
+  String get invalidVerificationCode => 'The credential verification code received is invalid.';
+
+  @override
+  String get invalidVerificationId => 'The credential verification ID received is invalid.';
+
+  @override
+  String get credentialDefaultError => 'something went wrong.. please try again';
+
+  @override
+  String get expiredActionCode => 'the password reset code has expired.';
+
+  @override
+  String get invalidActionCode => 'the password reset code is invalid.';
+
+  @override
+  String get userDisabledResetPassword => 'the user corresponding to the given password reset code has been disabled.';
+
+  @override
+  String get userNotFoundResetPassword => 'there is no user corresponding to the password reset code.';
+
+  @override
+  String get weakPassword => 'the new password is not strong enough.';
+
+  @override
+  String get resetPasswordDefaultError => 'Error when resetting your password.. please try again';
+
+  @override
+  String get errorUserNotFound => 'there is no user corresponding to the given email address.';
+
+  @override
+  String get resetPasswordEmailDefaultError => 'Error when sending your reset code.. please try again';
 }

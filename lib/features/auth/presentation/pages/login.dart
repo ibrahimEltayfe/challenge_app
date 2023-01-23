@@ -1,14 +1,14 @@
-import 'package:challenge_app/config/language_provider.dart';
+import 'dart:developer';
+
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:challenge_app/features/app_settings/data/models/app_languages.dart';
 import 'package:challenge_app/features/auth/presentation/widgets/social_buttons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../config/initialize_app_services.dart';
+import '../../../../main.dart';
 import '../../../reusable_components/action_button.dart';
 import '../../../reusable_components/double_back_to_exit.dart';
 import '../../../reusable_components/input_text_field.dart';

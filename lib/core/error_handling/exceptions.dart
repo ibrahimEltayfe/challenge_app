@@ -1,4 +1,6 @@
 import 'dart:io' show FileSystemException;
+import 'package:challenge_app/l10n/app_localizations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart' show MissingPlatformDirectoryException;
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +14,7 @@ class ExceptionHandler implements Exception{
 
   ExceptionHandler.handle(dynamic e){
     if(e is FirebaseAuthException){
-      failure = AuthFailure(FBAuthErrorMsgs.getEmailAuthErrorMsg(e.code));
+      failure = AuthFailure(FBAuthErrorMsgs.getLoginErrorMessage(e.code));
     }else if(e is FirebaseException){
       failure = UnExpectedFailure(e.message??AppErrors.unKnownError);
     }else if(e is DioError){

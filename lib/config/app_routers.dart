@@ -3,7 +3,7 @@ import 'package:challenge_app/features/add_challenge_response/presentation/pages
 import 'package:challenge_app/features/auth/presentation/pages/email_verification_check_page.dart';
 import 'package:challenge_app/features/auth/presentation/pages/forgot_password.dart';
 import 'package:challenge_app/features/auth/presentation/pages/register.dart';
-import 'package:challenge_app/features/auth/presentation/pages/setup_profile.dart';
+import 'package:challenge_app/features/profile/presentation/pages/edit_profile.dart';
 import 'package:challenge_app/features/challenge_details/presentation/pages/challenge_details_page.dart';
 import 'package:challenge_app/features/challenge_details/presentation/pages/repository_file_explorer_page.dart';
 import 'package:challenge_app/features/home/presentation/pages/search_Page.dart';
@@ -61,7 +61,7 @@ class RoutesManager{
 
       case AppRoutes.editProfileRoute:
         return MaterialPageRoute(
-            builder: (_)=> const SetupProfilePage(),
+            builder: (_)=> const EditProfilePage(),
             settings: settings
         );
 

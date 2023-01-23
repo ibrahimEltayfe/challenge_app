@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../core/common/enums/file_identifier.dart';
 import '../manager/import_file/import_file_provider.dart';
 import '../widgets/media_importer.dart';
 
@@ -43,12 +42,12 @@ class _AddChallengeResponsePageState extends State<AddChallengeResponsePage> {
               controller: scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               children: [
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
 
-                _BuildMediaContainer(),
+                const _BuildMediaContainer(),
 
                 const SizedBox(height: 28,),
-                _BuildGithubTitleBar(),
+                const _BuildGithubTitleBar(),
 
                 const SizedBox(height: 15,),
                 _BuildInputForm(scrollController: scrollController)

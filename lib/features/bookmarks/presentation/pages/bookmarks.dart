@@ -12,7 +12,7 @@ class Bookmarks extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 7,),
+            SizedBox(height: 10,),
             Center(
               child: Text(
                 'Bookmarks',
@@ -20,7 +20,7 @@ class Bookmarks extends StatelessWidget {
               )
             ),
 
-            SizedBox(height: 4,),
+            SizedBox(height: 6,),
             _BuildBookmarkItems()
           ],
         ),
@@ -39,9 +39,9 @@ class _BuildBookmarkItems extends StatelessWidget {
         padding: EdgeInsets.all(8),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            childAspectRatio: 0.8,
-            mainAxisSpacing:10,
+            crossAxisSpacing: 6,
+            childAspectRatio: 0.75,
+            mainAxisSpacing:6,
           ),
           itemCount: 6,
           itemBuilder: (context, index) {

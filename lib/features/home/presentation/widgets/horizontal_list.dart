@@ -1,12 +1,8 @@
-import 'package:challenge_app/core/constants/app_routes.dart';
-import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/reusable_components/challenge_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../reusable_components/bookmark_button.dart';
 
 class HorizontalList extends ConsumerWidget {
   final String title;

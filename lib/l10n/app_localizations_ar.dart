@@ -102,4 +102,109 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get exploreCode => 'تصفح الكود';
+
+  @override
+  String get unExpectedError => 'حدث خطأ, برجاء المحاولة مرة اخرى.';
+
+  @override
+  String get noInternetError => 'لا يوجد انترنت';
+
+  @override
+  String get noUIDError => 'انتهت صلاحية الجلسة, برجاء تسجيل الدخول';
+
+  @override
+  String get pickFileError => 'حدث خطأ, لم نتمكن من جلب الملف';
+
+  @override
+  String get dioBadRequest => 'حدث خطأ عند إرسال الطلب';
+
+  @override
+  String get dioUnAuthorized => 'طلب غير مصرح به';
+
+  @override
+  String get dioForbidden => 'السيرفر رفض الطلب, برجاء المحاولة مرة اخرى';
+
+  @override
+  String get dioRequestTimeout => 'الطلب اخذ وقتا كثيرا, برجاء المحاولة مرة اخرى';
+
+  @override
+  String get dioInternalServerError => 'هناك خطأ بالسيرفر, برجاء المحاولة مرة اخرى';
+
+  @override
+  String get dioNotFound => 'الصفحة غير موجودة, برجاء المحاولة مرة اخرى';
+
+  @override
+  String get userDisabled => 'هذا الحساب متوقف, برجاء مراسلتنا لمعرفة السبب.';
+
+  @override
+  String get userNotFound => 'البريد الالكترونى غير موجود.';
+
+  @override
+  String get wrongPassword => 'كلمة مرور غير صحيحة';
+
+  @override
+  String get invalidEmail => 'البريد الالكترونى غير صالح';
+
+  @override
+  String get loginDefaultError => 'حدث خطأ عند تسجيل الدخول, برجاء المحاولة مرة اخرى';
+
+  @override
+  String get errorOperationNotAllowed => 'الحسابات المجهولة غير مفعلة';
+
+  @override
+  String get errorWeakPassword => 'كلمة السر ليست قوية';
+
+  @override
+  String get errorInvalidEmail => 'عنوان البريد الإلكتروني غير صحيح';
+
+  @override
+  String get errorEmailAlreadyInUse => 'البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب مختلف';
+
+  @override
+  String get errorInvalidCredential => 'عنوان البريد الإلكتروني غير صحيح';
+
+  @override
+  String get registerDefaultError => 'حدث خطأ عند التسجيل, برجاء المحاولة مرة اخرى';
+
+  @override
+  String get accountExistsWithDifferentCredential => 'الحساب موجود ببيانات مختلفة';
+
+  @override
+  String get invalidCredential => 'البيانات المتلقاة غير صحيحة أو منتهية الصلاحية';
+
+  @override
+  String get operationNotAllowed => 'العملية غير مسموح بها';
+
+  @override
+  String get invalidVerificationCode => 'رمز التحقق غير صالح.';
+
+  @override
+  String get invalidVerificationId => 'رمز التحقق من البيانات غير صالح';
+
+  @override
+  String get credentialDefaultError => 'حدث خطأ, برجاء المحاولة مرة اخرى';
+
+  @override
+  String get expiredActionCode => 'انتهت صلاحية رمز إعادة تعيين كلمة المرور';
+
+  @override
+  String get invalidActionCode => 'رمز إعادة تعيين كلمة المرور غير صالح.';
+
+  @override
+  String get userDisabledResetPassword => 'البريد الالكترونى التابع لهذا الرمز متوقف.';
+
+  @override
+  String get userNotFoundResetPassword => 'لا يوجد مستخدم مطابق لرمز إعادة تعيين كلمة المرور.';
+
+  @override
+  String get weakPassword => 'كلمة المرور الجديدة ليست قوية بما يكفي.';
+
+  @override
+  String get resetPasswordDefaultError => 'خطأ عند إعادة تعيين كلمة المرور الخاصة بك .. يرجى المحاولة مرة أخرى';
+
+  @override
+  String get errorUserNotFound => 'لا يوجد مستخدم مطابق لعنوان البريد الإلكتروني المحدد.';
+
+  @override
+  String get resetPasswordEmailDefaultError => 'خطأ عند إرسال رمز إعادة التعيين الخاص بك, يرجى المحاولة مرة أخرى.';
 }

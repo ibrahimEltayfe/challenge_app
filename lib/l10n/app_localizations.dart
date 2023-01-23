@@ -290,6 +290,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Explore Code'**
   String get exploreCode;
+
+  /// No description provided for @unExpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'something went wrong, please try again later.'**
+  String get unExpectedError;
+
+  /// No description provided for @noInternetError.
+  ///
+  /// In en, this message translates to:
+  /// **'no internet'**
+  String get noInternetError;
+
+  /// No description provided for @noUIDError.
+  ///
+  /// In en, this message translates to:
+  /// **'session ended, please login.'**
+  String get noUIDError;
+
+  /// No description provided for @pickFileError.
+  ///
+  /// In en, this message translates to:
+  /// **'failed picking a file.'**
+  String get pickFileError;
+
+  /// No description provided for @dioBadRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'bad request, Try again later'**
+  String get dioBadRequest;
+
+  /// No description provided for @dioUnAuthorized.
+  ///
+  /// In en, this message translates to:
+  /// **'user is un authorized'**
+  String get dioUnAuthorized;
+
+  /// No description provided for @dioForbidden.
+  ///
+  /// In en, this message translates to:
+  /// **'server rejected the request, Try again later'**
+  String get dioForbidden;
+
+  /// No description provided for @dioRequestTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'time out, please try again later'**
+  String get dioRequestTimeout;
+
+  /// No description provided for @dioInternalServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'server error, please try again later'**
+  String get dioInternalServerError;
+
+  /// No description provided for @dioNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'page not found, please try again later'**
+  String get dioNotFound;
+
+  /// No description provided for @userDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This user has been disabled. contact support for help.'**
+  String get userDisabled;
+
+  /// No description provided for @userNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is not found.'**
+  String get userNotFound;
+
+  /// No description provided for @wrongPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password, please try again.'**
+  String get wrongPassword;
+
+  /// No description provided for @invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is not valid.'**
+  String get invalidEmail;
+
+  /// No description provided for @loginDefaultError.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Error.. please try again'**
+  String get loginDefaultError;
+
+  /// No description provided for @errorOperationNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous accounts are not enabled.'**
+  String get errorOperationNotAllowed;
+
+  /// No description provided for @errorWeakPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'the password is not strong enough.'**
+  String get errorWeakPassword;
+
+  /// No description provided for @errorInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'the email address is malformed.'**
+  String get errorInvalidEmail;
+
+  /// No description provided for @errorEmailAlreadyInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'the email is already in use by a different account.'**
+  String get errorEmailAlreadyInUse;
+
+  /// No description provided for @errorInvalidCredential.
+  ///
+  /// In en, this message translates to:
+  /// **'the email address is malformed'**
+  String get errorInvalidCredential;
+
+  /// No description provided for @registerDefaultError.
+  ///
+  /// In en, this message translates to:
+  /// **'Register Error.. please try again'**
+  String get registerDefaultError;
+
+  /// No description provided for @accountExistsWithDifferentCredential.
+  ///
+  /// In en, this message translates to:
+  /// **'Account exists with different credentials.'**
+  String get accountExistsWithDifferentCredential;
+
+  /// No description provided for @invalidCredential.
+  ///
+  /// In en, this message translates to:
+  /// **'The credential received is malformed or has expired.'**
+  String get invalidCredential;
+
+  /// No description provided for @operationNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation is not allowed.  Please contact support.'**
+  String get operationNotAllowed;
+
+  /// No description provided for @invalidVerificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'The credential verification code received is invalid.'**
+  String get invalidVerificationCode;
+
+  /// No description provided for @invalidVerificationId.
+  ///
+  /// In en, this message translates to:
+  /// **'The credential verification ID received is invalid.'**
+  String get invalidVerificationId;
+
+  /// No description provided for @credentialDefaultError.
+  ///
+  /// In en, this message translates to:
+  /// **'something went wrong.. please try again'**
+  String get credentialDefaultError;
+
+  /// No description provided for @expiredActionCode.
+  ///
+  /// In en, this message translates to:
+  /// **'the password reset code has expired.'**
+  String get expiredActionCode;
+
+  /// No description provided for @invalidActionCode.
+  ///
+  /// In en, this message translates to:
+  /// **'the password reset code is invalid.'**
+  String get invalidActionCode;
+
+  /// No description provided for @userDisabledResetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'the user corresponding to the given password reset code has been disabled.'**
+  String get userDisabledResetPassword;
+
+  /// No description provided for @userNotFoundResetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'there is no user corresponding to the password reset code.'**
+  String get userNotFoundResetPassword;
+
+  /// No description provided for @weakPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'the new password is not strong enough.'**
+  String get weakPassword;
+
+  /// No description provided for @resetPasswordDefaultError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error when resetting your password.. please try again'**
+  String get resetPasswordDefaultError;
+
+  /// No description provided for @errorUserNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'there is no user corresponding to the given email address.'**
+  String get errorUserNotFound;
+
+  /// No description provided for @resetPasswordEmailDefaultError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error when sending your reset code.. please try again'**
+  String get resetPasswordEmailDefaultError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

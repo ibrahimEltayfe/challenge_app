@@ -6,7 +6,6 @@ import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../../reusable_components/coins.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/horizontal_list.dart';
@@ -18,6 +17,7 @@ class Home extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
