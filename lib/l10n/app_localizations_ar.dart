@@ -143,25 +143,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wrongPassword => 'كلمة مرور غير صحيحة';
 
   @override
-  String get invalidEmail => 'البريد الالكترونى غير صالح';
-
-  @override
   String get loginDefaultError => 'حدث خطأ عند تسجيل الدخول, برجاء المحاولة مرة اخرى';
 
   @override
-  String get errorOperationNotAllowed => 'الحسابات المجهولة غير مفعلة';
+  String get weakPassword => 'كلمة السر ليست قوية';
 
   @override
-  String get errorWeakPassword => 'كلمة السر ليست قوية';
+  String get invalidEmail => 'البريد الالكترونى غير صالح';
 
   @override
-  String get errorInvalidEmail => 'عنوان البريد الإلكتروني غير صحيح';
-
-  @override
-  String get errorEmailAlreadyInUse => 'البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب مختلف';
-
-  @override
-  String get errorInvalidCredential => 'عنوان البريد الإلكتروني غير صحيح';
+  String get emailAlreadyInUse => 'البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب مختلف';
 
   @override
   String get registerDefaultError => 'حدث خطأ عند التسجيل, برجاء المحاولة مرة اخرى';
@@ -197,14 +188,23 @@ class AppLocalizationsAr extends AppLocalizations {
   String get userNotFoundResetPassword => 'لا يوجد مستخدم مطابق لرمز إعادة تعيين كلمة المرور.';
 
   @override
-  String get weakPassword => 'كلمة المرور الجديدة ليست قوية بما يكفي.';
-
-  @override
   String get resetPasswordDefaultError => 'خطأ عند إعادة تعيين كلمة المرور الخاصة بك .. يرجى المحاولة مرة أخرى';
 
   @override
   String get errorUserNotFound => 'لا يوجد مستخدم مطابق لعنوان البريد الإلكتروني المحدد.';
 
   @override
-  String get resetPasswordEmailDefaultError => 'خطأ عند إرسال رمز إعادة التعيين الخاص بك, يرجى المحاولة مرة أخرى.';
+  String get emailIsEmptyError => 'من فضلك ادخل البريد الإلكترونى';
+
+  @override
+  String get passwordIsEmptyError => 'من فضلك ادخل كلمة السر';
+
+  @override
+  String get nameIsEmptyError => 'هذا الحقل مطلوب';
+
+  @override
+  String get passwordLengthError => 'من فضلك أدخل على الأقل ٦ أرقام أو حروف';
+
+  @override
+  String get nameLengthError => 'هذا الحقل يجب أن لا يتعدى ٢٠ حرف';
 }

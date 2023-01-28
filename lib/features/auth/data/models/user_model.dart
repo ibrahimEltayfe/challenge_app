@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel{
-  final String? name;
-  final String? uid;
-  final String? email;
-  final String? image;
-  final String? points;
-  final String? title;
+  String? name;
+  String? uid;
+  String? email;
+  String? image;
+  String? points;
+  String? title;
+  bool? isVerified;
 
   List<String?>? bookmarks;
   List<String?>? challengeResponds;
   List<String?>? likes;
-  final Timestamp? createdTime;
 
+  Timestamp? createdTime;
 
   UserModel({
     this.image,
@@ -25,6 +26,7 @@ class UserModel{
     this.name,
     this.uid,
     this.email,
+    this.isVerified
   });
 
   Map<String, dynamic> toMap() {
@@ -38,7 +40,8 @@ class UserModel{
       if(bookmarks != null) 'bookmarks':bookmarks,
       if(challengeResponds != null) 'challengeResponds':challengeResponds,
       if(likes != null) 'likes':likes,
-      if(createdTime != null) 'createdTime':createdTime
+      if(createdTime != null) 'createdTime':createdTime,
+      if(isVerified != null) 'isVerified' : isVerified
     };
   }
 
@@ -53,7 +56,24 @@ class UserModel{
       bookmarks: data['bookmarks'] ?? [],
       challengeResponds: data['challengeResponds'] ?? [],
       likes: data['likes'] ?? [],
-      createdTime: data['createdTime']
+      createdTime: data['createdTime'],
+      isVerified : data['isVerified']
+    );
+  }
+
+  UserModel initialize() {
+    return UserModel(
+      name: '',
+      email: '',
+      uid:'',
+      image: '',
+      points: '0',
+      title: '',
+      bookmarks: [],
+      challengeResponds:[],
+      likes:[],
+      createdTime: null,
+      isVerified: false
     );
   }
 

@@ -1,31 +1,23 @@
-import 'dart:developer';
+import 'package:challenge_app/core/common/no_context_localization.dart';
 import 'package:email_validator/email_validator.dart';
 
-//todo: add localization
-
 class Validation {
-  Validation._internal();
-  static final _validator = Validation._internal();
-  factory Validation() => _validator;
-
-  String? emailValidator(String email){
-   log(EmailValidator.validate(email).toString());
-   log(email.toString());
-    if(email.isEmpty) {
-      return "من فضلك أدخل البريد الإلكترونى".toString();
+  String? emailValidator(String? email){
+    if(email == null || email.isEmpty) {
+      return noContextLocalization().emailIsEmptyError.toString();
     }else if(!EmailValidator.validate(email)){
-        return "البريد الإلكترونى غير صالح";
+        return noContextLocalization().invalidEmail;
     }
 
     return null;
   }
 
-  String? registerPasswordValidator(String password){
+  String? registerPasswordValidator(String? password){
 
-    if(password.isEmpty) {
-      return "من فضلك أدخل كلمة السر";
+    if(password == null || password.isEmpty) {
+      return noContextLocalization().passwordIsEmptyError;
     }else if(password.length < 6) {
-      return "من فضلك أدخل على الأقل 6 أرقام أو حروف";
+      return noContextLocalization().passwordLengthError;
     }
     return null;
   }
@@ -33,66 +25,19 @@ class Validation {
   String? nameValidator(String? name){
 
     if(name == null || name.isEmpty) {
-      return "من فضلك أدخل الاسم";
-    }else if(name.length>=25) {
-      return "الاسم يجب أن لا يتعدى 25 حرف";
+      return noContextLocalization().nameIsEmptyError;
+    }else if(name.length>=20) {
+      return noContextLocalization().nameLengthError;
     }
     return null;
   }
 
-  String? loginPasswordValidator(String password){
+  String? loginPasswordValidator(String? password){
 
-    if(password.isEmpty){
-      return "من فضلك أدخل كلمة السر";
-    }else if(password.length < 6){
-      return "أقل عدد لطول كلمة السر هو 6";
-    }
-    return null;
-
-  }
-/*
-  Future<String?>? registerEmail(String email) async {
-
-    String? errorMsg = _localEmailValidator(email);
-    if(errorMsg != null){
-      return errorMsg;
-    }
-
-    try {
-      var isEmailInUse =
-      await _auth.fetchSignInMethodsForEmail(email).then((value) => value);
-      if (isEmailInUse.isNotEmpty) {
-        return "This email already Registered";
-      }
-    } catch (e) {
-      log(e.toString());
-      return "something went wrong,please try again";
+    if(password == null || password.isEmpty){
+      return noContextLocalization().passwordIsEmptyError;
     }
 
     return null;
   }
-*/
-
-  /*
-  Future<String?> loginEmail(String email) async {
-    //} else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)){
-
-    String? errorMsg = _localEmailValidator(email);
-    if(errorMsg != null){
-      return errorMsg;
-    }
-
-    try {
-      var isEmailInUse =
-      await _auth.fetchSignInMethodsForEmail(email).then((value) => value);
-      if (isEmailInUse.isEmpty) {
-        return "This email is not exist";
-      }
-    } catch (e) {
-      log(e.toString());
-      return "something went wrong,please try again";
-    }
-
-    return null;
-  }*/
 }

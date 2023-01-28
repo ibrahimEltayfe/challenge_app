@@ -23,16 +23,16 @@ class FBAuthErrorMsgs {
     final localization = noContextLocalization();
 
     switch (code) {
-      case 'error_operation_not_allowed':
-        return localization.errorOperationNotAllowed;
-      case 'error_weak_password':
-        return localization.errorWeakPassword;
-      case 'error_invalid_email':
-        return localization.errorInvalidEmail;
-      case 'error_email_already_in_use':
-        return localization.errorEmailAlreadyInUse;
-      case 'error_invalid_credential':
-        return localization.errorInvalidCredential;
+      case 'operation_not_allowed':
+        return localization.operationNotAllowed;
+      case 'weak_password':
+        return localization.weakPassword;
+      case 'invalid_email':
+        return localization.invalidEmail;
+      case 'email-already-in-use':
+        return localization.emailAlreadyInUse;
+      case 'invalid_credential':
+        return localization.invalidCredential;
       default:
         return localization.registerDefaultError;
     }
@@ -77,21 +77,30 @@ class FBAuthErrorMsgs {
         return localization.userNotFound;
       case 'weak_password':
         return localization.weakPassword;
+      case 'error_invalid_email':
+        return localization.invalidEmail;
+      case 'error_user_not_found':
+        return localization.errorUserNotFound;
       default:
         return localization.resetPasswordDefaultError;
     }
   }
+}
 
-  static getResetPasswordEmailErrorMessage(String code){
-    final localization = noContextLocalization();
+enum AuthMethod{
+  register,
+  login,
+  credential,
+  resetPassword,
+}
 
-    switch (code) {
-      case 'error_invalid_email':
-        return localization.errorInvalidEmail;
-      case 'error_user_not_found':
-        return localization.errorUserNotFound;
-      default:
-        return localization.resetPasswordEmailDefaultError;
+extension AuthErrorMessagesHandler on AuthMethod{
+  String getAuthError(String code){
+    switch(this) {
+      case AuthMethod.register: return FBAuthErrorMsgs.getRegisterErrorMessage(code);
+      case AuthMethod.login: return FBAuthErrorMsgs.getLoginErrorMessage(code);
+      case AuthMethod.credential: return FBAuthErrorMsgs.getCredentialErrorMessage(code);
+      case AuthMethod.resetPassword: return FBAuthErrorMsgs.getResetPasswordErrorMessage(code);
     }
   }
 }

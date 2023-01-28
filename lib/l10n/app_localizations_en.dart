@@ -143,25 +143,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wrongPassword => 'Incorrect password, please try again.';
 
   @override
-  String get invalidEmail => 'Email is not valid.';
-
-  @override
   String get loginDefaultError => 'Login Error.. please try again';
 
   @override
-  String get errorOperationNotAllowed => 'Anonymous accounts are not enabled.';
+  String get weakPassword => 'the password is not strong enough.';
 
   @override
-  String get errorWeakPassword => 'the password is not strong enough.';
+  String get invalidEmail => 'the email address is malformed.';
 
   @override
-  String get errorInvalidEmail => 'the email address is malformed.';
-
-  @override
-  String get errorEmailAlreadyInUse => 'the email is already in use by a different account.';
-
-  @override
-  String get errorInvalidCredential => 'the email address is malformed';
+  String get emailAlreadyInUse => 'the email is already in use by a different account.';
 
   @override
   String get registerDefaultError => 'Register Error.. please try again';
@@ -173,7 +164,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invalidCredential => 'The credential received is malformed or has expired.';
 
   @override
-  String get operationNotAllowed => 'Operation is not allowed.  Please contact support.';
+  String get operationNotAllowed => 'Operation is not allowed. Please contact support.';
 
   @override
   String get invalidVerificationCode => 'The credential verification code received is invalid.';
@@ -197,14 +188,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get userNotFoundResetPassword => 'there is no user corresponding to the password reset code.';
 
   @override
-  String get weakPassword => 'the new password is not strong enough.';
-
-  @override
   String get resetPasswordDefaultError => 'Error when resetting your password.. please try again';
 
   @override
   String get errorUserNotFound => 'there is no user corresponding to the given email address.';
 
   @override
-  String get resetPasswordEmailDefaultError => 'Error when sending your reset code.. please try again';
+  String get emailIsEmptyError => 'please enter your email';
+
+  @override
+  String get passwordIsEmptyError => 'please enter your password';
+
+  @override
+  String get nameIsEmptyError => 'please enter your name';
+
+  @override
+  String get passwordLengthError => 'please enter at least 6 letter';
+
+  @override
+  String get nameLengthError => 'this field can not exceed 20 letter';
 }

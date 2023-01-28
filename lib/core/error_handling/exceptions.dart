@@ -1,10 +1,9 @@
+import 'dart:developer';
 import 'dart:io' show FileSystemException;
-import 'package:challenge_app/l10n/app_localizations.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:challenge_app/core/common/no_context_localization.dart';
 import 'package:path_provider/path_provider.dart' show MissingPlatformDirectoryException;
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../constants/app_errors.dart';
 import 'dio_errors.dart';
 import 'failures.dart';
 import 'fb_auth_errors.dart';
@@ -12,11 +11,15 @@ import 'fb_auth_errors.dart';
 class ExceptionHandler implements Exception{
   late final Failure failure;
 
-  ExceptionHandler.handle(dynamic e){
+  ExceptionHandler.handle(dynamic e,{AuthMethod? authMethod}){
     if(e is FirebaseAuthException){
-      failure = AuthFailure(FBAuthErrorMsgs.getLoginErrorMessage(e.code));
+      if(authMethod == null){
+        failure = UnExpectedFailure(e.message??noContextLocalization().unExpectedError);
+      }else{
+        failure = AuthFailure(authMethod.getAuthError(e.code));
+      }
     }else if(e is FirebaseException){
-      failure = UnExpectedFailure(e.message??AppErrors.unKnownError);
+      failure = UnExpectedFailure(e.message??noContextLocalization().unExpectedError);
     }else if(e is DioError){
       failure = handleDioErrors(e);
     } else if(e is MissingPlatformDirectoryException){
@@ -24,7 +27,9 @@ class ExceptionHandler implements Exception{
     } else if(e is FileSystemException){
       failure = FileFailure(e.message);
     } else{
-      failure = const UnExpectedFailure(AppErrors.unKnownError);
+      failure = UnExpectedFailure(noContextLocalization().unExpectedError);
     }
   }
 }
+
+

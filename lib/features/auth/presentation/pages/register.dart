@@ -1,11 +1,15 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:challenge_app/core/constants/app_routes.dart';
+import 'package:challenge_app/core/error_handling/validation.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:challenge_app/features/auth/presentation/manager/register_provider/register_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../reusable_components/double_back_to_exit.dart';
 import '../widgets/or_divider.dart';
 import '../widgets/social_buttons.dart';
@@ -21,6 +25,7 @@ class RegisterPage extends ConsumerStatefulWidget {
 
 class _RegisterPageState extends ConsumerState<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final Validation _validation = Validation();
   late final TextEditingController emailController = TextEditingController();
   late final TextEditingController passwordController = TextEditingController();
 
@@ -50,7 +55,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       const SizedBox(height: 60,),
                       InputTextField(
                         hint: context.localization.email,
-                        validator: (val){},
+                        validator: (email){
+                          return _validation.emailValidator(email);
+                        },
                         controller: emailController,
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.emailAddress,
@@ -59,7 +66,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       const SizedBox(height: 25,),
                       InputTextField(
                         hint: context.localization.password,
-                        validator: (val){},
+                        validator: (password){
+                          return _validation.registerPasswordValidator(password);
+                        },
                         controller: passwordController,
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.text,
@@ -67,13 +76,37 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       ),
 
                       const SizedBox(height:30,),
-                      ActionButton(
-                        title: context.localization.register,
-                        onTap: (){
-                          //todo:register
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final registerState = ref.watch(registerProvider);
 
-                          //if sign in with email
-                          Navigator.pushNamed(context, AppRoutes.emailVerificationCheckRoute);
+                          ref.listen(registerProvider, (previous, current) {
+                            if(current is RegisterSuccess){
+                              Navigator.pushNamed(context, AppRoutes.emailVerificationCheckRoute);
+                            }else if(current is RegisterError){
+                              Fluttertoast.showToast(
+                                  msg: current.message,
+                                  backgroundColor: context.theme.redColor,
+                                  textColor: context.theme.whiteColor,
+                              );
+                            }
+                          });
+
+                          return ActionButton(
+                            title: context.localization.register,
+                            isLoading: registerState is RegisterLoading,
+
+                            onTap: () async{
+                              if(_formKey.currentState!.validate()){
+                              await ref.read(registerProvider.notifier).register(
+                                  emailController.text.trim(),
+                                  passwordController.text.trim()
+                              );
+                            }
+                          },
+
+                          );
+
                         },
                       ),
 

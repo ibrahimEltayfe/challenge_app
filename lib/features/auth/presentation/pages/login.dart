@@ -4,10 +4,13 @@ import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:challenge_app/features/auth/presentation/manager/login_provider/login_provider.dart';
 import 'package:challenge_app/features/auth/presentation/widgets/social_buttons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../../../../core/error_handling/validation.dart';
 import '../../../../main.dart';
 import '../../../reusable_components/action_button.dart';
 import '../../../reusable_components/double_back_to_exit.dart';
@@ -25,6 +28,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final TextEditingController emailController = TextEditingController();
   late final TextEditingController passwordController = TextEditingController();
+  final Validation _validation = Validation();
 
   @override
   void dispose() {
@@ -51,7 +55,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     const SizedBox(height: 52,),
                     InputTextField(
                       hint: context.localization.email,
-                      validator: (val){},
+                      validator: (email){
+                        return _validation.emailValidator(email);
+                      },
                       controller: emailController,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
@@ -60,7 +66,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     const SizedBox(height: 24,),
                     InputTextField(
                       hint: context.localization.password,
-                      validator: (val){},
+                      validator: (password){
+                        return _validation.loginPasswordValidator(password);
+                      },
                       controller: passwordController,
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.text,
@@ -71,10 +79,39 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     const _BuildForgotPassword(),
 
                     const SizedBox(height:30,),
-                    ActionButton(
-                      title: context.localization.login,
-                      onTap: (){
-                        //todo:login
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final loginState = ref.watch(loginProvider);
+
+                        ref.listen(loginProvider, (previous, current) {
+                          if(current is LoginSuccess){
+                            if(current.isEmailVerified){
+                              Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeRoute, (route) => false);
+                            }else{
+                              Navigator.pushNamed(context, AppRoutes.emailVerificationCheckRoute);
+                            }
+                          }else if(current is LoginError){
+                            Fluttertoast.showToast(
+                              msg: current.message,
+                              backgroundColor: context.theme.redColor,
+                              textColor: context.theme.whiteColor,
+                            );
+                          }
+                        });
+
+
+                        return ActionButton(
+                          title: context.localization.login,
+                          isLoading: loginState is LoginLoading,
+                          onTap: () async{
+                            if(_formKey.currentState!.validate()){
+                              await ref.read(loginProvider.notifier).login(
+                                  emailController.text.trim(),
+                                  passwordController.text.trim()
+                              );
+                            }
+                          },
+                        );
                       },
                     ),
 

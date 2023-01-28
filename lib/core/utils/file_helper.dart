@@ -1,8 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:challenge_app/core/common/enums/file_identifier.dart';
-import 'package:challenge_app/core/constants/app_errors.dart';
-import 'package:challenge_app/core/error_handling/dio_errors.dart';
+import 'package:challenge_app/core/common/no_context_localization.dart';
 import 'package:challenge_app/core/error_handling/exceptions.dart';
 import 'package:challenge_app/core/error_handling/failures.dart';
 import 'package:dartz/dartz.dart';
@@ -51,7 +50,7 @@ class LocalFileHelper implements FileHelper{
         return Right(files);
       } else {
         // User canceled the picker
-        return const Left(PickFileFailure(AppErrors.noFilePicked));
+        return Left(PickFileFailure(noContextLocalization().pickFileError));
       }
     }catch(e){
       log(e.toString());

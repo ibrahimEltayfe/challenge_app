@@ -54,11 +54,8 @@
   "invalidEmail": "البريد الالكترونى غير صالح",
   "loginDefaultError":"حدث خطأ عند تسجيل الدخول, برجاء المحاولة مرة اخرى",
 
-  "errorOperationNotAllowed": "الحسابات المجهولة غير مفعلة",
-  "errorWeakPassword": "كلمة السر ليست قوية",
-  "errorInvalidEmail": "عنوان البريد الإلكتروني غير صحيح",
-  "errorEmailAlreadyInUse": "البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب مختلف",
-  "errorInvalidCredential": "عنوان البريد الإلكتروني غير صحيح",
+  "weakPassword": "كلمة السر ليست قوية",
+  "emailAlreadyInUse": "البريد الإلكتروني قيد الاستخدام بالفعل من قبل حساب مختلف",
   "registerDefaultError":"حدث خطأ عند التسجيل, برجاء المحاولة مرة اخرى",
 
   "accountExistsWithDifferentCredential": "الحساب موجود ببيانات مختلفة",
@@ -72,9 +69,13 @@
   "invalidActionCode": "رمز إعادة تعيين كلمة المرور غير صالح.",
   "userDisabledResetPassword": "البريد الالكترونى التابع لهذا الرمز متوقف.",
   "userNotFoundResetPassword": "لا يوجد مستخدم مطابق لرمز إعادة تعيين كلمة المرور.",
-  "weakPassword": "كلمة المرور الجديدة ليست قوية بما يكفي.",
   "resetPasswordDefaultError":"خطأ عند إعادة تعيين كلمة المرور الخاصة بك .. يرجى المحاولة مرة أخرى",
-
   "errorUserNotFound": "لا يوجد مستخدم مطابق لعنوان البريد الإلكتروني المحدد.",
-  "resetPasswordEmailDefaultError": "خطأ عند إرسال رمز إعادة التعيين الخاص بك, يرجى المحاولة مرة أخرى."
+
+  "emailIsEmptyError" : "من فضلك ادخل البريد الإلكترونى",
+  "passwordIsEmptyError" : "من فضلك ادخل كلمة السر",
+  "nameIsEmptyError" : "هذا الحقل مطلوب",
+  "passwordLengthError" : "من فضلك أدخل على الأقل ٦ أرقام أو حروف",
+  "nameLengthError" : "هذا الحقل يجب أن لا يتعدى ٢٠ حرف"
+
 }

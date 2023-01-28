@@ -369,47 +369,29 @@ abstract class AppLocalizations {
   /// **'Incorrect password, please try again.'**
   String get wrongPassword;
 
-  /// No description provided for @invalidEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Email is not valid.'**
-  String get invalidEmail;
-
   /// No description provided for @loginDefaultError.
   ///
   /// In en, this message translates to:
   /// **'Login Error.. please try again'**
   String get loginDefaultError;
 
-  /// No description provided for @errorOperationNotAllowed.
-  ///
-  /// In en, this message translates to:
-  /// **'Anonymous accounts are not enabled.'**
-  String get errorOperationNotAllowed;
-
-  /// No description provided for @errorWeakPassword.
+  /// No description provided for @weakPassword.
   ///
   /// In en, this message translates to:
   /// **'the password is not strong enough.'**
-  String get errorWeakPassword;
+  String get weakPassword;
 
-  /// No description provided for @errorInvalidEmail.
+  /// No description provided for @invalidEmail.
   ///
   /// In en, this message translates to:
   /// **'the email address is malformed.'**
-  String get errorInvalidEmail;
+  String get invalidEmail;
 
-  /// No description provided for @errorEmailAlreadyInUse.
+  /// No description provided for @emailAlreadyInUse.
   ///
   /// In en, this message translates to:
   /// **'the email is already in use by a different account.'**
-  String get errorEmailAlreadyInUse;
-
-  /// No description provided for @errorInvalidCredential.
-  ///
-  /// In en, this message translates to:
-  /// **'the email address is malformed'**
-  String get errorInvalidCredential;
+  String get emailAlreadyInUse;
 
   /// No description provided for @registerDefaultError.
   ///
@@ -432,7 +414,7 @@ abstract class AppLocalizations {
   /// No description provided for @operationNotAllowed.
   ///
   /// In en, this message translates to:
-  /// **'Operation is not allowed.  Please contact support.'**
+  /// **'Operation is not allowed. Please contact support.'**
   String get operationNotAllowed;
 
   /// No description provided for @invalidVerificationCode.
@@ -477,12 +459,6 @@ abstract class AppLocalizations {
   /// **'there is no user corresponding to the password reset code.'**
   String get userNotFoundResetPassword;
 
-  /// No description provided for @weakPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'the new password is not strong enough.'**
-  String get weakPassword;
-
   /// No description provided for @resetPasswordDefaultError.
   ///
   /// In en, this message translates to:
@@ -495,11 +471,35 @@ abstract class AppLocalizations {
   /// **'there is no user corresponding to the given email address.'**
   String get errorUserNotFound;
 
-  /// No description provided for @resetPasswordEmailDefaultError.
+  /// No description provided for @emailIsEmptyError.
   ///
   /// In en, this message translates to:
-  /// **'Error when sending your reset code.. please try again'**
-  String get resetPasswordEmailDefaultError;
+  /// **'please enter your email'**
+  String get emailIsEmptyError;
+
+  /// No description provided for @passwordIsEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'please enter your password'**
+  String get passwordIsEmptyError;
+
+  /// No description provided for @nameIsEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'please enter your name'**
+  String get nameIsEmptyError;
+
+  /// No description provided for @passwordLengthError.
+  ///
+  /// In en, this message translates to:
+  /// **'please enter at least 6 letter'**
+  String get passwordLengthError;
+
+  /// No description provided for @nameLengthError.
+  ///
+  /// In en, this message translates to:
+  /// **'this field can not exceed 20 letter'**
+  String get nameLengthError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

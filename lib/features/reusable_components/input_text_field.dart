@@ -29,7 +29,7 @@ class InputTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width:width,
-      height: height,
+      //height: height,
       child: TextFormField(
         validator: validator,
         controller: controller,
@@ -47,6 +47,11 @@ class InputTextField extends StatelessWidget {
           hintStyle: context.textTheme.labelMedium,
           alignLabelWithHint: true,
           filled: false,
+
+          errorStyle: context.textTheme.titleSmall!.copyWith(
+            fontSize: 14,
+            color: context.theme.redColor
+          ),
           border: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(15)),
               borderSide: BorderSide(color: context.theme.primaryColor)

@@ -51,19 +51,16 @@
   "userDisabled": "This user has been disabled. contact support for help.",
   "userNotFound": "Email is not found.",
   "wrongPassword": "Incorrect password, please try again.",
-  "invalidEmail": "Email is not valid.",
   "loginDefaultError":"Login Error.. please try again",
 
-  "errorOperationNotAllowed": "Anonymous accounts are not enabled.",
-  "errorWeakPassword": "the password is not strong enough.",
-  "errorInvalidEmail": "the email address is malformed.",
-  "errorEmailAlreadyInUse": "the email is already in use by a different account.",
-  "errorInvalidCredential": "the email address is malformed",
+  "weakPassword": "the password is not strong enough.",
+  "invalidEmail": "the email address is malformed.",
+  "emailAlreadyInUse": "the email is already in use by a different account.",
   "registerDefaultError":"Register Error.. please try again",
 
   "accountExistsWithDifferentCredential": "Account exists with different credentials.",
   "invalidCredential": "The credential received is malformed or has expired.",
-  "operationNotAllowed": "Operation is not allowed.  Please contact support.",
+  "operationNotAllowed": "Operation is not allowed. Please contact support.",
   "invalidVerificationCode": "The credential verification code received is invalid.",
   "invalidVerificationId": "The credential verification ID received is invalid.",
   "credentialDefaultError": "something went wrong.. please try again",
@@ -72,10 +69,13 @@
   "invalidActionCode": "the password reset code is invalid.",
   "userDisabledResetPassword": "the user corresponding to the given password reset code has been disabled.",
   "userNotFoundResetPassword": "there is no user corresponding to the password reset code.",
-  "weakPassword": "the new password is not strong enough.",
   "resetPasswordDefaultError":"Error when resetting your password.. please try again",
-
   "errorUserNotFound": "there is no user corresponding to the given email address.",
-  "resetPasswordEmailDefaultError": "Error when sending your reset code.. please try again"
+
+  "emailIsEmptyError" : "please enter your email",
+  "passwordIsEmptyError" : "please enter your password",
+  "nameIsEmptyError" : "please enter your name",
+  "passwordLengthError" : "please enter at least 6 letter",
+  "nameLengthError" : "this field can not exceed 20 letter"
 
 }
