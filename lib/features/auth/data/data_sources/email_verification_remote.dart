@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../../../../core/common/no_context_localization.dart';
 import '../../../../core/error_handling/failures.dart';
-import '../models/user_model.dart';
+
 
 class EmailVerificationRemote{
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -16,7 +14,7 @@ class EmailVerificationRemote{
     }
 
     await user.reload();
-    return user.emailVerified;
+    return _firebaseAuth.currentUser!.emailVerified;
   }
 
 

@@ -23,33 +23,36 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        style: ButtonStyle(
-          padding: const MaterialStatePropertyAll<EdgeInsets>(
-              EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 7
-              )
+    return AbsorbPointer(
+      absorbing: isLoading,
+      child: ElevatedButton(
+          style: ButtonStyle(
+            padding: const MaterialStatePropertyAll<EdgeInsets>(
+                EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 7
+                )
+            ),
+            fixedSize: MaterialStatePropertyAll<Size>(
+                Size(
+                    width??338,
+                    height??60
+                )
+            ),
+            backgroundColor: MaterialStatePropertyAll<Color>(context.theme.primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(cornerRadius),
+                )
+            ),
           ),
-          fixedSize: MaterialStatePropertyAll<Size>(
-              Size(
-                  width??338,
-                  height??60
-              )
-          ),
-          backgroundColor: MaterialStatePropertyAll<Color>(context.theme.primaryColor),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(cornerRadius),
-              )
-          ),
-        ),
-        onPressed: onTap,
-        child: isLoading
-         ?Lottie.asset("assets/lottie/loading.json",fit: BoxFit.contain)
-         :FittedBox(
-          child: Text(title,style: context.textTheme.headlineSmall,),
-        )
+          onPressed: onTap,
+          child: isLoading
+           ?Lottie.asset("assets/lottie/loading.json",fit: BoxFit.contain)
+           :FittedBox(
+            child: Text(title,style: context.textTheme.headlineSmall,),
+          )
+      ),
     );
   }
 }

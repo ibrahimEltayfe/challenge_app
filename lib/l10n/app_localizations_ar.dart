@@ -207,4 +207,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nameLengthError => 'هذا الحقل يجب أن لا يتعدى ٢٠ حرف';
+
+  @override
+  String get emailNotVerified => 'البريد الإلكترونى غير مفعل';
+
+  @override
+  String get sendingVerificationEmail => 'يتم إرسال رابط التفعيل لبريدك الإلكترونى.. ';
 }

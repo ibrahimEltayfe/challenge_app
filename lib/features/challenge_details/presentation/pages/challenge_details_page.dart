@@ -154,7 +154,7 @@ class _BuildBackButtonAndChallengeCard extends StatelessWidget {
                 Transform(
                     alignment: AlignmentDirectional.centerStart,
                     transform: Matrix4.translationValues(-slideAnimation, 0, 0),
-                    child: const BackButtonShadowBox()
+                    child: const BackButtonBox()
                 ),
                 const SizedBox(
                   width: 10,

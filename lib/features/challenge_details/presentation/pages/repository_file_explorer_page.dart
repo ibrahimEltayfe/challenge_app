@@ -20,7 +20,7 @@ class RepositoryFileExplorerPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             textDirection: TextDirection.ltr,
             children: [
-              const BackButtonShadowBox(),
+              const BackButtonBox(),
 
               const SizedBox(height: 15,),
 

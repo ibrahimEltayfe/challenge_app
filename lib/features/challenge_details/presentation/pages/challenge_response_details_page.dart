@@ -24,7 +24,7 @@ class ChallengeResponseCardDetails extends StatelessWidget {
                  crossAxisAlignment: CrossAxisAlignment.start,
                  textDirection: TextDirection.ltr,
                  children: const [
-                    BackButtonShadowBox(),
+                    BackButtonBox(),
                     SizedBox(
                      width: 10,
                    ),

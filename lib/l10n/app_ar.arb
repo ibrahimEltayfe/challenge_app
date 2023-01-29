@@ -76,6 +76,9 @@
   "passwordIsEmptyError" : "من فضلك ادخل كلمة السر",
   "nameIsEmptyError" : "هذا الحقل مطلوب",
   "passwordLengthError" : "من فضلك أدخل على الأقل ٦ أرقام أو حروف",
-  "nameLengthError" : "هذا الحقل يجب أن لا يتعدى ٢٠ حرف"
+  "nameLengthError" : "هذا الحقل يجب أن لا يتعدى ٢٠ حرف",
+
+  "emailNotVerified" : "البريد الإلكترونى غير مفعل",
+  "sendingVerificationEmail" : "يتم إرسال رابط التفعيل لبريدك الإلكترونى.. "
 
 }

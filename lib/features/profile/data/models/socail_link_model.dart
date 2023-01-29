@@ -1,4 +1,4 @@
-import '../../../profile/data/models/socials_enum.dart';
+import 'socials_enum.dart';
 
 class SocialLinkModel{
   final String url;

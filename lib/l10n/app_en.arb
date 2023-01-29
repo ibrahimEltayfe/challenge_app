@@ -76,6 +76,9 @@
   "passwordIsEmptyError" : "please enter your password",
   "nameIsEmptyError" : "please enter your name",
   "passwordLengthError" : "please enter at least 6 letter",
-  "nameLengthError" : "this field can not exceed 20 letter"
+  "nameLengthError" : "this field can not exceed 20 letter",
+
+  "emailNotVerified" : "Email is not verified",
+  "sendingVerificationEmail" : "Sending the verification link to your email.."
 
 }

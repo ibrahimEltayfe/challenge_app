@@ -5,8 +5,8 @@ import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class BackButtonShadowBox extends StatelessWidget {
-  const BackButtonShadowBox({Key? key}) : super(key: key);
+class BackButtonBox extends StatelessWidget {
+  const BackButtonBox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class BackButtonShadowBox extends StatelessWidget {
       child: Container(
         width: 53,
         height: 51,
-        padding: EdgeInsets.all(14),
+        padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           boxShadow: const[

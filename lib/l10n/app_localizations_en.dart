@@ -207,4 +207,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nameLengthError => 'this field can not exceed 20 letter';
+
+  @override
+  String get emailNotVerified => 'Email is not verified';
+
+  @override
+  String get sendingVerificationEmail => 'Sending the verification link to your email..';
 }

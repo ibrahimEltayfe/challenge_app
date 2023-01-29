@@ -1,7 +1,7 @@
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:challenge_app/features/auth/data/models/socail_link_model.dart';
+import 'package:challenge_app/features/profile/data/models/socail_link_model.dart';
 import 'package:flutter/material.dart';
 import '../../../reusable_components/action_button.dart';
 import '../../../reusable_components/input_text_field.dart';

@@ -57,7 +57,7 @@ class _AddChallengeResponsePageState extends State<AddChallengeResponsePage> {
             const Positioned(
                 left: 5,
                 top: 4,
-                child: BackButtonShadowBox()
+                child: BackButtonBox()
             ),
 
           ],

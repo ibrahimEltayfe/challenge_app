@@ -1,10 +1,9 @@
-import 'dart:developer';
-import 'package:challenge_app/core/common/no_context_localization.dart';
 import 'package:challenge_app/core/constants/end_points.dart';
-import 'package:challenge_app/core/error_handling/failures.dart';
 import 'package:challenge_app/features/auth/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRemote {
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
@@ -16,56 +15,74 @@ class AuthRemote {
         password: password
     );
 
-    if(userCredential.user == null){
-      throw NoUIDFailure(noContextLocalization().noUIDError);
-    }
-
     //additional check, to handle if data did not initialized in register
-    final checkIfUserDataExists = await _fs.collection(EndPoints.users).doc(userCredential.user!.uid).get();
-    if(checkIfUserDataExists.data() == null){
-      await initializeUserData();
+    final bool isUserExists = await _isUserDataExists(userCredential.user!.uid);
+    if(!isUserExists){
+      await _initializeUserData(
+          userCredential,
+          isVerified: false
+      );
     }
   }
 
   Future<void> register({required String email, required String password}) async {
     //register
-    await _firebaseAuth.createUserWithEmailAndPassword(
+    final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password
     );
 
-    await initializeUserData();
+    await _initializeUserData(
+       userCredential,
+        isVerified: false
+    );
   }
 
-  Future<void> initializeUserData() async{
+  //social logins
+  Future<void> loginWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    final userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final bool isUserExists = await _isUserDataExists(userCredential.user!.uid);
+    if(!isUserExists){
+      await _initializeUserData(
+          userCredential,
+          isVerified: true
+      );
+    }
+
+  }
+
+  Future<bool> _isUserDataExists(String uid) async {
+    final results = await _fs.collection(EndPoints.users).doc(uid).get();
+    return results.data() == null;
+  }
+
+  Future<void> _initializeUserData(UserCredential userCredential,{required bool isVerified}) async{
     final UserModel userModel = UserModel().initialize();
 
-    final user = _firebaseAuth.currentUser!;
+    final user = userCredential.user!;
 
     //set user fields
     final DateTime? creationDate = user.metadata.creationTime;
 
     userModel.email = user.email;
-    userModel.name = user.email!.split('@').first;
-    userModel.isVerified = user.emailVerified;
+    userModel.name = user.displayName ?? '';
+    userModel.isVerified = isVerified;
     userModel.uid = user.uid;
     userModel.createdTime = Timestamp.fromDate(creationDate??DateTime.now());
+    userModel.image = user.photoURL ?? '';
 
     //save user`s data
     await _fs.collection(EndPoints.users).doc(user.uid).set(userModel.toMap());
   }
-
-  Future checkIsEmailVerified() async{
-    final user = _firebaseAuth.currentUser;
-
-    if(user == null){
-      throw NoUIDFailure(noContextLocalization().noUIDError);
-    }
-
-    await user.reload();
-    return user.emailVerified;
-  }
-
-
 
 }

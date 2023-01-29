@@ -500,6 +500,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'this field can not exceed 20 letter'**
   String get nameLengthError;
+
+  /// No description provided for @emailNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is not verified'**
+  String get emailNotVerified;
+
+  /// No description provided for @sendingVerificationEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending the verification link to your email..'**
+  String get sendingVerificationEmail;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

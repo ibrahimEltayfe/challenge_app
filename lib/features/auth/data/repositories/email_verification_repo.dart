@@ -1,9 +1,7 @@
-
 import 'dart:developer';
-
 import 'package:challenge_app/features/auth/data/data_sources/email_verification_remote.dart';
 import 'package:dartz/dartz.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/common/no_context_localization.dart';
 import '../../../../core/error_handling/exceptions.dart';
 import '../../../../core/error_handling/failures.dart';
