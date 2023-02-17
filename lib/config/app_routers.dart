@@ -6,7 +6,7 @@ import 'package:challenge_app/features/auth/presentation/pages/register.dart';
 import 'package:challenge_app/features/profile/presentation/pages/edit_profile.dart';
 import 'package:challenge_app/features/challenge_details/presentation/pages/challenge_details_page.dart';
 import 'package:challenge_app/features/challenge_details/presentation/pages/repository_file_explorer_page.dart';
-import 'package:challenge_app/features/home/presentation/pages/search_Page.dart';
+import 'package:challenge_app/features/home/presentation/pages/search_page.dart';
 import 'package:challenge_app/features/profile/presentation/pages/about.dart';
 import 'package:challenge_app/features/app_settings/presentation/pages/app_settings.dart';
 import 'package:challenge_app/features/profile/presentation/pages/user_likes_page.dart';
@@ -103,7 +103,9 @@ class RoutesManager{
 
       case AppRoutes.challengeDetailsRoute:
         return MaterialPageRoute(
-            builder: (_)=> const ChallengeDetailsPage(),
+            builder: (_){
+              return ChallengeDetailsPage(settings.arguments!.toString());
+            },
             settings: settings
         );
 

@@ -11,7 +11,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get password => 'كلمة السر';
 
   @override
-  String get forgotPassword => 'نسيت كلمة السر';
+  String get forgotPassword => 'نسيت\nكلمة السر';
 
   @override
   String get enterYourEmail => 'اكتب بريدك الإلكترونى';
@@ -213,4 +213,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sendingVerificationEmail => 'يتم إرسال رابط التفعيل لبريدك الإلكترونى.. ';
+
+  @override
+  String get resetPasswordLinkSent => 'تم إرسال رابط إعادة تعيين كلمة المرور الخاصة بك الى بريدك الإلكترونى';
+
+  @override
+  String get noDataError => 'لا توجد معلومات حالية.';
 }

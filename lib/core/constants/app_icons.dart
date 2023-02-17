@@ -38,8 +38,8 @@ class AppIcons{
 
   static const IconData search = Icons.search_outlined;
   static const IconData home = FeatherIcons.home;
-
   static const IconData profile = FeatherIcons.user;
+  static const IconData refresh = FeatherIcons.refreshCw;
 
 
 

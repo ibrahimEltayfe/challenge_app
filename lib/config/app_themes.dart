@@ -1,30 +1,29 @@
 import 'dart:ui';
 import 'package:challenge_app/core/constants/app_colors.dart';
-import 'package:challenge_app/core/constants/app_strings.dart';
+import 'package:challenge_app/core/constants/app_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AppThemes{
   static ThemeData lightTheme(BuildContext context,Locale locale){
     return ThemeData(
       scaffoldBackgroundColor:AppColors.backgroundColor ,
-      backgroundColor: AppColors.backgroundColor,
       primaryColor: AppColors.primaryColor,
       shadowColor: AppColors.lightGrey,
       /* -the rest of colors are in theme extension- */
 
-      fontFamily: locale.languageCode == 'ar'? AppStrings.dubaiFont: AppStrings.senFont,
+      fontFamily: locale.languageCode == 'ar'? AppFonts.dubaiFont: AppFonts.senFont,
 
       textTheme: TextTheme(
 
         displayLarge: TextStyle(
             color: AppColors.primaryColor,
-            fontFamily: locale.languageCode == 'ar'? AppStrings.dubaiFont: AppStrings.junegullFont,
+            fontFamily: locale.languageCode == 'ar'? AppFonts.dubaiFont: AppFonts.junegullFont,
             fontSize: 52
         ),
 
         displayMedium: TextStyle(
             color: AppColors.darkGrey,
-            fontFamily: locale.languageCode == 'ar'? AppStrings.dubaiFont: AppStrings.bergenFont,
+            fontFamily: locale.languageCode == 'ar'? AppFonts.dubaiFont: AppFonts.bergenFont,
             fontSize: 32
         ),
 

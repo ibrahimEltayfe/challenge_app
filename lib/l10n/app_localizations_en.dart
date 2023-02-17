@@ -11,7 +11,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get password => 'Password';
 
   @override
-  String get forgotPassword => 'Forgot Password';
+  String get forgotPassword => 'Forgot\nPassword';
 
   @override
   String get enterYourEmail => 'Enter you email';
@@ -213,4 +213,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sendingVerificationEmail => 'Sending the verification link to your email..';
+
+  @override
+  String get resetPasswordLinkSent => 'Your reset password link sent to your account.';
+
+  @override
+  String get noDataError => 'No Data Found.';
 }

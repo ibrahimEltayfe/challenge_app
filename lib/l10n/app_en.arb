@@ -1,7 +1,7 @@
 {
   "email":"Email",
   "password":"Password",
-  "forgotPassword":"Forgot Password",
+  "forgotPassword":"Forgot\nPassword",
   "enterYourEmail": "Enter you email",
   "login":"Login",
   "register":"Register",
@@ -79,6 +79,11 @@
   "nameLengthError" : "this field can not exceed 20 letter",
 
   "emailNotVerified" : "Email is not verified",
-  "sendingVerificationEmail" : "Sending the verification link to your email.."
+  "sendingVerificationEmail" : "Sending the verification link to your email..",
+
+  "resetPasswordLinkSent" : "Your reset password link sent to your account.",
+
+  "noDataError" : "No Data Found."
+
 
 }

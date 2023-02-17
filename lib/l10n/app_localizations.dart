@@ -108,7 +108,7 @@ abstract class AppLocalizations {
   /// No description provided for @forgotPassword.
   ///
   /// In en, this message translates to:
-  /// **'Forgot Password'**
+  /// **'Forgot\nPassword'**
   String get forgotPassword;
 
   /// No description provided for @enterYourEmail.
@@ -512,6 +512,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sending the verification link to your email..'**
   String get sendingVerificationEmail;
+
+  /// No description provided for @resetPasswordLinkSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reset password link sent to your account.'**
+  String get resetPasswordLinkSent;
+
+  /// No description provided for @noDataError.
+  ///
+  /// In en, this message translates to:
+  /// **'No Data Found.'**
+  String get noDataError;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,7 +1,7 @@
 {
   "email": "البريد الإلكترونى",
   "password": "كلمة السر",
-  "forgotPassword": "نسيت كلمة السر",
+  "forgotPassword": "نسيت\nكلمة السر",
   "login": "دخول",
   "register": "تسجيل",
   "doNotHaveAnAccount": "لا تمتلك حساب؟",
@@ -79,6 +79,10 @@
   "nameLengthError" : "هذا الحقل يجب أن لا يتعدى ٢٠ حرف",
 
   "emailNotVerified" : "البريد الإلكترونى غير مفعل",
-  "sendingVerificationEmail" : "يتم إرسال رابط التفعيل لبريدك الإلكترونى.. "
+  "sendingVerificationEmail" : "يتم إرسال رابط التفعيل لبريدك الإلكترونى.. ",
+
+  "resetPasswordLinkSent" : "تم إرسال رابط إعادة تعيين كلمة المرور الخاصة بك الى بريدك الإلكترونى",
+
+  "noDataError" : "لا توجد معلومات حالية."
 
 }
