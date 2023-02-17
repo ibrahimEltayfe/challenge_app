@@ -53,6 +53,7 @@ dependencies:
   mime: ^1.0.3
   file_picker: ^5.2.5
   carousel_slider: ^4.2.1
+  sliver_tools: ^0.2.9
 
 dev_dependencies:
   flutter_test:

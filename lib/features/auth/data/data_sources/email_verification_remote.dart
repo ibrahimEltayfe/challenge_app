@@ -10,7 +10,7 @@ class EmailVerificationRemote{
     final user = _firebaseAuth.currentUser;
 
     if(user == null){
-      throw NoUIDFailure(noContextLocalization().noUIDError);
+      throw NoUIDFailure();
     }
 
     await user.reload();
@@ -23,7 +23,7 @@ class EmailVerificationRemote{
     final user = _firebaseAuth.currentUser;
 
     if(user == null){
-      throw NoUIDFailure(noContextLocalization().noUIDError);
+      throw NoUIDFailure();
     }
 
     await user.sendEmailVerification();

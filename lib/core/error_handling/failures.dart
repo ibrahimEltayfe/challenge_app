@@ -1,3 +1,4 @@
+import 'package:challenge_app/core/common/no_context_localization.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable{
@@ -23,7 +24,7 @@ class AuthFailure extends Failure{
 }
 
 class NoInternetFailure extends Failure{
-  const NoInternetFailure(super.message);
+  NoInternetFailure({String? message}):super(message??noContextLocalization().noInternetError);
 }
 
 class UnExpectedFailure extends Failure{
@@ -31,9 +32,13 @@ class UnExpectedFailure extends Failure{
 }
 
 class NoUIDFailure extends Failure{
-  const NoUIDFailure(super.message);
+  NoUIDFailure({String? message}):super(message??noContextLocalization().noUIDError);
 }
 
 class PickFileFailure extends Failure{
   const PickFileFailure(super.message);
+}
+
+class NoDataFailure extends Failure{
+  NoDataFailure({String? message}):super(message??noContextLocalization().noDataError);
 }

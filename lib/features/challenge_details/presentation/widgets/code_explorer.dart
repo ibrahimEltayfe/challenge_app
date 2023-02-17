@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:challenge_app/core/constants/app_strings.dart';
-import 'package:challenge_app/core/constants/app_themes.dart';
+import 'package:challenge_app/core/constants/app_fonts.dart';
+import 'package:challenge_app/config/app_themes.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/app_settings/data/models/app_languages.dart';
 import 'package:challenge_app/features/challenge_details/data/models/file_model.dart';
@@ -37,7 +37,7 @@ class CodeExplorer extends ConsumerWidget {
         child: Theme(
           data: AppThemes.lightTheme(context,locale??Localizations.localeOf(context)).copyWith(
             textTheme: AppThemes.lightTheme(context,locale??Localizations.localeOf(context)).textTheme.apply(
-                fontFamily: AppStrings.senFont,
+                fontFamily: AppFonts.senFont,
             )
           ),
           child: Column(

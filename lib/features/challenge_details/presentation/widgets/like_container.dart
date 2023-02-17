@@ -1,4 +1,4 @@
-import 'package:challenge_app/core/constants/app_strings.dart';
+import 'package:challenge_app/core/constants/app_fonts.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:flutter/material.dart';

@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../core/constants/app_images.dart';
 
 class Coins extends StatelessWidget {
-  final int numOfCoins;
+  final String numOfCoins;
   const Coins({Key? key, required this.numOfCoins}) : super(key: key);
 
   @override

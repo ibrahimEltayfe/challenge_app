@@ -1,17 +1,18 @@
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:challenge_app/features/home/data/models/challenge_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_routes.dart';
 import 'bookmark_button.dart';
 
 class ChallengeItem extends StatelessWidget {
+  final ChallengeModel challengeModel;
   final bool isBookmarkActive;
-  final int challengePoints;
   const ChallengeItem({
     Key? key,
+    required this.challengeModel,
     required this.isBookmarkActive,
-    required this.challengePoints
   }) : super(key: key);
 
   @override
@@ -28,21 +29,28 @@ class ChallengeItem extends StatelessWidget {
               GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: (){
-                    Navigator.pushNamed(context, AppRoutes.challengeDetailsRoute);
+                    Navigator.pushNamed(
+                        context,
+                        AppRoutes.challengeDetailsRoute,
+                        arguments: challengeModel.id
+                    );
                   },
                   child: const Placeholder()
               ),
 
-              _BuildPoints(points: challengePoints),
+              _BuildPoints(points: challengeModel.points!),
 
               PositionedDirectional(
                   top: 5,
                   end: 5,
-                  child: BookmarkButton(isActive: isBookmarkActive,)
+                  child: BookmarkButton(
+                    isActive: isBookmarkActive,
+                    challengeId: challengeModel.id ?? '',
+                  )
               ),
 
               _BuildChallengeName(
-                  name:'Snowing Background'
+                  name:challengeModel.title!
               )
 
             ],

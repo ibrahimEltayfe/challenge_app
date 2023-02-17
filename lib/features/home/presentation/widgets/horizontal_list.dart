@@ -1,18 +1,26 @@
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:challenge_app/features/home/presentation/manager/user_data_provider/user_data_provider.dart';
 import 'package:challenge_app/features/reusable_components/challenge_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HorizontalList extends ConsumerWidget {
+import '../../data/models/challenge_model.dart';
+
+class HorizontalList extends StatelessWidget {
+  final List<ChallengeModel> challengeModels;
+  final bool isLoading;
   final String title;
+  final bool Function(ScrollNotification) onNotification;
   const HorizontalList({
     required this.title,
-    Key? key,
+    required this.challengeModels,
+    required this.isLoading,
+    Key? key, required this.onNotification,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
       child: SizedBox(
@@ -22,21 +30,54 @@ class HorizontalList extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(title,style: context.textTheme.titleLarge,),
+            Row(
+              children: [
+                Text(title,style: context.textTheme.titleLarge,),
+                const SizedBox(width: 10,),
+                if(isLoading)
+                SizedBox(
+                  width: 15,
+                  height: 15,
+                  child: FittedBox(
+                    child: CircularProgressIndicator(
+                      color: context.theme.primaryColor,
+                      strokeWidth: 5,
+                    ),
+                  )
+                )
+              ],
+            ),
             const SizedBox(height: 14,),
 
             Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) => const SizedBox(width: 20,),
-                scrollDirection: Axis.horizontal,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return ChallengeItem(
-                    challengePoints: 10,
-                    isBookmarkActive: false,
-                  );
-                },
-              ),
+              child: NotificationListener<ScrollNotification>(
+              onNotification: (scrollNotification){
+                return onNotification(scrollNotification);
+              },
+               child: Consumer(
+                 builder: (_,ref,child) {
+                   ref.watch(userDataProvider.select((state) => state is UserDataFetched));
+                   final userData = ref.watch(userDataProvider.notifier).userModel;
+
+                   return ListView.separated(
+                     separatorBuilder: (context, i) => const SizedBox(width: 20,),
+                     physics: const BouncingScrollPhysics(),
+                     scrollDirection: Axis.horizontal,
+                     itemCount: challengeModels.length,
+                     itemBuilder: (context, i) {
+                       final userLikes =  userData?.bookmarks ?? [];
+                       final isBookmarked = userLikes.contains(challengeModels[i].id);
+
+                       return ChallengeItem(
+                         challengeModel: challengeModels[i],
+                         isBookmarkActive: isBookmarked,
+                       );
+                     },
+                   );
+                 }
+               ),
+
+             )
             )
           ],
         ),

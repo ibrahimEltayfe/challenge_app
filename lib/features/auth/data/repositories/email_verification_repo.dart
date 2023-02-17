@@ -37,7 +37,7 @@ class EmailVerificationRepositoryImpl implements EmailVerificationRepository{
         return Left(ExceptionHandler.handle(e).failure);
       }
     }else{
-      return Left(NoInternetFailure(noContextLocalization().noInternetError));
+      return Left(NoInternetFailure());
     }
   }
 

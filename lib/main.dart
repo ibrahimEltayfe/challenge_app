@@ -1,7 +1,5 @@
-import 'dart:developer';
 import 'dart:ui';
-import 'package:challenge_app/core/constants/app_themes.dart';
-import 'package:challenge_app/core/extensions/localization_helper.dart';
+import 'package:challenge_app/config/app_themes.dart';
 import 'package:challenge_app/features/app_settings/data/models/app_languages.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +75,7 @@ class MyApp extends ConsumerWidget {
             },
 
             onGenerateRoute: RoutesManager.routes,
-            initialRoute: AppRoutes.loginRoute,
+            initialRoute: AppRoutes.decideRoute,
 
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,

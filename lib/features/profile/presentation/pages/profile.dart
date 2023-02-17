@@ -44,7 +44,7 @@ class _BuildTopBar extends StatelessWidget {
       children: [
         const Positioned(
           left: 10,
-          child: Coins(numOfCoins: 10,),
+          child: Coins(numOfCoins: '10',),
         ),
 
         Center(child: Text('Profile',style: context.textTheme.titleLarge,)),

@@ -13,6 +13,8 @@ class InputTextField extends StatelessWidget {
   final TextInputAction textInputAction;
   final TextInputType? keyboardType;
   final bool isObscure;
+  final double borderRadius;
+
   const InputTextField({
     Key? key,
     this.width = 338,
@@ -22,7 +24,8 @@ class InputTextField extends StatelessWidget {
     this.validator,
     required this.controller,
     required this.textInputAction,
-    this.keyboardType
+    this.keyboardType,
+    this.borderRadius = 15
   }) : super(key: key);
 
   @override
@@ -53,12 +56,12 @@ class InputTextField extends StatelessWidget {
             color: context.theme.redColor
           ),
           border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
               borderSide: BorderSide(color: context.theme.primaryColor)
           ),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
               borderSide: BorderSide(color: context.theme.primaryColor)
           ),
 

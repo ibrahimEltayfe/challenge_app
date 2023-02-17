@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../reusable_components/action_button.dart';
+import '../../../reusable_components/error_toast.dart';
 import '../widgets/back_arrow.dart';
 
 class EmailVerificationCheckPage extends ConsumerStatefulWidget {
@@ -48,11 +49,7 @@ class _EmailVerificationCheckPageState extends ConsumerState<EmailVerificationCh
 
                   ref.listen(sendEmailVerificationProvider, (previous, current) {
                     if(current is SendEmailVerificationError){
-                      Fluttertoast.showToast(
-                          msg: current.message,
-                          backgroundColor: context.theme.redColor,
-                          textColor: context.theme.whiteColor
-                      );
+                      showErrorToast(context,current.message);
                     }
                   });
 

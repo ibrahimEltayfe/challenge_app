@@ -6,10 +6,7 @@ import 'package:challenge_app/features/home/presentation/pages/home.dart';
 import 'package:challenge_app/features/profile/presentation/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../manager/bottom_navigation_provider/bottom_navigation_provider.dart';
-
-
 
 class HomeBase extends StatelessWidget{
   @override
@@ -50,7 +47,7 @@ class _BottomNavBar extends ConsumerWidget {
         onTap: (i){
           ref.read(bottomNavigationIndexProvider.notifier).state = i;
         },
-        backgroundColor: context.theme.backgroundColor,
+        backgroundColor: context.theme.scaffoldBackgroundColor,
         unselectedItemColor: context.theme.lightGreyColor,
         selectedItemColor: context.theme.primaryColor,
         showSelectedLabels: false,
