@@ -30,11 +30,11 @@ class LanguageProvider extends StateNotifier<LanguageState> {
   }
 
   Future<void> changeLang(AppLanguages nextAppLanguage) async{
+
     state = const LanguageLoading();
 
     try{
       await SharedPrefHelper.setLanguage(nextAppLanguage.name);
-      await Future.delayed(Duration(seconds: 1));
       appLanguage = nextAppLanguage;
       state = const LanguageChanged();
     }catch(e){

@@ -4,7 +4,6 @@ import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/reusable_components/action_button.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,7 +16,8 @@ final slideAnimationProvider = StateProvider.autoDispose<double>((ref) => 0.0);
 final showBackButtonProvider = StateProvider.autoDispose<bool>((ref) => false);
 
 class ChallengeDetailsPage extends ConsumerStatefulWidget {
-  const ChallengeDetailsPage({
+  final String id;
+  const ChallengeDetailsPage(this.id, {
     Key? key,
   }) : super(key: key);
 
@@ -40,8 +40,9 @@ class _ChallengeDetailsPageState extends ConsumerState<ChallengeDetailsPage>
     animation =
         CurvedAnimation(parent: animationController, curve: Curves.decelerate);
 
-    var slideAnim;
-    var showBackButton;
+    late StateController<double> slideAnim;
+    late StateController<bool> showBackButton;
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       slideAnim = ref.watch(slideAnimationProvider.notifier);
       showBackButton = ref.watch(showBackButtonProvider.notifier);
@@ -140,10 +141,10 @@ class _BuildBackButtonAndChallengeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: context.theme.backgroundColor,
-      leading: SizedBox.shrink(),
+      backgroundColor: context.theme.scaffoldBackgroundColor,
+      leading: const SizedBox.shrink(),
       bottom: PreferredSize(
-        preferredSize: Size.fromHeight(340),
+        preferredSize: const Size.fromHeight(340),
         child: Consumer(
           builder: (context, ref, child) {
             final slideAnimation = ref.watch(slideAnimationProvider);
@@ -197,6 +198,7 @@ class _BuildChallengeCard extends StatelessWidget {
                         width: 40,
                         height: 40,
                         isActive: false,
+                        challengeId: '',
                       ),
                    ),
                 ],
@@ -223,7 +225,7 @@ class _BuildFilterBarAndSharesHeadline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: context.theme.backgroundColor,
+      backgroundColor: context.theme.scaffoldBackgroundColor,
       floating: false,
       pinned: true,
       bottom: PreferredSize(

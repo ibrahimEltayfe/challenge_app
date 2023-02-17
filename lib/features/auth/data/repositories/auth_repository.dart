@@ -53,7 +53,7 @@ class AuthRepositoryImpl implements AuthRepository{
           return Left(ExceptionHandler.handle(e,authMethod: authMethod).failure);
         }
       }else{
-        return Left(NoInternetFailure(noContextLocalization().noInternetError));
+        return Left(NoInternetFailure());
       }
   }
 

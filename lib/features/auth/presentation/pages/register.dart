@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../reusable_components/double_back_to_exit.dart';
+import '../../../reusable_components/error_toast.dart';
 import '../widgets/or_divider.dart';
 import '../widgets/social_buttons.dart';
 import '../../../reusable_components/action_button.dart';
@@ -84,11 +85,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                             if(current is RegisterSuccess){
                               Navigator.pushNamed(context, AppRoutes.emailVerificationCheckRoute);
                             }else if(current is RegisterError){
-                              Fluttertoast.showToast(
-                                  msg: current.message,
-                                  backgroundColor: context.theme.redColor,
-                                  textColor: context.theme.whiteColor,
-                              );
+                              showErrorToast(context,current.message);
                             }
                           });
 

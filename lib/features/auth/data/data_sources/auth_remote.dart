@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:challenge_app/core/constants/end_points.dart';
-import 'package:challenge_app/features/auth/data/models/user_model.dart';
+import 'package:challenge_app/core/common/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -20,7 +22,6 @@ class AuthRemote {
     if(!isUserExists){
       await _initializeUserData(
           userCredential,
-          isVerified: false
       );
     }
   }
@@ -34,7 +35,6 @@ class AuthRemote {
 
     await _initializeUserData(
        userCredential,
-        isVerified: false
     );
   }
 
@@ -55,7 +55,6 @@ class AuthRemote {
     if(!isUserExists){
       await _initializeUserData(
           userCredential,
-          isVerified: true
       );
     }
 
@@ -63,20 +62,25 @@ class AuthRemote {
 
   Future<bool> _isUserDataExists(String uid) async {
     final results = await _fs.collection(EndPoints.users).doc(uid).get();
-    return results.data() == null;
+    return results.data() != null;
   }
 
-  Future<void> _initializeUserData(UserCredential userCredential,{required bool isVerified}) async{
-    final UserModel userModel = UserModel().initialize();
+  Future<void> _initializeUserData(UserCredential userCredential) async{
+    final UserModel userModel = UserModel();
 
+    //user`s default values
+    userModel.points = 0;
+    userModel.title = '';
+    userModel.bookmarks = [];
+    userModel.challengeResponds = [];
+    userModel.likes = [];
+
+    //user`s data
     final user = userCredential.user!;
-
-    //set user fields
     final DateTime? creationDate = user.metadata.creationTime;
 
     userModel.email = user.email;
     userModel.name = user.displayName ?? '';
-    userModel.isVerified = isVerified;
     userModel.uid = user.uid;
     userModel.createdTime = Timestamp.fromDate(creationDate??DateTime.now());
     userModel.image = user.photoURL ?? '';

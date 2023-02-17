@@ -1,7 +1,7 @@
 import 'package:challenge_app/core/utils/network_checker.dart';
 import 'package:challenge_app/features/auth/data/data_sources/auth_remote.dart';
 import 'package:challenge_app/features/auth/data/data_sources/email_verification_remote.dart';
-import 'package:challenge_app/features/auth/data/models/user_model.dart';
+import 'package:challenge_app/core/common/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:riverpod/riverpod.dart';

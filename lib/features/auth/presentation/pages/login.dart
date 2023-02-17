@@ -10,10 +10,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import '../../../../core/error_handling/validation.dart';
 import '../../../../main.dart';
 import '../../../reusable_components/action_button.dart';
 import '../../../reusable_components/double_back_to_exit.dart';
+import '../../../reusable_components/error_toast.dart';
 import '../../../reusable_components/input_text_field.dart';
 import '../widgets/or_divider.dart';
 
@@ -91,11 +93,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               Navigator.pushNamed(context, AppRoutes.emailVerificationCheckRoute);
                             }
                           }else if(current is LoginError){
-                            Fluttertoast.showToast(
-                              msg: current.message,
-                              backgroundColor: context.theme.redColor,
-                              textColor: context.theme.whiteColor,
-                            );
+                            showErrorToast(context,current.message);
                           }
                         });
 
@@ -186,7 +184,7 @@ class _BuildForgotPassword extends StatelessWidget {
         child: Padding(
           padding: EdgeInsetsDirectional.only(end: context.width*0.09),
           child: Text(
-            context.localization.forgotPassword,
+            context.localization.forgotPassword.replaceAll('\n', ' '),
             style: context.textTheme.titleSmall!.copyWith(
                 decoration: TextDecoration.underline
             ),),
