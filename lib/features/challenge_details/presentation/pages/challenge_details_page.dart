@@ -1,12 +1,16 @@
+import 'dart:developer';
 import 'package:challenge_app/core/constants/app_icons.dart';
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:challenge_app/features/challenge_details/presentation/manager/challenge_details_provider/challenge_details_provider.dart';
+import 'package:challenge_app/features/challenge_details/presentation/widgets/challenge_card.dart';
 import 'package:challenge_app/features/reusable_components/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../home/presentation/manager/user_data_provider/user_data_provider.dart';
 import '../../../reusable_components/back_button_shadow_box.dart';
 import '../../../reusable_components/bookmark_button.dart';
 import '../widgets/challenge_responses_gridview.dart';
@@ -44,6 +48,7 @@ class _ChallengeDetailsPageState extends ConsumerState<ChallengeDetailsPage>
     late StateController<bool> showBackButton;
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(challengeDetailsProvider.notifier).getChallengeDetails(widget.id);
       slideAnim = ref.watch(slideAnimationProvider.notifier);
       showBackButton = ref.watch(showBackButtonProvider.notifier);
     });
@@ -55,7 +60,7 @@ class _ChallengeDetailsPageState extends ConsumerState<ChallengeDetailsPage>
         slideAnim.state = scrollController.offset;
       }
 
-      if (scrollController.offset >= endOffset - context.width * 0.1) {
+      if (scrollController.offset >= endOffset - context.height * 0.25) {
         showBackButton.state = true;
       } else {
         showBackButton.state = false;
@@ -73,57 +78,60 @@ class _ChallengeDetailsPageState extends ConsumerState<ChallengeDetailsPage>
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-          child: Stack(
-            children:[
-              CustomScrollView(
-                controller: scrollController,
-                slivers: const [
-                  _BuildBackButtonAndChallengeCard(),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+            child: Stack(
+              children:[
+                CustomScrollView(
+                  controller: scrollController,
+                  slivers: [
+                    const _BuildBackButtonAndChallengeCard(),
 
-                  _SliverVerticalSeparator(20),
-                  _BuildFilterBarAndSharesHeadline(),
+                    const _BuildSeparator(20),
+                    const _BuildSharesBar(),
 
-                  _SliverVerticalSeparator(12),
-                  ChallengeResponsesGridView(),
+                    const _BuildSeparator(12),
+                    ChallengeResponsesGridView(
+                      challengeId:widget.id
+                    ),
 
-                  _SliverVerticalSeparator(100),
-                ],
-              ),
-
-              Positioned(
-                right: 0,
-                bottom: 4,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minWidth: 170
-                  ),
-                  child: ActionButton(
-                    onTap: (){
-                      //todo:navigate to share work page
-                      Navigator.pushNamed(context, AppRoutes.addChallengeResponseRoute);
-                    },
-                    title: context.localization.shareYourCreativity,
-                    height: 54,
-                    width: double.infinity,
-                    cornerRadius: 15,
-                  ),
+                    const _BuildSeparator(100),
+                  ],
                 ),
-              )
-            ]
 
+                Positioned(
+                  right: 0,
+                  bottom: 4,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minWidth: 170
+                    ),
+                    child: ActionButton(
+                      onTap: (){
+                        //todo:navigate to share work page
+                        Navigator.pushNamed(context, AppRoutes.addChallengeResponseRoute);
+                      },
+                      title: context.localization.shareYourCreativity,
+                      height: 54,
+                      width: double.infinity,
+                      cornerRadius: 15,
+                    ),
+                  ),
+                )
+              ]
+
+            ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
-class _SliverVerticalSeparator extends StatelessWidget {
+class _BuildSeparator extends StatelessWidget {
   final double height;
-  const _SliverVerticalSeparator(this.height,{Key? key}) : super(key: key);
+  const _BuildSeparator(this.height,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +172,7 @@ class _BuildBackButtonAndChallengeCard extends StatelessWidget {
                   child: Transform(
                       alignment: AlignmentDirectional.centerStart,
                       transform: Matrix4.translationValues(slideAnimation, 0, 0),
-                      child: const _BuildChallengeCard()
+                      child: const ChallengeCard()
                   ),
                 ),
               ],
@@ -176,51 +184,10 @@ class _BuildBackButtonAndChallengeCard extends StatelessWidget {
   }
 }
 
-class _BuildChallengeCard extends StatelessWidget {
-  const _BuildChallengeCard({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 390,
-      child: Column(
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              child: Stack(
-                children: [
-                  Placeholder(),
-                  Positioned(
-                      top: 5,
-                      right: 5,
-                      child: BookmarkButton(
-                        width: 40,
-                        height: 40,
-                        isActive: false,
-                        challengeId: '',
-                      ),
-                   ),
-                ],
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Snowing Background",
-              style: context.textTheme.titleMedium!.copyWith(fontSize: 19),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 /* filter and share title bar*/
-class _BuildFilterBarAndSharesHeadline extends StatelessWidget {
-  const _BuildFilterBarAndSharesHeadline({Key? key}) : super(key: key);
+class _BuildSharesBar extends StatelessWidget {
+  const _BuildSharesBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

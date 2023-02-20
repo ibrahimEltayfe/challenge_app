@@ -1,50 +1,91 @@
 import 'dart:developer';
 
+import 'package:challenge_app/core/extensions/localization_helper.dart';
+import 'package:challenge_app/features/challenge_details/presentation/manager/challenge_details_provider/challenge_details_provider.dart';
+import 'package:challenge_app/features/challenge_details/presentation/manager/challenge_response_provider/challenge_responses_provider.dart';
 import 'package:challenge_app/features/challenge_details/presentation/widgets/like_container.dart';
 import 'package:challenge_app/features/challenge_details/presentation/widgets/user_details_card.dart';
 import 'package:flutter/material.dart';
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
-class ChallengeResponsesGridView extends StatelessWidget {
-  const ChallengeResponsesGridView({super.key});
+import '../../data/models/challenge_response_model.dart';
+
+class ChallengeResponsesGridView extends ConsumerWidget {
+  final String challengeId;
+  const ChallengeResponsesGridView({super.key,required this.challengeId});
 
   @override
-  Widget build(BuildContext context) {
-    return SliverGrid(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.7,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 18
-      ),
-      delegate: SliverChildBuilderDelegate(childCount: 8, (_, int index) {
-        return ChallengeRespondCard();
-      }),
+  Widget build(BuildContext context,WidgetRef ref) {
+    final challengeResponseState = ref.watch(challengeResponseProvider(challengeId));
+    final challengeResponseRef = ref.watch(challengeResponseProvider(challengeId).notifier);
+
+    if(challengeResponseState is ChallengeResponseDataFetched && challengeResponseRef.responses.isEmpty){
+      return _BuildInfoText(context.localization.noShares);
+    }
+
+    return MultiSliver(
+      children: [
+        if(challengeResponseState is ChallengeResponseDataFetched)
+        SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.7,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 18
+          ),
+          delegate: SliverChildBuilderDelegate(childCount: challengeResponseRef.responses.length, (_,index) {
+            return ChallengeRespondCard(challengeResponseRef.responses[index]);
+          }),
+        ),
+
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 15,
+          ),
+        ),
+
+        if(challengeResponseState is ChallengeResponseLoading)
+          SliverToBoxAdapter(
+            child: SizedBox(
+              width: 40,
+              height: 40,
+              child: FittedBox(child: CircularProgressIndicator(color: context.theme.primaryColor,))
+            ),
+          )
+
+        else if(challengeResponseState is ChallengeResponseError)
+          _BuildInfoText(challengeResponseState.message,)
+
+      ],
     );
   }
 }
 
 
-class ChallengeRespondCard extends StatelessWidget {
-  const ChallengeRespondCard({Key? key}) : super(key: key);
+class ChallengeRespondCard extends ConsumerWidget {
+  final ChallengeResponseModel responseModel;
+  const ChallengeRespondCard(this.responseModel, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+
     return ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         child: Column(
-              children: const[
-                _BuildResponseCard(),
+              children:[
+                _BuildResponseCard(responseModel),
 
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
                 UserDetailsCard(
                   height: 40,
-                  imageUrl: '',
-                  name: "Ibrahim eltayfe",
-                  title: 'Flutter Developer',
+                  imageUrl: responseModel.userModel!.image!,
+                  name: responseModel.userModel!.name!,
+                  title: responseModel.userModel!.title!,
                 )
               ],
             )
@@ -52,11 +93,12 @@ class ChallengeRespondCard extends StatelessWidget {
   }
 }
 
-class _BuildResponseCard extends StatelessWidget {
-  const _BuildResponseCard({Key? key}) : super(key: key);
+class _BuildResponseCard extends ConsumerWidget {
+  final ChallengeResponseModel response;
+  const _BuildResponseCard(this.response, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     return Expanded(
       flex: 5,
       child: LayoutBuilder(
@@ -66,7 +108,11 @@ class _BuildResponseCard extends StatelessWidget {
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: (){
-                  Navigator.pushNamed(context, AppRoutes.challengeRespondCardDetailsRoute);
+                  Navigator.pushNamed(
+                      context,
+                      AppRoutes.challengeRespondCardDetailsRoute,
+                      arguments: response.id
+                  );
                 },
                 child: Placeholder()
               ),
@@ -82,15 +128,15 @@ class _BuildResponseCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     textDirection: TextDirection.ltr,
-                    children: const [
-                      SizedBox(width: 6,),
+                    children: [
+                      const SizedBox(width: 6,),
                       LikeContainer(
-                        numOfLikes:40,
+                        numOfLikes:response.numOfLikes!,
                         isActive:false
                       ),
 
                       SizedBox(width: 8,),
-                      _BuildCardCategoryName(),
+                      _BuildCardCategoryName(),//todo:
 
                       SizedBox(width: 10,)
                     ],
@@ -129,3 +175,20 @@ class _BuildCardCategoryName extends StatelessWidget {
   }
 }
 
+class _BuildInfoText extends StatelessWidget {
+  final String text;
+  const _BuildInfoText(this.text,{Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Center(
+        child: Text(
+          text,
+          style: context.textTheme.titleMedium,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}

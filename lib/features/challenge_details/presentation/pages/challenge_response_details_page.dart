@@ -1,60 +1,82 @@
+import 'package:challenge_app/core/common/models/user_model.dart';
 import 'package:challenge_app/core/constants/app_icons.dart';
 import 'package:challenge_app/core/constants/app_routes.dart';
+import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
+import 'package:challenge_app/features/challenge_details/data/models/challenge_response_model.dart';
+import 'package:challenge_app/features/challenge_details/presentation/manager/specific_challenge_response_provider/specific_challenge_response_provider.dart';
 import 'package:challenge_app/features/challenge_details/presentation/widgets/like_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../reusable_components/action_button.dart';
 import '../../../reusable_components/back_button_shadow_box.dart';
 import '../widgets/user_details_card.dart';
 
-class ChallengeResponseCardDetails extends StatelessWidget {
-  const ChallengeResponseCardDetails({Key? key}) : super(key: key);
+class ChallengeResponseCardDetails extends ConsumerWidget {
+  final String responseUserId;
+  const ChallengeResponseCardDetails(this.responseUserId,{Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Row(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 textDirection: TextDirection.ltr,
-                 children: const [
-                    BackButtonBox(),
-                    SizedBox(
-                     width: 10,
-                   ),
-                   Expanded(
-                       child: _BuildChallengeResponseCard()
-                   )
-                  ],
-                 ),
-              ),
+  Widget build(BuildContext context,WidgetRef ref) {
+    final challengeResponseState = ref.watch(specificChallengeResponseProvider(responseUserId));
 
-              SliverToBoxAdapter(child: SizedBox(height: 22,)),
-              _BuildUserDetailsCard(),
+    if(challengeResponseState is SpecificChallengeResponseLoading){
+      return const _BuildLoadingWidget();
+    }else if(challengeResponseState is SpecificChallengeResponseError){
+      return _BuildErrorWidget(challengeResponseState.message);
 
-              SliverToBoxAdapter(child: SizedBox(height: 22,)),
-              _BuildCodeSection()
+    }else if(challengeResponseState is SpecificChallengeResponseDataFetched){
+      final responseModel = ref.watch(specificChallengeResponseProvider(responseUserId).notifier).responseModel;
 
-            ],
+      return Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    textDirection: TextDirection.ltr,
+                    children: [
+                      const BackButtonBox(),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                          child: _BuildChallengeResponseCard(responseModel)
+                      )
+                    ],
+                  ),
+                ),
+
+                const SliverToBoxAdapter(child: SizedBox(height: 22,)),
+                _BuildUserDetailsCard(
+                  responseModel
+                ),
+
+                const SliverToBoxAdapter(child: SizedBox(height: 22,)),
+                _BuildCodeSection(repositoryUrl:responseModel.repositoryUrl!)
+
+              ],
+            ),
           ),
         ),
-      ),
+      );
+    }
 
-    );
+    return const SizedBox.shrink();
   }
 }
 
-class _BuildChallengeResponseCard extends StatelessWidget {
-  const _BuildChallengeResponseCard({Key? key}) : super(key: key);
+class _BuildChallengeResponseCard extends ConsumerWidget {
+  final ChallengeResponseModel responseModel;
+  const _BuildChallengeResponseCard(this.responseModel,{Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+
     return Column(
       children: [
         const SizedBox(
@@ -65,25 +87,19 @@ class _BuildChallengeResponseCard extends StatelessWidget {
             child: Placeholder()
           ),
         ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            "Snowing Background",
-            style: context.textTheme.titleMedium!.copyWith(fontSize: 19),
-          ),
-        ),
       ],
     );
   }
 }
 
 class _BuildUserDetailsCard extends StatelessWidget {
-  const _BuildUserDetailsCard({Key? key}) : super(key: key);
+  final ChallengeResponseModel responseModel;
+  const _BuildUserDetailsCard(this.responseModel,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: context.theme.backgroundColor,
+      backgroundColor: context.theme.scaffoldBackgroundColor,
       leading: const SizedBox.shrink(),
 
       bottom: PreferredSize(
@@ -91,24 +107,26 @@ class _BuildUserDetailsCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           textDirection: TextDirection.ltr,
-          children: const[
+          children:[
             Flexible(
               child: UserDetailsCard(
                 width: double.infinity,
                 height: 55,
                 imageUrl: '',
-                name: "Ibrahim eltayfe",
-                title: 'Flutter Developer',
+                name: responseModel.userModel!.name!,
+                title:  responseModel.userModel!.title!,
                 nameFontSize: 19,
                 titleFontSize: 15,
                 imageSize: 55,
               ),
             ),
+
             LikeContainer(
               isActive: false,
-              numOfLikes: 40,
+              numOfLikes: responseModel.numOfLikes!,
             ),
-            SizedBox(width:10)
+
+            const SizedBox(width:10)
           ],
         ),
       ),
@@ -117,7 +135,8 @@ class _BuildUserDetailsCard extends StatelessWidget {
 }
 
 class _BuildCodeSection extends StatelessWidget {
-  const _BuildCodeSection({Key? key}) : super(key: key);
+  final String repositoryUrl;
+  const _BuildCodeSection({Key? key, required this.repositoryUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -127,18 +146,18 @@ class _BuildCodeSection extends StatelessWidget {
           textDirection: TextDirection.ltr,
           children: [
             Text(
-              "Code",style: context.textTheme.titleLarge,
+              context.localization.code,style: context.textTheme.titleLarge,
             ),
 
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
 
-            _BuildGithubCard(),
+            _BuildGithubCard(repositoryUrl),
 
             const SizedBox(height: 9,),
             ActionButton(
                 width: 380,
                 height: 47,
-                title: 'Explore Code',
+                title: context.localization.exploreCode,
                 onTap: (){
                   Navigator.pushNamed(context, AppRoutes.repositoryFileExplorerRoute);
                 }
@@ -150,7 +169,8 @@ class _BuildCodeSection extends StatelessWidget {
 }
 
 class _BuildGithubCard extends StatelessWidget {
-  const _BuildGithubCard({Key? key}) : super(key: key);
+  final String repositoryUrl;
+  const _BuildGithubCard(this.repositoryUrl,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -167,9 +187,9 @@ class _BuildGithubCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             textDirection: TextDirection.ltr,
             children: [
-              FaIcon(AppIcons.githubFa,size: 30,),
+              const FaIcon(AppIcons.githubFa,size: 30,),
 
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               Text(
                   "Github",
                   style: context.textTheme.titleMedium
@@ -177,11 +197,11 @@ class _BuildGithubCard extends StatelessWidget {
             ],
           ),
 
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Padding(
-            padding: const EdgeInsets.only(left: 12),
+            padding: const EdgeInsetsDirectional.only(end: 12),
             child: Text(
-              "https://github.com/ibrahimeltayfe/weather-app",
+              repositoryUrl,
               style: context.textTheme.titleMedium!.copyWith(
                   decoration: TextDecoration.underline
               ),
@@ -191,6 +211,43 @@ class _BuildGithubCard extends StatelessWidget {
 
           SizedBox(height: 4,),
         ],
+      ),
+    );
+  }
+}
+
+class _BuildErrorWidget extends StatelessWidget {
+  final String message;
+  const _BuildErrorWidget(this.message,{Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Text(
+          message,
+          style: context.textTheme.titleMedium,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}
+
+class _BuildLoadingWidget extends StatelessWidget {
+  const _BuildLoadingWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: CircularProgressIndicator(color: context.theme.primaryColor,),
+          ),
+        ),
       ),
     );
   }

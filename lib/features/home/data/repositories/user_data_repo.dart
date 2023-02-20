@@ -1,11 +1,10 @@
 import 'dart:developer';
 import 'package:challenge_app/config/type_def.dart';
-import 'package:challenge_app/core/common/user_model.dart';
+import 'package:challenge_app/core/common/models/user_model.dart';
 import 'package:dartz/dartz.dart';
 import '../../../../../core/error_handling/exceptions.dart';
 import '../../../../../core/error_handling/failures.dart';
 import '../../../../../core/utils/network_checker.dart';
-import '../../../../core/common/no_context_localization.dart';
 import '../data_sources/user_data_remote.dart';
 
 abstract class UserDataRepository{

@@ -1,5 +1,7 @@
+import 'dart:developer';
+
 import 'package:challenge_app/config/providers.dart';
-import 'package:challenge_app/core/common/user_model.dart';
+import 'package:challenge_app/core/common/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -33,5 +35,26 @@ class UserDataProvider extends StateNotifier<UserDataState> {
       }
     );
 
+  }
+
+  bool isBookmarked(String id){
+    if(userModel == null){
+      return false;
+    }
+
+    return userModel!.bookmarks!.contains(id);
+  }
+
+  void removeBookmarkFromModel(String challengeId){
+    state = UserDataLoading();
+
+    userModel!.bookmarks!.remove(challengeId);
+    state = UserDataFetched();
+  }
+
+  void addBookmarkToModel(String challengeId){
+    state = UserDataLoading();
+    userModel!.bookmarks!.add(challengeId);
+    state = UserDataFetched();
   }
 }

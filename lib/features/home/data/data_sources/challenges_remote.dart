@@ -4,7 +4,7 @@ import '../../../../core/constants/end_points.dart';
 
 const int docsFetchLimit = 5;
 
-class ChallengeRemote{
+class ChallengesRemote{
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
   DocumentSnapshot? _lastTrendyChallenge;
   DocumentSnapshot? _lastNewChallenge;

@@ -1,8 +1,7 @@
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:challenge_app/features/home/data/models/challenge_model.dart';
 import 'package:flutter/material.dart';
-
+import '../../core/common/models/challenge_model.dart';
 import '../../core/constants/app_routes.dart';
 import 'bookmark_button.dart';
 

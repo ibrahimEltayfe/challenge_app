@@ -5,8 +5,8 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/error_handling/exceptions.dart';
 import '../../../../../core/error_handling/failures.dart';
 import '../../../../../core/utils/network_checker.dart';
-import '../data_sources/challenge_remote.dart';
-import '../models/challenge_model.dart';
+import '../../../../core/common/models/challenge_model.dart';
+import '../data_sources/challenges_remote.dart';
 
 abstract class ChallengeRepository{
   FutureEither<List<ChallengeModel>> fetchTrendyChallenges();
@@ -16,7 +16,7 @@ abstract class ChallengeRepository{
 }
 
 class ChallengeRepositoryImpl implements ChallengeRepository{
-  final ChallengeRemote challengeDataRemote;
+  final ChallengesRemote challengeDataRemote;
   final NetworkInfo _connectionChecker;
   const ChallengeRepositoryImpl(this.challengeDataRemote, this._connectionChecker);
 
@@ -46,7 +46,7 @@ class ChallengeRepositoryImpl implements ChallengeRepository{
     challengeDataRemote.resetPagination();
   }
 
-  Future<Either<Failure, List<ChallengeModel>>> _handleFailures<type>(Future<QuerySnapshot<Map<String, dynamic>>> Function() task) async{
+  Future<Either<Failure, List<ChallengeModel>>> _handleFailures(Future<QuerySnapshot<Map<String, dynamic>>> Function() task) async{
     if(await _connectionChecker.isConnected) {
       try{
         final QuerySnapshot<Map<String, dynamic>> results = await task();

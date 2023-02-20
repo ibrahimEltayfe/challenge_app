@@ -18,4 +18,5 @@ class UserDataRemote{
     return await _fs.collection(EndPoints.users).doc(currentUser.uid).get();
   }
 
+
 }
