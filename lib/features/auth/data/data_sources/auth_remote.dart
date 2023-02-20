@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:challenge_app/core/constants/end_points.dart';
-import 'package:challenge_app/core/common/user_model.dart';
+import 'package:challenge_app/core/common/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';

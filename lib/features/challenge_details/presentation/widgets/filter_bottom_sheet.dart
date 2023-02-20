@@ -2,8 +2,29 @@ import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../../core/constants/app_icons.dart';
 import '../../../reusable_components/action_button.dart';
+
+class FilterButton extends StatelessWidget {
+
+  const FilterButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () {
+          Scaffold.of(context).showBottomSheet((_){
+            return const FilterBottomSheet();
+          });
+        },
+        child: const FaIcon(
+          AppIcons.filterFa,
+          size: 25,
+        ));
+  }
+}
 
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({Key? key}) : super(key: key);

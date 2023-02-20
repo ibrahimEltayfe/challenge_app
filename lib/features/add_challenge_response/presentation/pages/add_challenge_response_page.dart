@@ -46,10 +46,10 @@ class _AddChallengeResponsePageState extends State<AddChallengeResponsePage> {
 
                 const _BuildMediaContainer(),
 
-                const SizedBox(height: 28,),
+                const SizedBox(height: 38,),
                 const _BuildGithubTitleBar(),
 
-                const SizedBox(height: 15,),
+                const SizedBox(height: 14,),
                 _BuildInputForm(scrollController: scrollController)
               ],
             ),
@@ -245,15 +245,12 @@ class _BuildInputForm extends StatefulWidget {
 }
 
 class _BuildInputFormState extends State<_BuildInputForm> {
-  final usernameController = TextEditingController();
-  final repositoryNameController = TextEditingController();
-  final branchNameController = TextEditingController();
+  final repositoryUrlController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    usernameController.dispose();
-    repositoryNameController.dispose();
-    branchNameController.dispose();
+    repositoryUrlController.dispose();
     super.dispose();
   }
 
@@ -262,34 +259,22 @@ class _BuildInputFormState extends State<_BuildInputForm> {
     return SizedBox(
       height: 300,
       child: Form(
+        key: _formKey,
         child: ListView(
           controller:widget.scrollController,
           children: [
             InputTextField(
                 height: 56,
-                hint: "Github username",
-                controller: usernameController,
-                textInputAction: TextInputAction.next
+                hint: "Github Repository Url",
+                controller: repositoryUrlController,
+                textInputAction: TextInputAction.done,
+                validator: (val){
+                  if(val!.isEmpty){
+                    return context.localization.fieldIsEmptyError;
+                  }
+                },
             ),
             const SizedBox(height: 12,),
-
-            InputTextField(
-                height: 56,
-                hint: "Repository name",
-                controller: repositoryNameController,
-                textInputAction: TextInputAction.next
-            ),
-            const SizedBox(height: 12,),
-
-            InputTextField(
-                height: 56,
-                hint: "Branch name",
-                controller: branchNameController,
-                textInputAction: TextInputAction.next
-            ),
-
-            const SizedBox(height: 12,),
-
 
             ActionButton(
                 title: context.localization.shareYourCreativity,
@@ -313,11 +298,11 @@ class _BuildGithubTitleBar extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FaIcon(AppIcons.githubFa,size: 26,),
+        const FaIcon(AppIcons.githubFa,size: 26,),
 
-        SizedBox(width: 5,),
+        const SizedBox(width: 5,),
 
-        Expanded(child: Text("Kindly fill the data below to fetch your repository:",style: context.textTheme.titleMedium,))
+        Expanded(child: Text(context.localization.addYourRepositoryUrl,style: context.textTheme.titleMedium,))
       ],
     );
   }

@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'dart:ui';
-import 'package:challenge_app/core/constants/app_lottie.dart';
-import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/sliver_convertor.dart';

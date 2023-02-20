@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:challenge_app/core/extensions/mediaquery_size.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/home/presentation/manager/user_data_provider/user_data_provider.dart';
@@ -5,7 +7,7 @@ import 'package:challenge_app/features/reusable_components/challenge_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/models/challenge_model.dart';
+import '../../../../../core/common/models/challenge_model.dart';
 
 class HorizontalList extends StatelessWidget {
   final List<ChallengeModel> challengeModels;
@@ -57,7 +59,6 @@ class HorizontalList extends StatelessWidget {
                child: Consumer(
                  builder: (_,ref,child) {
                    ref.watch(userDataProvider.select((state) => state is UserDataFetched));
-                   final userData = ref.watch(userDataProvider.notifier).userModel;
 
                    return ListView.separated(
                      separatorBuilder: (context, i) => const SizedBox(width: 20,),
@@ -65,9 +66,7 @@ class HorizontalList extends StatelessWidget {
                      scrollDirection: Axis.horizontal,
                      itemCount: challengeModels.length,
                      itemBuilder: (context, i) {
-                       final userLikes =  userData?.bookmarks ?? [];
-                       final isBookmarked = userLikes.contains(challengeModels[i].id);
-
+                       final isBookmarked = ref.watch(userDataProvider.notifier).isBookmarked(challengeModels[i].id!);
                        return ChallengeItem(
                          challengeModel: challengeModels[i],
                          isBookmarkActive: isBookmarked,

@@ -111,7 +111,7 @@ class RoutesManager{
 
       case AppRoutes.challengeRespondCardDetailsRoute:
         return MaterialPageRoute(
-            builder: (_)=> const ChallengeResponseCardDetails(),
+            builder: (_)=> ChallengeResponseCardDetails(settings.arguments.toString()),
             settings: settings
         );
 

@@ -1,4 +1,4 @@
-import 'package:challenge_app/features/home/data/models/challenge_model.dart';
+import '../../../../../core/common/models/challenge_model.dart';
 import 'package:challenge_app/features/home/presentation/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 
