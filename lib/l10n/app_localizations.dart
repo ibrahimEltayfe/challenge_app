@@ -291,6 +291,18 @@ abstract class AppLocalizations {
   /// **'Explore Code'**
   String get exploreCode;
 
+  /// No description provided for @code.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get code;
+
+  /// No description provided for @addYourRepositoryUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add this project`s github url:'**
+  String get addYourRepositoryUrl;
+
   /// No description provided for @unExpectedError.
   ///
   /// In en, this message translates to:
@@ -489,6 +501,12 @@ abstract class AppLocalizations {
   /// **'please enter your name'**
   String get nameIsEmptyError;
 
+  /// No description provided for @fieldIsEmptyError.
+  ///
+  /// In en, this message translates to:
+  /// **'this field is required'**
+  String get fieldIsEmptyError;
+
   /// No description provided for @passwordLengthError.
   ///
   /// In en, this message translates to:
@@ -524,6 +542,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Data Found.'**
   String get noDataError;
+
+  /// No description provided for @noShares.
+  ///
+  /// In en, this message translates to:
+  /// **'no shares on this challenge for now.'**
+  String get noShares;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

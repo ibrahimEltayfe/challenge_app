@@ -35,6 +35,8 @@
   "socialLinks":"Social links",
 
   "exploreCode":"Explore Code",
+  "code" : "Code",
+  "addYourRepositoryUrl" : "Please add this project`s github url:",
 
   "unExpectedError" : "something went wrong, please try again later.",
   "noInternetError":"no internet",
@@ -75,6 +77,7 @@
   "emailIsEmptyError" : "please enter your email",
   "passwordIsEmptyError" : "please enter your password",
   "nameIsEmptyError" : "please enter your name",
+  "fieldIsEmptyError" : "this field is required",
   "passwordLengthError" : "please enter at least 6 letter",
   "nameLengthError" : "this field can not exceed 20 letter",
 
@@ -83,7 +86,8 @@
 
   "resetPasswordLinkSent" : "Your reset password link sent to your account.",
 
-  "noDataError" : "No Data Found."
+  "noDataError" : "No Data Found.",
 
+  "noShares": "no shares on this challenge for now."
 
 }

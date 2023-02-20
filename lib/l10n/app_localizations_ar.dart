@@ -104,6 +104,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get exploreCode => 'تصفح الكود';
 
   @override
+  String get code => 'الكود';
+
+  @override
+  String get addYourRepositoryUrl => 'من فضلك اضف رابط github الخاص بهذا المشروع';
+
+  @override
   String get unExpectedError => 'حدث خطأ, برجاء المحاولة مرة اخرى.';
 
   @override
@@ -200,7 +206,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get passwordIsEmptyError => 'من فضلك ادخل كلمة السر';
 
   @override
-  String get nameIsEmptyError => 'هذا الحقل مطلوب';
+  String get nameIsEmptyError => 'من فضلك ادخل اسمك';
+
+  @override
+  String get fieldIsEmptyError => 'هذا الحقل مطلوب';
 
   @override
   String get passwordLengthError => 'من فضلك أدخل على الأقل ٦ أرقام أو حروف';
@@ -219,4 +228,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get noDataError => 'لا توجد معلومات حالية.';
+
+  @override
+  String get noShares => 'لا توجد مشاركات حالية.';
 }

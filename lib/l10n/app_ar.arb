@@ -35,6 +35,8 @@
   "socialLinks": "روابط التواصل",
 
   "exploreCode": "تصفح الكود",
+  "code" : "الكود",
+  "addYourRepositoryUrl" : "من فضلك اضف رابط github الخاص بهذا المشروع",
 
   "unExpectedError" : "حدث خطأ, برجاء المحاولة مرة اخرى.",
   "noInternetError":"لا يوجد انترنت",
@@ -74,7 +76,8 @@
 
   "emailIsEmptyError" : "من فضلك ادخل البريد الإلكترونى",
   "passwordIsEmptyError" : "من فضلك ادخل كلمة السر",
-  "nameIsEmptyError" : "هذا الحقل مطلوب",
+  "nameIsEmptyError" : "من فضلك ادخل اسمك",
+  "fieldIsEmptyError" : "هذا الحقل مطلوب",
   "passwordLengthError" : "من فضلك أدخل على الأقل ٦ أرقام أو حروف",
   "nameLengthError" : "هذا الحقل يجب أن لا يتعدى ٢٠ حرف",
 
@@ -83,6 +86,8 @@
 
   "resetPasswordLinkSent" : "تم إرسال رابط إعادة تعيين كلمة المرور الخاصة بك الى بريدك الإلكترونى",
 
-  "noDataError" : "لا توجد معلومات حالية."
+  "noDataError" : "لا توجد معلومات حالية.",
+
+  "noShares": "لا توجد مشاركات حالية."
 
 }

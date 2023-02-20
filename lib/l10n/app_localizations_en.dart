@@ -104,6 +104,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exploreCode => 'Explore Code';
 
   @override
+  String get code => 'Code';
+
+  @override
+  String get addYourRepositoryUrl => 'Please add this project`s github url:';
+
+  @override
   String get unExpectedError => 'something went wrong, please try again later.';
 
   @override
@@ -203,6 +209,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nameIsEmptyError => 'please enter your name';
 
   @override
+  String get fieldIsEmptyError => 'this field is required';
+
+  @override
   String get passwordLengthError => 'please enter at least 6 letter';
 
   @override
@@ -219,4 +228,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noDataError => 'No Data Found.';
+
+  @override
+  String get noShares => 'no shares on this challenge for now.';
 }
