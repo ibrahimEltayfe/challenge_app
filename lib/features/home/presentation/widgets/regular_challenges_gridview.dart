@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sliver_tools/sliver_tools.dart' show MultiSliver, SliverPinnedHeader;
 import '../../../reusable_components/challenge_item.dart';
-import '../../data/models/challenge_model.dart';
+import '../../../../../core/common/models/challenge_model.dart';
 import '../manager/user_data_provider/user_data_provider.dart';
 
 class RegularChallengesSliverGrid extends ConsumerWidget {
@@ -17,6 +17,12 @@ class RegularChallengesSliverGrid extends ConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
     final challengesState = ref.watch(regularChallengesProvider);
     final List<ChallengeModel> challenges = ref.watch(regularChallengesProvider.notifier).challengeModels;
+
+    if(challenges.isEmpty){
+      return const SliverToBoxAdapter(
+        child: SizedBox.shrink(),
+      );
+    }
 
     return MultiSliver(
       pushPinnedChildren: true,
@@ -53,8 +59,7 @@ class RegularChallengesSliverGrid extends ConsumerWidget {
                 ),
                 itemCount: challenges.length,
                 itemBuilder: (context, index) {
-                  final userLikes =  userData?.bookmarks ?? [];
-                  final isBookmarked = userLikes.contains(challenges[index].id);
+                  final isBookmarked =  ref.watch(userDataProvider.notifier).isBookmarked(challenges[index].id!);
 
                   return ChallengeItem(
                     isBookmarkActive: isBookmarked,

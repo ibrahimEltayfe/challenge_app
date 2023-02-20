@@ -3,9 +3,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 import '../../../../../config/providers.dart';
-import '../../../data/data_sources/challenge_remote.dart' show docsFetchLimit;
-import '../../../data/models/challenge_model.dart';
-import '../../../data/repositories/challenge_repo.dart';
+import '../../../data/data_sources/challenges_remote.dart' show docsFetchLimit;
+import '../../../../../core/common/models/challenge_model.dart';
+import '../../../data/repositories/challenges_repo.dart';
 part 'regular_challenges_state.dart';
 
 final regularChallengesProvider = StateNotifierProvider<RegularChallengesProvider,RegularChallengesState>(

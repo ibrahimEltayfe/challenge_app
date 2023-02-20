@@ -1,13 +1,11 @@
 import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:riverpod/riverpod.dart';
-
 import '../../../../../config/providers.dart';
-import '../../../data/data_sources/challenge_remote.dart' show docsFetchLimit;
-import '../../../data/models/challenge_model.dart';
-import '../../../data/repositories/challenge_repo.dart';
+import '../../../../../core/common/models/challenge_model.dart';
+import '../../../data/data_sources/challenges_remote.dart' show docsFetchLimit;
+import '../../../data/repositories/challenges_repo.dart';
 part 'new_challenges_state.dart';
 
 final newChallengesProvider = StateNotifierProvider<NewChallengesProvider,NewChallengesState>(
