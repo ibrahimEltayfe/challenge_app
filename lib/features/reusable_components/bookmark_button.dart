@@ -4,6 +4,7 @@ import 'package:challenge_app/core/constants/app_icons.dart';
 import 'package:challenge_app/core/constants/app_lottie.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/home/presentation/manager/bookmark_challenge_provider/bookmark_challenge_provider.dart';
+import 'package:challenge_app/features/home/presentation/manager/trendy_challenges_provider/trendy_challenges_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -45,6 +46,20 @@ class _BookmarkButtonState extends State<BookmarkButton> with SingleTickerProvid
   }
 
   @override
+  void didUpdateWidget(covariant BookmarkButton oldWidget) {
+    //to update bookmark`s value after navigating back
+    //Ex: going to details page => change bookmark value => go back to home
+    if(oldWidget.isActive != widget.isActive){
+      if(widget.isActive){
+        animationController.value = 1;
+      }else{
+        animationController.value = 0;
+      }
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     animationController.dispose();
     super.dispose();
@@ -66,6 +81,8 @@ class _BookmarkButtonState extends State<BookmarkButton> with SingleTickerProvid
                   userId: userData?.uid ?? ''
               );
 
+              ref.watch(userDataProvider.notifier).removeBookmarkFromModel(widget.challengeId);
+
               animationController.reverse();
               isActiveStatus = false;
             }else{
@@ -73,6 +90,8 @@ class _BookmarkButtonState extends State<BookmarkButton> with SingleTickerProvid
                   challengeId: widget.challengeId,
                   userId: userData?.uid ?? ''
               );
+
+              ref.watch(userDataProvider.notifier).addBookmarkToModel(widget.challengeId);
 
               animationController.forward();
               isActiveStatus = true;

@@ -1,4 +1,5 @@
 import 'package:challenge_app/config/providers.dart';
+import 'package:challenge_app/features/home/presentation/manager/user_data_provider/user_data_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -23,7 +24,7 @@ class BookmarkChallengeProvider extends StateNotifier<BookmarkChallengeState> {
         state = BookmarkChallengeError(failure.message);
       },
       (results){
-        state = BookmarkChallengeAdded();
+        state = BookmarkChallengeAdded(challengeId);
       }
     );
   }
@@ -37,7 +38,7 @@ class BookmarkChallengeProvider extends StateNotifier<BookmarkChallengeState> {
           state = BookmarkChallengeError(failure.message);
         },
         (results){
-          state = BookmarkChallengeRemoved();
+          state = BookmarkChallengeRemoved(challengeId);
         }
     );
   }

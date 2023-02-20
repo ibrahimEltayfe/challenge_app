@@ -11,9 +11,23 @@ class BookmarkChallengeInitial extends BookmarkChallengeState {}
 
 class BookmarkChallengeLoading extends BookmarkChallengeState {}
 
-class BookmarkChallengeAdded extends BookmarkChallengeState {}
+class BookmarkChallengeAdded extends BookmarkChallengeState {
+  final String challengeId;
+  const BookmarkChallengeAdded(this.challengeId);
 
-class BookmarkChallengeRemoved extends BookmarkChallengeState {}
+  @override
+  // TODO: implement props
+  List<Object> get props => [challengeId];
+}
+
+class BookmarkChallengeRemoved extends BookmarkChallengeState {
+  final String challengeId;
+  const BookmarkChallengeRemoved(this.challengeId);
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [challengeId];
+}
 
 class BookmarkChallengeError extends BookmarkChallengeState {
   final String message;

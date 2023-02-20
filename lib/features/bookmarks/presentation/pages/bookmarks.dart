@@ -1,6 +1,5 @@
-import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
-import 'package:challenge_app/features/home/data/models/challenge_model.dart';
+import '../../../../../core/common/models/challenge_model.dart';
 import 'package:challenge_app/features/reusable_components/challenge_item.dart';
 import 'package:flutter/material.dart';
 
