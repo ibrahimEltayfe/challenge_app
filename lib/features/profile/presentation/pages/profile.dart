@@ -86,8 +86,11 @@ class _BuildBasicUserDetails extends StatelessWidget {
 
         const SizedBox(height: 6,),
         LikeContainer(
-            numOfLikes: 40,
-            isActive: true
+         numOfLikes: 40,
+          isActive: true,
+          responseId: '',
+          maxWidth: 75,
+          maxHeight: 29,
         ),
 
         SizedBox(height: 20,),
