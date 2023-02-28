@@ -1,15 +1,9 @@
 import 'dart:developer';
-
-import 'package:challenge_app/core/constants/app_icons.dart';
 import 'package:challenge_app/core/constants/app_lottie.dart';
-import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/home/presentation/manager/bookmark_challenge_provider/bookmark_challenge_provider.dart';
-import 'package:challenge_app/features/home/presentation/manager/trendy_challenges_provider/trendy_challenges_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
-
 import '../home/presentation/manager/user_data_provider/user_data_provider.dart';
 
 class BookmarkButton extends StatefulWidget {
@@ -76,22 +70,18 @@ class _BookmarkButtonState extends State<BookmarkButton> with SingleTickerProvid
             bool isActiveStatus = widget.isActive;
 
             if(isActiveStatus){
-              await ref.read(bookmarkChallengeProvider.notifier).removeFromBookmarks(
+               ref.read(bookmarkChallengeProvider.notifier).removeFromBookmarks(
                   challengeId: widget.challengeId,
                   userId: userData?.uid ?? ''
               );
-
-              ref.watch(userDataProvider.notifier).removeBookmarkFromModel(widget.challengeId);
 
               animationController.reverse();
               isActiveStatus = false;
             }else{
-              await ref.read(bookmarkChallengeProvider.notifier).addToBookmarks(
+               ref.read(bookmarkChallengeProvider.notifier).addToBookmarks(
                   challengeId: widget.challengeId,
                   userId: userData?.uid ?? ''
               );
-
-              ref.watch(userDataProvider.notifier).addBookmarkToModel(widget.challengeId);
 
               animationController.forward();
               isActiveStatus = true;

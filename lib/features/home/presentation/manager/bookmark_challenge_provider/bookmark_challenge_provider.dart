@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:challenge_app/config/providers.dart';
 import 'package:challenge_app/features/home/presentation/manager/user_data_provider/user_data_provider.dart';
 import 'package:equatable/equatable.dart';
@@ -7,12 +9,13 @@ import '../../../data/repositories/user_bookmarks_manager_repo.dart';
 part 'bookmark_challenge_state.dart';
 
 final bookmarkChallengeProvider = StateNotifierProvider<BookmarkChallengeProvider,BookmarkChallengeState>(
-  (ref) => BookmarkChallengeProvider(ref.read(userBookmarksManagerRepositoryProvider))
+  (ref) => BookmarkChallengeProvider(ref.read(userBookmarksManagerRepositoryProvider),ref)
 );
 
 class BookmarkChallengeProvider extends StateNotifier<BookmarkChallengeState> {
   final UserBookmarksManagerRepository bookmarksManagerRepository;
-  BookmarkChallengeProvider(this.bookmarksManagerRepository) : super(BookmarkChallengeInitial());
+  final StateNotifierProviderRef _ref;
+  BookmarkChallengeProvider(this.bookmarksManagerRepository,this._ref) : super(BookmarkChallengeInitial());
 
   Future<void> addToBookmarks({required String challengeId,required String userId}) async{
     state = BookmarkChallengeLoading();
@@ -24,6 +27,7 @@ class BookmarkChallengeProvider extends StateNotifier<BookmarkChallengeState> {
         state = BookmarkChallengeError(failure.message);
       },
       (results){
+        _ref.watch(userDataProvider.notifier).addBookmarkToModel(challengeId);
         state = BookmarkChallengeAdded(challengeId);
       }
     );
@@ -38,6 +42,7 @@ class BookmarkChallengeProvider extends StateNotifier<BookmarkChallengeState> {
           state = BookmarkChallengeError(failure.message);
         },
         (results){
+          _ref.watch(userDataProvider.notifier).removeBookmarkFromModel(challengeId);
           state = BookmarkChallengeRemoved(challengeId);
         }
     );

@@ -54,6 +54,7 @@ class UserDataProvider extends StateNotifier<UserDataState> {
 
   void addBookmarkToModel(String challengeId){
     state = UserDataLoading();
+
     userModel!.bookmarks!.add(challengeId);
     state = UserDataFetched();
   }

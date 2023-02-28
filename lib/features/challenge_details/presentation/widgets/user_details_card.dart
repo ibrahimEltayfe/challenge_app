@@ -39,12 +39,12 @@ class UserDetailsCard extends StatelessWidget {
              SizedBox(
                width: imageSize,
                height: imageSize,
-               child: CircleAvatar(
+               child: const CircleAvatar(
                  backgroundColor: Colors.grey,
                ),
              ),
 
-            SizedBox(width: 4,),
+            const SizedBox(width: 4,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
