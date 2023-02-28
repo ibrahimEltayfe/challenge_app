@@ -6,7 +6,7 @@ class ChallengeResponseModel{
   final String? id;
   final int? numOfLikes;
   final List<dynamic>? media;
-  final String? repositoryUrl;
+  final String? githubRepositoryId;
   final String? userId;
   UserModel? userModel;
 
@@ -16,7 +16,7 @@ class ChallengeResponseModel{
     required this.id,
     required this.numOfLikes,
     required this.media,
-    required this.repositoryUrl,
+    required this.githubRepositoryId,
     required this.userId,
     this.userModel
   });
@@ -28,7 +28,7 @@ class ChallengeResponseModel{
       if(id != null) 'id': id,
       if(numOfLikes != null) 'numOfLikes':numOfLikes,
       if(media != null) 'media': media,
-      if(repositoryUrl != null) 'repositoryId': repositoryUrl!,
+      if(githubRepositoryId != null) 'githubRepositoryId': githubRepositoryId!,
       if(userId != null) 'userId': userId,
     };
   }
@@ -40,7 +40,7 @@ class ChallengeResponseModel{
       id: data['id'] ?? '',
       numOfLikes: (data['numOfLikes']??0).toInt(),
       media: data['media'] ?? [],
-      repositoryUrl: data['repositoryUrl'] ?? '',
+      githubRepositoryId: data['githubRepositoryId'] ?? '',
       userId: data['userId'] ?? '',
     );
   }

@@ -1,41 +1,41 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:challenge_app/config/providers.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../../../../core/utils/github_helper.dart';
 import 'package:path/path.dart' as path;
+
+import '../../../data/models/github_repository_model.dart';
+import '../../../data/repositories/github_repository.dart';
+import '../specific_challenge_response_provider/specific_challenge_response_provider.dart';
 part 'github_state.dart';
 
 
 final githubProvider = StateNotifierProvider.autoDispose<GithubProvider,GithubState>(
   (ref){
-    final githubRef = ref.read(githubHelperProvider);
-    return GithubProvider(githubRef)..downloadRepository(GithubRepository(
-        repositoryName: 'weather-app',
-        branchName: 'main',
-        userName: 'ibrahimEltayfe'
-    ));
+    final repositoryModel = ref.watch(specificChallengeResponseProvider.notifier).githubRepositoryModel;
+    final githubRepositoryRef = ref.read(githubRepositoryProvider);
+    return GithubProvider(githubRepositoryRef)..downloadRepository(repositoryModel);
  }
 );
 
 class GithubProvider extends StateNotifier<GithubState> {
-  final GithubHelper githubHelper;
-  GithubProvider(this.githubHelper) : super(GithubInitial());
+  final GithubRepository _githubRepository;
+  GithubProvider(this._githubRepository) : super(GithubInitial());
 
-  Future<void> downloadRepository(GithubRepository githubRepository) async{
+  Future<void> downloadRepository(GithubRepositoryModel githubRepository) async{
     state = GithubLoading();
 
     bool localRepoDirectory = await _isRepositoryExistsLocally(githubRepository);
 
     if(!localRepoDirectory){
-      final results = await githubHelper.downloadAndUnZipRepository(githubRepository);
+      final results = await _githubRepository.downloadAndUnZipRepository(githubRepository);
       results.fold(
           (failure){
             state = GithubError(failure.message);
           },
           (_){
-
             state = GithubDataFetched();
           }
       );
@@ -45,7 +45,7 @@ class GithubProvider extends StateNotifier<GithubState> {
 
   }
 
-  Future<bool> _isRepositoryExistsLocally(GithubRepository githubRepository) async{
+  Future<bool> _isRepositoryExistsLocally(GithubRepositoryModel githubRepository) async{
     final dir = await getApplicationDocumentsDirectory();
     Directory repoLocalDirectory = Directory(
         path.join(

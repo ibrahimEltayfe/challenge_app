@@ -1,4 +1,6 @@
+import 'package:challenge_app/features/challenge_details/data/models/github_repository_model.dart';
 import 'package:challenge_app/features/challenge_details/presentation/manager/github_provider/github_provider.dart';
+import 'package:challenge_app/features/challenge_details/presentation/manager/specific_challenge_response_provider/specific_challenge_response_provider.dart';
 import 'package:challenge_app/features/reusable_components/back_button_shadow_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

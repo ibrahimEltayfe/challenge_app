@@ -38,7 +38,36 @@ class ChallengeResponseRemote{
         .get();
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getResponseUserData(String uid) async{
-    return await _fs.collection(EndPoints.users).where('uid',isEqualTo: uid).get();
+   Future getFilteredChallengeResponse(String challengeId, List<String> filterIds) async{
+    final QuerySnapshot<Map<String, dynamic>> responses;
+
+    if(lastChallengeResponse == null){
+      responses = await _fs.collection(EndPoints.challengeResponds)
+          .where("challengeId", isEqualTo: challengeId)
+          .where('categoryIds', arrayContainsAny: filterIds)
+          .limit(responsesFetchLimit)
+          .get();
+    }else{
+      responses = await _fs.collection(EndPoints.challenges)
+          .where("challengeId", isEqualTo: challengeId)
+          .where('categoryIds', arrayContainsAny: filterIds)
+          .startAfterDocument(lastChallengeResponse!)
+          .limit(responsesFetchLimit)
+          .get();
+    }
+
+    if(responses.docs.isNotEmpty){
+      lastChallengeResponse = responses.docs.last;
+    }
+
+    return responses;
+  }
+
+  void reset(){
+    lastChallengeResponse = null;
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getGithubRepositoryData(repositoryId) async{
+    return await _fs.collection(EndPoints.repositories).doc(repositoryId).get();
   }
 }

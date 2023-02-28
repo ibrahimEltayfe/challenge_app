@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'package:challenge_app/core/constants/app_fonts.dart';
 import 'package:challenge_app/config/app_themes.dart';
+import 'package:challenge_app/core/constants/app_lottie.dart';
+import 'package:challenge_app/core/extensions/localization_helper.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
 import 'package:challenge_app/features/app_settings/data/models/app_languages.dart';
 import 'package:challenge_app/features/challenge_details/data/models/file_model.dart';
 import 'package:challenge_app/features/challenge_details/presentation/manager/file_manager/file_manager_provider.dart';
-import 'package:challenge_app/features/challenge_details/presentation/manager/pinned_items_provider/pinned_files_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/common/language_provider/language_provider.dart';
 import '../../../../core/constants/app_icons.dart';
 import '../../data/models/pinned_file_model.dart';
+import '../manager/pinned_files_provider/pinned_files_provider.dart';
 import 'lottie_widget.dart';
 
 class CodeExplorer extends ConsumerWidget {
@@ -43,7 +45,7 @@ class CodeExplorer extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Code",style: context.textTheme.titleLarge,),
+              Text(context.localization.code,style: context.textTheme.titleLarge,),
 
               const SizedBox(height: 8,),
               const _BuildCurrentFilePath(),
@@ -272,13 +274,13 @@ class _BuildFiles extends ConsumerWidget {
     if(fileManagerRef is FileManagerError){
       return LottieWidget(
         message: fileManagerRef.message,
-        lottiePath: 'assets/lottie/error_mark.json',
+        lottiePath: AppLottie.errorMark,
         repeat: false,
       );
     }else if(fileManagerRef is FileManagerLoading){
       return const LottieWidget(
         message: 'Loading Files..',
-        lottiePath: 'assets/lottie/file_loading.json',
+        lottiePath: AppLottie.fileLoading,
       );
     }else if(fileManagerRef is FileManagerFilesFetched){
       final List<FileModel> repoFileModels = fileManagerRef.fileModels;
@@ -321,7 +323,7 @@ class _BuildFileContainer extends ConsumerWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(9),
             border: Border.all(color: Colors.black, width: 1,),
-            color: context.theme.backgroundColor,
+            color: context.theme.scaffoldBackgroundColor,
           ),
 
           child: Row(

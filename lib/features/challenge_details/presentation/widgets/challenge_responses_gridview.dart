@@ -5,6 +5,7 @@ import 'package:challenge_app/features/challenge_details/presentation/manager/ch
 import 'package:challenge_app/features/challenge_details/presentation/manager/challenge_response_provider/challenge_responses_provider.dart';
 import 'package:challenge_app/features/challenge_details/presentation/widgets/like_container.dart';
 import 'package:challenge_app/features/challenge_details/presentation/widgets/user_details_card.dart';
+import 'package:challenge_app/features/home/presentation/manager/user_data_provider/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/theme_helper.dart';
@@ -76,19 +77,19 @@ class ChallengeRespondCard extends ConsumerWidget {
     return ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         child: Column(
-              children:[
-                _BuildResponseCard(responseModel),
+            children:[
+              _BuildResponseCard(responseModel),
 
-                const SizedBox(height: 10,),
+              const SizedBox(height: 10,),
 
-                UserDetailsCard(
-                  height: 40,
-                  imageUrl: responseModel.userModel!.image!,
-                  name: responseModel.userModel!.name!,
-                  title: responseModel.userModel!.title!,
-                )
-              ],
-            )
+              UserDetailsCard(
+                height: 40,
+                imageUrl: responseModel.userModel!.image!,
+                name: responseModel.userModel!.name!,
+                title: responseModel.userModel!.title!,
+              )
+            ],
+          )
     );
   }
 }
@@ -99,6 +100,8 @@ class _BuildResponseCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    final userData = ref.watch(userDataProvider.notifier).userModel;
+
     return Expanded(
       flex: 5,
       child: LayoutBuilder(
@@ -132,7 +135,10 @@ class _BuildResponseCard extends ConsumerWidget {
                       const SizedBox(width: 6,),
                       LikeContainer(
                         numOfLikes:response.numOfLikes!,
-                        isActive:false
+                        isActive: userData!.likes!.contains(response.id),
+                        responseId: response.id!,
+                        maxWidth: size.maxWidth*0.42,
+                        maxHeight: 34
                       ),
 
                       SizedBox(width: 8,),

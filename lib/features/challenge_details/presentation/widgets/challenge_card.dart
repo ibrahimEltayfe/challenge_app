@@ -12,35 +12,10 @@ class ChallengeCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
     ref.watch(userDataProvider.select((state) => state is UserDataFetched));
-    final challengeDetailsState = ref.watch(challengeDetailsProvider);
 
-    if(challengeDetailsState is ChallengeDetailsLoading){
-      return Container(
-        height: 390,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            border: Border.all(color: context.theme.primaryColor),
-            borderRadius: const BorderRadius.all(Radius.circular(10))
-        ),
-        child: CircularProgressIndicator(color: context.theme.primaryColor,),
-      );
-    }else if(challengeDetailsState is ChallengeDetailsError){
-      return Container(
-        height: 390,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            border: Border.all(color: context.theme.primaryColor),
-            borderRadius: const BorderRadius.all(Radius.circular(10))
-        ),
-        child: Text(
-          challengeDetailsState.message,
-          style: context.textTheme.titleMedium,
-        ),
-      );
-    }else if(challengeDetailsState is ChallengeDetailsDataFetched){
-      final challengeModel = ref.watch(challengeDetailsProvider.notifier).challengeModel;
+    final challengeModel = ref.watch(challengeDetailsProvider.notifier).challengeModel;
 
-      return SizedBox(
+    return SizedBox(
         height: 390,
         child: Column(
           children: [
@@ -74,9 +49,6 @@ class ChallengeCard extends ConsumerWidget {
           ],
         ),
       );
-    }
-
-    return const SizedBox.shrink();
 
   }
 }

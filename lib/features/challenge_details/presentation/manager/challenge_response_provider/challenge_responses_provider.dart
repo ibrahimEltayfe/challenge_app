@@ -3,7 +3,6 @@ import 'package:challenge_app/features/challenge_details/data/data_sources/chall
 import 'package:challenge_app/features/challenge_details/data/models/challenge_response_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:riverpod/riverpod.dart';
-
 import '../../../data/repositories/challenge_response_repo.dart';
 part 'challenge_responses_state.dart';
 
@@ -18,10 +17,16 @@ class ChallengeResponseProvider extends StateNotifier<ChallengeResponseState> {
   List<ChallengeResponseModel> responses = [];
 
   bool hasMore = true;
+  bool isFirstFetch = true;
 
   Future getChallengeResponses(String challengeId) async{
     if(!hasMore){
       return;
+    }
+
+    if(isFirstFetch){
+      reset();
+      isFirstFetch = false;
     }
 
     state = ChallengeResponseLoading();
@@ -42,4 +47,42 @@ class ChallengeResponseProvider extends StateNotifier<ChallengeResponseState> {
       }
     );
   }
+
+  Future getFilteredChallengeResponses(String challengeId,List<String> filterIds) async{
+    if(!hasMore){
+      return;
+    }
+
+    if(isFirstFetch){
+      reset();
+      isFirstFetch = false;
+    }
+
+    state = ChallengeResponseLoading();
+    final results = await _challengeResponseRepository.getFilteredChallengeResponds(challengeId,filterIds);
+
+    results.fold(
+         (failure){
+          state = ChallengeResponseError(failure.message);
+        },
+         (results){
+          if(results.length < responsesFetchLimit){
+            hasMore = false;
+          }
+
+          responses.addAll(results);
+
+          state = ChallengeResponseDataFetched();
+        }
+    );
+  }
+
+  void reset(){
+    hasMore = true;
+    isFirstFetch = true;
+    responses = [];
+    _challengeResponseRepository.reset();
+  }
+
+
 }

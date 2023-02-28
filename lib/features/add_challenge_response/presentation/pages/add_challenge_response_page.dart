@@ -245,12 +245,15 @@ class _BuildInputForm extends StatefulWidget {
 }
 
 class _BuildInputFormState extends State<_BuildInputForm> {
-  final repositoryUrlController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final repositoryNameController = TextEditingController();
+  final branchNameController = TextEditingController();
 
   @override
   void dispose() {
-    repositoryUrlController.dispose();
+    usernameController.dispose();
+    repositoryNameController.dispose();
+    branchNameController.dispose();
     super.dispose();
   }
 
@@ -259,23 +262,51 @@ class _BuildInputFormState extends State<_BuildInputForm> {
     return SizedBox(
       height: 300,
       child: Form(
-        key: _formKey,
         child: ListView(
           controller:widget.scrollController,
           children: [
             InputTextField(
                 height: 56,
-                hint: "Github Repository Url",
-                controller: repositoryUrlController,
-                textInputAction: TextInputAction.done,
+                hint: "Github username",
+                controller: usernameController,
+                textInputAction: TextInputAction.next,
                 validator: (val){
                   if(val!.isEmpty){
                     return context.localization.fieldIsEmptyError;
                   }
+                  return null;
                 },
             ),
             const SizedBox(height: 12,),
 
+            InputTextField(
+                height: 56,
+                hint: "Repository name",
+                controller: repositoryNameController,
+                textInputAction: TextInputAction.next,
+                validator: (val){
+                  if(val!.isEmpty){
+                    return context.localization.fieldIsEmptyError;
+                  }
+                  return null;
+                },
+            ),
+            const SizedBox(height: 12,),
+
+            InputTextField(
+                height: 56,
+                hint: "Branch name",
+                controller: branchNameController,
+                textInputAction: TextInputAction.next,
+                validator: (val){
+                  if(val!.isEmpty){
+                    return context.localization.fieldIsEmptyError;
+                  }
+                  return null;
+                },
+            ),
+
+            const SizedBox(height: 12,),
             ActionButton(
                 title: context.localization.shareYourCreativity,
                 onTap: (){

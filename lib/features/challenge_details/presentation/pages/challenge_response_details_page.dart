@@ -1,4 +1,3 @@
-import 'package:challenge_app/core/common/models/user_model.dart';
 import 'package:challenge_app/core/constants/app_icons.dart';
 import 'package:challenge_app/core/constants/app_routes.dart';
 import 'package:challenge_app/core/extensions/localization_helper.dart';
@@ -9,17 +8,33 @@ import 'package:challenge_app/features/challenge_details/presentation/widgets/li
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../home/presentation/manager/user_data_provider/user_data_provider.dart';
 import '../../../reusable_components/action_button.dart';
 import '../../../reusable_components/back_button_shadow_box.dart';
 import '../widgets/user_details_card.dart';
 
-class ChallengeResponseCardDetails extends ConsumerWidget {
+class ChallengeResponseCardDetails extends ConsumerStatefulWidget {
   final String responseUserId;
   const ChallengeResponseCardDetails(this.responseUserId,{Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-    final challengeResponseState = ref.watch(specificChallengeResponseProvider(responseUserId));
+  ConsumerState createState() => _ChallengeResponseCardDetailsState();
+}
+
+class _ChallengeResponseCardDetailsState extends ConsumerState<ChallengeResponseCardDetails> {
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(specificChallengeResponseProvider.notifier).getResponseData(widget.responseUserId);
+    });
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final challengeResponseState = ref.watch(specificChallengeResponseProvider);
 
     if(challengeResponseState is SpecificChallengeResponseLoading){
       return const _BuildLoadingWidget();
@@ -27,7 +42,7 @@ class ChallengeResponseCardDetails extends ConsumerWidget {
       return _BuildErrorWidget(challengeResponseState.message);
 
     }else if(challengeResponseState is SpecificChallengeResponseDataFetched){
-      final responseModel = ref.watch(specificChallengeResponseProvider(responseUserId).notifier).responseModel;
+      final responseModel = ref.watch(specificChallengeResponseProvider.notifier).responseModel;
 
       return Scaffold(
         body: SafeArea(
@@ -53,11 +68,11 @@ class ChallengeResponseCardDetails extends ConsumerWidget {
 
                 const SliverToBoxAdapter(child: SizedBox(height: 22,)),
                 _BuildUserDetailsCard(
-                  responseModel
+                    responseModel
                 ),
 
                 const SliverToBoxAdapter(child: SizedBox(height: 22,)),
-                _BuildCodeSection(repositoryUrl:responseModel.repositoryUrl!)
+                _BuildCodeSection()
 
               ],
             ),
@@ -69,6 +84,7 @@ class ChallengeResponseCardDetails extends ConsumerWidget {
     return const SizedBox.shrink();
   }
 }
+
 
 class _BuildChallengeResponseCard extends ConsumerWidget {
   final ChallengeResponseModel responseModel;
@@ -92,12 +108,14 @@ class _BuildChallengeResponseCard extends ConsumerWidget {
   }
 }
 
-class _BuildUserDetailsCard extends StatelessWidget {
+class _BuildUserDetailsCard extends ConsumerWidget {
   final ChallengeResponseModel responseModel;
   const _BuildUserDetailsCard(this.responseModel,{Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    final userData = ref.watch(userDataProvider.notifier).userModel;
+
     return SliverAppBar(
       backgroundColor: context.theme.scaffoldBackgroundColor,
       leading: const SizedBox.shrink(),
@@ -112,9 +130,9 @@ class _BuildUserDetailsCard extends StatelessWidget {
               child: UserDetailsCard(
                 width: double.infinity,
                 height: 55,
-                imageUrl: '',
+                imageUrl: responseModel.userModel!.image!,
                 name: responseModel.userModel!.name!,
-                title:  responseModel.userModel!.title!,
+                title: responseModel.userModel!.title!,
                 nameFontSize: 19,
                 titleFontSize: 15,
                 imageSize: 55,
@@ -122,8 +140,11 @@ class _BuildUserDetailsCard extends StatelessWidget {
             ),
 
             LikeContainer(
-              isActive: false,
+              isActive: userData!.likes!.contains(responseModel.id),
               numOfLikes: responseModel.numOfLikes!,
+              responseId: responseModel.id!,
+              maxWidth: 90,
+              maxHeight: 50,
             ),
 
             const SizedBox(width:10)
@@ -135,8 +156,7 @@ class _BuildUserDetailsCard extends StatelessWidget {
 }
 
 class _BuildCodeSection extends StatelessWidget {
-  final String repositoryUrl;
-  const _BuildCodeSection({Key? key, required this.repositoryUrl}) : super(key: key);
+  const _BuildCodeSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +171,7 @@ class _BuildCodeSection extends StatelessWidget {
 
             const SizedBox(height: 15,),
 
-            _BuildGithubCard(repositoryUrl),
+            _BuildGithubCard(),
 
             const SizedBox(height: 9,),
             ActionButton(
@@ -168,12 +188,13 @@ class _BuildCodeSection extends StatelessWidget {
   }
 }
 
-class _BuildGithubCard extends StatelessWidget {
-  final String repositoryUrl;
-  const _BuildGithubCard(this.repositoryUrl,{Key? key}) : super(key: key);
+class _BuildGithubCard extends ConsumerWidget {
+  const _BuildGithubCard({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    final githubRepositoryUrl = ref.watch(specificChallengeResponseProvider.notifier).repositoryUrl;
+
     return Container(
       width: 380,
       padding: const EdgeInsets.all(10),
@@ -198,15 +219,20 @@ class _BuildGithubCard extends StatelessWidget {
           ),
 
           const SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: 12),
-            child: Text(
-              repositoryUrl,
-              style: context.textTheme.titleMedium!.copyWith(
-                  decoration: TextDecoration.underline
-              ),
-              textAlign: TextAlign.left,
-            ),
+          Consumer(
+            builder: (context, ref, child) {
+
+              return Padding(
+                padding: const EdgeInsetsDirectional.only(end: 12),
+                child: Text(
+                  githubRepositoryUrl,
+                  style: context.textTheme.titleMedium!.copyWith(
+                      decoration: TextDecoration.underline
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              );
+            },
           ),
 
           SizedBox(height: 4,),

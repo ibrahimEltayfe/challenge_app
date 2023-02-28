@@ -3,35 +3,32 @@ import 'dart:io';
 import 'package:challenge_app/core/error_handling/exceptions.dart';
 import 'package:challenge_app/features/challenge_details/data/models/file_model.dart';
 import 'package:challenge_app/core/common/enums/file_identifier.dart';
+import 'package:challenge_app/features/challenge_details/presentation/manager/specific_challenge_response_provider/specific_challenge_response_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import '../../../../../core/utils/file_helper.dart';
-import '../../../../../core/utils/github_helper.dart';
+import '../../../data/models/github_repository_model.dart';
 part 'file_manager_state.dart';
 
 final fileManagerProvider = StateNotifierProvider.autoDispose<FileManagerProvider,FileManagerState>(
   //todo:pass github repo
   (ref){
     final FileHelper localFileHelper = LocalFileHelper();
-    return FileManagerProvider(localFileHelper)..init();
+    final repositoryModel = ref.read(specificChallengeResponseProvider.notifier).githubRepositoryModel;
+    return FileManagerProvider(localFileHelper,repositoryModel)..init();
   }
 );
 
 class FileManagerProvider extends StateNotifier<FileManagerState> {
   final FileHelper _fileHelper;
-  FileManagerProvider(this._fileHelper) : super(FileManagerInitial());
+  final GithubRepositoryModel githubRepository;
+  FileManagerProvider(this._fileHelper,this.githubRepository) : super(FileManagerInitial());
 
   String mainRepoDirName = '';
   Directory? appDir;
   late List<String> repoFiles = [];
-
-  GithubRepository githubRepository = GithubRepository(
-      repositoryName: 'weather-app',
-      branchName: 'main',
-      userName: 'ibrahimEltayfe'
-  );
 
   Future<void> init() async{
     state = FileManagerLoading();

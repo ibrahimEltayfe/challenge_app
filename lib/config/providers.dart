@@ -10,10 +10,14 @@ import '../features/auth/data/repositories/reset_password_repo.dart';
 import '../features/challenge_details/data/data_sources/challenge_details_remote.dart';
 import '../features/challenge_details/data/data_sources/challenge_response_remote.dart';
 import '../features/challenge_details/data/data_sources/filter_remote.dart';
+import '../features/challenge_details/data/data_sources/github_remote.dart';
+import '../features/challenge_details/data/data_sources/likes_manager_remote.dart';
 import '../features/challenge_details/data/repositories/challenge_details_repo.dart';
 import '../features/challenge_details/data/repositories/challenge_response_repo.dart';
 import '../features/challenge_details/data/repositories/filter_repo.dart';
 import '../features/challenge_details/data/data_sources/response_user_data_remote.dart';
+import '../features/challenge_details/data/repositories/github_repository.dart';
+import '../features/challenge_details/data/repositories/likes_manager_repo.dart';
 import '../features/challenge_details/data/repositories/response_user_data_repo.dart';
 import '../features/home/data/data_sources/challenges_remote.dart';
 import '../features/home/data/data_sources/user_bookmarks_manager_remote.dart';
@@ -131,4 +135,24 @@ final resetPasswordRepositoryProvider = Provider.autoDispose<ResetPasswordReposi
     final networkInfoRef = ref.read(networkInfoProvider);
 
     return ResponseUserDataRepositoryImpl(responseUserDataRemoteRef,networkInfoRef);
+  });
+
+  //! ---- likes_manager ----
+  final likesManagerRemoteProvider = Provider.autoDispose<LikesManagerRemote>((ref) => LikesManagerRemote());
+
+  final likesManagerRepositoryProvider = Provider.autoDispose<LikesManagerRepository>((ref) {
+    final likesManagerRemoteRef = ref.read(likesManagerRemoteProvider);
+    final networkInfoRef = ref.read(networkInfoProvider);
+
+    return LikesManagerRepositoryImpl(likesManagerRemoteRef,networkInfoRef);
+  });
+
+  //! ---- github ----
+  final githubRemoteProvider = Provider.autoDispose<GithubRemote>((ref) => GithubRemote());
+
+  final githubRepositoryProvider = Provider.autoDispose<GithubRepository>((ref) {
+    final githubRemoteRef = ref.read(githubRemoteProvider);
+    final networkInfoRef = ref.read(networkInfoProvider);
+
+    return GithubRepositoryImpl(githubRemoteRef,networkInfoRef);
   });
