@@ -11,7 +11,13 @@ class FilterInitial extends FilterState {}
 
 class FilterLoading extends FilterState {}
 
-class FilterDataFetched extends FilterState {}
+class FilterDataFetched extends FilterState {
+  final List<FilterModel> filters;
+  const FilterDataFetched(this.filters);
+
+  @override
+  List<Object> get props => [filters];
+}
 
 class FilterError extends FilterState {
   final String message;
